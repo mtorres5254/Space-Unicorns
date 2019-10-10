@@ -32,23 +32,27 @@ void j1Map::Draw()
 		return;
 
 	//(old): Prepare the loop to draw all tilesets + Blit
-	MapLayer* layer = data.layers.start->data; // for now we just use the first layer and tileset
-	TileSet* tileset = data.tilesets.start->data;
+	p2List_item<MapLayer*>* layer = data.layers.start; // for now we just use the first layer and tileset
+	p2List_item<TileSet*>* tileset = data.tilesets.start;
 	//(old): Complete the draw function
-	int layer_height = layer->height;
-	int layer_width = layer->width;
+	int layer_height = layer->data->height;
+	int layer_width = layer->data->width;
 
-	int pos = 0;
-	for (int h = 0; h < layer_height; h++)
-	{
-		for (int w = 0; w < layer_width; w++)
+	while (layer != NULL) {
+		int pos = 0;
+		for (int h = 0; h < layer_height; h++)
 		{
-			SDL_Rect section = tileset->GetTileRect(layer->data[pos]);
-			iPoint position = MapToWorld(w, h);
-			App->render->Blit(tileset->texture, position.x, position.y, &section);
-			pos++;
+			for (int w = 0; w < layer_width; w++)
+			{
+				SDL_Rect section = tileset->data->GetTileRect(layer->data->data[pos]);
+				iPoint position = MapToWorld(w, h);
+				App->render->Blit(tileset->data->texture, position.x, position.y, &section);
+				pos++;
+			}
 		}
+		layer = layer->next;
 	}
+	
 }
 
 iPoint j1Map::MapToWorld(int x, int y) const
