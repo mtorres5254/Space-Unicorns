@@ -40,7 +40,13 @@ public:
 	bool CleanUp();
 	//add colliders
 public:
+	iPoint position;
 	//texture , animations and sounds
+	SDL_Texture* current_graphics = nullptr;
+	SDL_Texture* normal_graphics = nullptr;
+	//add animations + sound
+	SDL_Rect rectplayer;
+
 	//position and limitators
 };
 #endif

@@ -1,0 +1,1 @@
+Juntar sprites en un mateix spritesheet
