@@ -1,1 +1,1 @@
-Juntar sprites en un mateix spritesheet
+Fer sprite salt i gancho

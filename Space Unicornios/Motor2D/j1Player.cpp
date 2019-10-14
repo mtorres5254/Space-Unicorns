@@ -100,10 +100,12 @@ bool j1Player::PreUpdate() {
 
 	
 	}
+	//Fix Jumping//Add gravity
+
 	//make movement while player is in air
 
 
-	//input not works
+	//input fails
 	if ((App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) && (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)) {
 		Current_Animation.GetCurrentFrame() = idle.GetCurrentFrame();
 	}
