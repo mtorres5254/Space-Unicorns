@@ -33,7 +33,7 @@ j1Player::j1Player() {
 	/*jumping.PushBack({8, 101, 18, 28});
 	jumping.PushBack({30 , 101, 16 , 28});
 	jumping.PushBack({ 49 , 101 , 19, 28 });
-		jumping.speed = 1.0f;*/
+	jumping.speed = 1.0f;*/
 
 	//HOOK
 
@@ -79,6 +79,8 @@ bool j1Player::PreUpdate() {
 	//inputs
 	Current_Animation.GetCurrentFrame() = idle.GetCurrentFrame();
 	/*godModechetao
+
+	if (godmode = true){
 	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) {
 		position.y -= player_speed;
 		
@@ -94,8 +96,9 @@ bool j1Player::PreUpdate() {
 		position.x -= player_speed;
 		flip = SDL_FLIP_HORIZONTAL;
 	}
+	}
 	*/
-	if (whileair = false && ducking = false) {
+	if (falling = false && ducking = false) {
 
 		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 			
@@ -112,11 +115,13 @@ bool j1Player::PreUpdate() {
 			flip = SDL_FLIP_HORIZONTAL;
 		}
 		if ((App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && !jumping) {
-			Current_Animation-GetCurrentFrame() = duck.GetCurrentFrame();
+			Current_Animation.GetCurrentFrame() = duck.GetCurrentFrame();
+				ducking = true;
 		}
 	
 	}
 	//Fix Jumping//Add gravity
+	
 	//if (jumping = true) {} Add gravity. Allow player to move while its in the air
 
 	// Add gravity make movement while player is in air/falling
@@ -124,7 +129,10 @@ bool j1Player::PreUpdate() {
 	//flip
 
 	//special move
-
+	if (App->input->GetKey(SDL_SCANCODE_V) == KEY_DOWN) {
+		Current_Animation.GetCurrentFrame() == special.GetCurrentFrame();
+		//add special mechanics
+	}
 
 	//input fails
 	if ((App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) && (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)) {
