@@ -27,11 +27,24 @@ j1Player::j1Player() {
 	walking.PushBack({128 , 0 ,	32 , 32 });
 	walking.PushBack({ 256 , 0 ,32 , 32});
 	walking.PushBack({ 512 , 0 , 32 , 32});
-	walking.speed = 1.0f;
+	walking.speed = 6.0f; //no son sprites corrent per tant camina tot puesto com la policia nacional
 
 	//JUMPING
+	/*jumping.PushBack({8, 101, 18, 28});
+	jumping.PushBack({30 , 101, 16 , 28});
+	jumping.PushBack({ 49 , 101 , 19, 28 });
+		jumping.speed = 1.0f;*/
 
 	//HOOK
+
+	//DEATH
+	death.PushBack({32, 0 , 32 , 32});
+	death.PushBack({32, 32, 32, 32});
+	death.PushBack({32, 64, 32 , 32});
+	death.PushBack({32, 128 , 32 , 32});
+	death.PushBack({32, 256, 32 , 32 });
+	death.PushBack({32 , 512, 32 , 32 });
+	death.speed = 0.3f;
 
 
 		
@@ -44,7 +57,7 @@ bool j1Player::Start() {
 
 	//load conditions
 	//flip = false
-	position.x = 20;
+	position.x = 50;//check positions 
 	position.y = 200;
 	Current_Animation = idle;
 
@@ -82,27 +95,35 @@ bool j1Player::PreUpdate() {
 		flip = SDL_FLIP_HORIZONTAL;
 	}
 	*/
-	if (whileair = false) {
-		if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
+	if (whileair = false && ducking = false) {
+
+		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 			
 			position.y += player_speed;
 			jumping = true;
-		if ((App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) && !not_forward) {
+		if ((App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) && !not_forward && !jumping) {
 			position.x += player_speed;
 			Current_Animation.GetCurrentFrame() = walking.GetCurrentFrame();
 			flip = SDL_FLIP_NONE;
 		}
-		if ((App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) && !not_backwards) {
+		if ((App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) && !not_backwards &&!jumping) {
 			position.x -= player_speed;
 			Current_Animation.GetCurrentFrame() = walking.GetCurrentFrame();
 			flip = SDL_FLIP_HORIZONTAL;
 		}
-
+		if ((App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && !jumping) {
+			Current_Animation-GetCurrentFrame() = duck.GetCurrentFrame();
+		}
 	
 	}
 	//Fix Jumping//Add gravity
+	//if (jumping = true) {} Add gravity. Allow player to move while its in the air
 
-	//make movement while player is in air
+	// Add gravity make movement while player is in air/falling
+
+	//flip
+
+	//special move
 
 
 	//input fails

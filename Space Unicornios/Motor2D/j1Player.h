@@ -52,11 +52,19 @@ public:
 	Animation Current_Animation;
 	Animation idle;
 	Animation walking;
+	Animation jumping;
+	Animation duck;
+	Animation death;
+	Animation special;
+
+
 	//add more animations + sound
 	
 	SDL_Rect rectplayer;
 	SDL_Rect rectoli;
-	
+
+	int gravity = 2;
+	int max_gravity = 20;
 	int player_speed = 5;
 	int jumping_speed = 25;
 	int mult;
@@ -67,8 +75,10 @@ public:
 	bool godmode = false;
 	bool jumping = false;
 	bool whileair = false;
+	bool ducking = false;
 	bool not_forward = false;
 	bool not_backwards = false;
+	bool death = false;
 	state actual;
 	
 	//position and limitators
