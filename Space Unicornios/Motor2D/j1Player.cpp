@@ -130,7 +130,7 @@ bool j1Player::PreUpdate() {
 
 	//special move
 	if (App->input->GetKey(SDL_SCANCODE_V) == KEY_DOWN) {
-		Current_Animation.GetCurrentFrame() == special.GetCurrentFrame();
+		Current_Animation.GetCurrentFrame() = special.GetCurrentFrame();
 		//add special mechanics
 	}
 

@@ -71,15 +71,10 @@ public:
 	void DebugDraw();
 	void DeleteCollider(Collider*);
 
-private:
-
-	bool LoadColliders();
-
-public:
-
 	MapData data;
 
 private:
+	bool LoadColliders();
 
 	Collider* colliders[MAX_COLLIDERS];
 	bool matrix[COLLIDER_MAX][COLLIDER_MAX];
