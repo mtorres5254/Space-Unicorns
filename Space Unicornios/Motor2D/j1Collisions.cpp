@@ -2,6 +2,7 @@
 #include "j1Input.h"
 #include "j1Render.h"
 #include "j1Collisions.h"
+#include "p2Log.h"
 
 j1Collisions::j1Collisions()
 {
@@ -9,10 +10,27 @@ j1Collisions::j1Collisions()
 		colliders[i] = nullptr;
 
 	//colliders matrix
+	matrix[COLLIDER_PLAYER][COLLIDER_ENEMY] = true;
+	matrix[COLLIDER_PLAYER][COLLIDER_FLOOR] = true;
+	matrix[COLLIDER_PLAYER][COLLIDER_PLAYER] = true;
+
+	matrix[COLLIDER_ENEMY][COLLIDER_PLAYER] = true;
+	matrix[COLLIDER_ENEMY][COLLIDER_FLOOR] = true;
+	matrix[COLLIDER_ENEMY][COLLIDER_ENEMY] = true;
+
+	matrix[COLLIDER_FLOOR][COLLIDER_PLAYER] = true;
+	matrix[COLLIDER_FLOOR][COLLIDER_ENEMY] = true;
+	matrix[COLLIDER_FLOOR][COLLIDER_FLOOR] = true;
+
+	name.create("collisions");
 }
 
 j1Collisions::~j1Collisions()
 {}
+
+bool j1Collisions::Awake(pugi::xml_node& conf) {
+
+}
 
 bool j1Collisions::PreUpdate() {
 	//Remove all colliders scheduled for deletion
@@ -97,5 +115,55 @@ void j1Collisions::DebugDraw() {
 			App->render->DrawQuad(colliders[i]->rect, 0, 255, 0, alpha);
 			break;
 		}
+	}
+}
+
+bool j1Collisions::CleanUp()
+{
+	LOG("Freeing all colliders");
+
+	for (uint i = 0; i < MAX_COLLIDERS; ++i)
+	{
+		if (colliders[i] != nullptr)
+		{
+			delete colliders[i];
+			colliders[i] = nullptr;
+		}
+	}
+
+	return true;
+}
+
+Collider* j1Collisions::AddCollider(SDL_Rect rect, COLLIDER_TYPE typeC, j1Module* callbackC = nullptr)
+{
+	Collider* ret = nullptr;
+
+	for (uint i = 0; i < MAX_COLLIDERS; ++i)
+	{
+		if (colliders[i] == nullptr)
+		{
+			ret = colliders[i] = new Collider(rect, typeC, callbackC);
+			break;
+		}
+	}
+
+	return ret;
+}
+
+// -----------------------------------------------------
+
+bool Collider::CheckCollision(const SDL_Rect& r) const
+{
+	return (rect.x < r.x + r.w &&
+		rect.x + rect.w > r.x &&
+		rect.y < r.y + r.h &&
+		rect.h + rect.y > r.y);
+}
+
+//-----------------------------------------------------
+
+void j1Collisions::DeleteCollider(Collider* collider) {
+	if (collider != nullptr) {
+		collider->to_delete = true;
 	}
 }

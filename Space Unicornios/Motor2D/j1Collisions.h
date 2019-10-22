@@ -58,9 +58,6 @@ public:
 
 	bool Update();
 
-	// Called each loop iteration
-	void Draw();
-
 	// Called before quitting
 	bool CleanUp();
 
@@ -71,13 +68,12 @@ public:
 	void DebugDraw();
 	void DeleteCollider(Collider*);
 
-	MapData data;
-
 private:
-	bool LoadColliders();
+	//bool LoadColliders();
 
 	Collider* colliders[MAX_COLLIDERS];
 	bool matrix[COLLIDER_MAX][COLLIDER_MAX];
 	bool debug = false;
+}
 
 #endif // __j1COLLISIONS_H__

@@ -147,7 +147,7 @@ bool j1Player::Update() { return true; }
 
 
 bool j1Player::PostUpdate() {
-	App->render->Blit(current_graphics, position.x, position.y, &(Current_Animation.GetCurrentFrame()), 1.5f, 0, 0, 0, flip);
+	App->render->Blit(current_graphics, position.x, position.y, &(Current_Animation.GetCurrentFrame()), 1.5f, 0, 0, 0);
 
 	return true;
 }
