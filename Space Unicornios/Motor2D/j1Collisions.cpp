@@ -22,14 +22,51 @@ j1Collisions::j1Collisions()
 	matrix[COLLIDER_FLOOR][COLLIDER_ENEMY] = true;
 	matrix[COLLIDER_FLOOR][COLLIDER_FLOOR] = true;
 
-	name.create("collisions");
+	name.create("map");
 }
 
 j1Collisions::~j1Collisions()
 {}
 
-bool j1Collisions::Awake(pugi::xml_node& conf) {
+bool j1Collisions::Awake(pugi::xml_node& config) {
+	LOG("Loading colliders");
+	
+	folder.create(config.child("folder").child_value());
+}
 
+bool j1Collisions::Load(const char* file_name) {
+	bool ret = true;
+	p2SString tmp("%s%s", folder.GetString(), file_name);
+
+	pugi::xml_parse_result result = collisions_data.load_file(tmp.GetString());
+
+	if (result == NULL)
+	{
+		LOG("Could not load map xml file %s. pugi error: %s", file_name, result.description());
+		ret = false;
+	}
+	//Load Collider
+
+	pugi::xml_node objectgroup;
+	for (objectgroup = collisions_data.child("map").child("objectgroup"); objectgroup && ret; objectgroup = objectgroup.next_sibling("objectgroup"))
+	{
+		pugi::xml_node object;
+		for (object = objectgroup.child("object"); object && ret; object = object.next_sibling("object")) {
+			SDL_Rect rect;
+			rect.x = object.attribute("x").as_uint();
+			rect.y = object.attribute("y").as_uint();
+			rect.w = object.attribute("width").as_uint();
+			rect.h = object.attribute("heigth").as_uint();
+
+			COLLIDER_TYPE coltype;
+			if (object.attribute("name").as_string() == "Floor") {
+				coltype = COLLIDER_FLOOR;
+				//j1Module* module_ptr = App->map;
+
+				AddCollider(rect, coltype);
+			}
+		}
+	}
 }
 
 bool j1Collisions::PreUpdate() {

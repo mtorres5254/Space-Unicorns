@@ -9556,7 +9556,7 @@
    </chunk>
   </data>
  </layer>
- <objectgroup id="3" name="Colliders">
+ <objectgroup color="#ffffff" id="3" name="Colliders">
   <object id="3" name="Floor" type="Collider" x="-3039.33" y="1376" width="542.667" height="28.3333"/>
   <object id="8" name="Floor" type="Collider" x="-3041.33" y="929.333" width="30.6667" height="445.333"/>
   <object id="9" name="Floor" type="Collider" x="-3006.67" y="926.667" width="252" height="34.6667"/>

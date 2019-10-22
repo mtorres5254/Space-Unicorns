@@ -98,12 +98,12 @@ bool j1Player::PreUpdate() {
 	}
 	}
 	*/
-	if (falling = false && ducking = false) {
+	if (falling == false && ducking == false) {
 
-		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
-			
+		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
 			position.y += player_speed;
 			jumping = true;
+		}
 		if ((App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) && !not_forward && !jumping) {
 			position.x += player_speed;
 			Current_Animation.GetCurrentFrame() = walking.GetCurrentFrame();
@@ -114,7 +114,7 @@ bool j1Player::PreUpdate() {
 			Current_Animation.GetCurrentFrame() = walking.GetCurrentFrame();
 			flip = SDL_FLIP_HORIZONTAL;
 		}
-		if ((App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && !jumping) {
+		if ((App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) && !jumping) {
 			Current_Animation.GetCurrentFrame() = duck.GetCurrentFrame();
 				ducking = true;
 		}
@@ -147,7 +147,7 @@ bool j1Player::Update() { return true; }
 
 
 bool j1Player::PostUpdate() {
-	App->render->Blit(current_graphics, position.x, position.y, &(Current_Animation.GetCurrentFrame()), 1.5f, 0, 0, 0);
+	App->render->Blit(current_graphics, position.x, position.y, &(Current_Animation.GetCurrentFrame()), 1.5f, 0, 0, 0, flip);
 
 	return true;
 }

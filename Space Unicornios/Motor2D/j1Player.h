@@ -79,7 +79,6 @@ public:
 	bool not_forward = false;
 	bool not_backwards = false;
 	bool death = false;
-	bool godmode = false;
 	state actual;
 	
 	//position and limitators

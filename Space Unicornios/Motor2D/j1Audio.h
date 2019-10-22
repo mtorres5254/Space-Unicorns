@@ -5,7 +5,8 @@
 
 #define DEFAULT_MUSIC_FADE_TIME 2.0f
 
-struct _Mix_Music;
+
+struct Mix_Music;
 struct Mix_Chunk;
 
 class j1Audio : public j1Module
@@ -34,7 +35,7 @@ public:
 
 private:
 
-	_Mix_Music*			music = NULL;
+	Mix_Music* music;
 	p2List<Mix_Chunk*>	fx;
 };
 

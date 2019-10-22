@@ -70,7 +70,8 @@ public:
 
 private:
 	//bool LoadColliders();
-
+	p2SString			folder;
+	pugi::xml_document collisions_data;
 	Collider* colliders[MAX_COLLIDERS];
 	bool matrix[COLLIDER_MAX][COLLIDER_MAX];
 	bool debug = false;
