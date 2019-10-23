@@ -414,16 +414,16 @@ bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 	else {
 		LOG("loading custom properties");
 		for (pugi::xml_node property_node = properties_data.child("property"); property_node; property_node = property_node.next_sibling("property")) {
-			CustomProperties* tmpProp;
-			tmpProp->name = property_node.attribute("name").as_string();
-			tmpProp->type = property_node.attribute("type").as_string();
-			if (tmpProp->type.GetString() == "bool") {
-				tmpProp->info.b_data = property_node.attribute("value").as_string();
+			CustomProperties tmpProp;
+			tmpProp.name = property_node.attribute("name").as_string();
+			tmpProp.type = property_node.attribute("type").as_string();
+			if (tmpProp.type.GetString() == "bool") {
+				tmpProp.info.b_data = property_node.attribute("value").as_string();
 			}
-			if (tmpProp->type.GetString() == "int") {
-				tmpProp->info.ui_data = property_node.attribute("value").as_uint();
+			if (tmpProp.type.GetString() == "int") {
+				tmpProp.info.ui_data = property_node.attribute("value").as_uint();
 			}
-			layer->properties.add(tmpProp);
+			layer->properties.add(&tmpProp);
 		}
 	}
 

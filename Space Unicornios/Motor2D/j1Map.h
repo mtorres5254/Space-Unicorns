@@ -21,11 +21,10 @@ struct CustomProperties {
 struct MapLayer
 {
 	p2SString	name;
+	p2List<CustomProperties*> properties;
 	int			width;
 	int			height;
 	uint*		data;
-
-	p2List<CustomProperties*> properties;
 
 	MapLayer() : data(NULL)
 	{}
