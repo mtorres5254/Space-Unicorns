@@ -30,10 +30,10 @@ j1Player::j1Player() {
 	walking.speed = 6.0f; //no son sprites corrent per tant camina tot puesto com la policia nacional
 
 	//JUMPING
-	/*jumping.PushBack({8, 101, 18, 28});
+	jumping.PushBack({8, 101, 18, 28});
 	jumping.PushBack({30 , 101, 16 , 28});
 	jumping.PushBack({ 49 , 101 , 19, 28 });
-	jumping.speed = 1.0f;*/
+	jumping.speed = 1.0f;
 
 	//HOOK
 
@@ -78,43 +78,43 @@ bool j1Player::CleanUp() {
 bool j1Player::PreUpdate() {
 	//inputs
 	Current_Animation.GetCurrentFrame() = idle.GetCurrentFrame();
-	/*godModechetao
 
-	if (godmode = true){
-	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) {
+	//Godmode movement
+	if (godmode == true){
+		if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) {
 		position.y -= player_speed;
 		
-	}
-	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT) {
+		}
+		if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT) {
 		position.y += player_speed;
-	}
-	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) {
+		}
+		if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) {
 		position.x += player_speed;
 		flip = SDL_FLIP_NONE;
-	}
-	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) {
+		}
+		if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) {
 		position.x -= player_speed;
 		flip = SDL_FLIP_HORIZONTAL;
+		}
 	}
-	}
-	*/
+
 	if (falling == false && ducking == false) {
 
 		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
 			position.y += player_speed;
-			jumping = true;
+			jumping_bool = true;
 		}
-		if ((App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) && !not_forward && !jumping) {
+		if ((App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) && !not_forward && !jumping_bool) {
 			position.x += player_speed;
 			Current_Animation.GetCurrentFrame() = walking.GetCurrentFrame();
 			flip = SDL_FLIP_NONE;
 		}
-		if ((App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) && !not_backwards &&!jumping) {
+		if ((App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) && !not_backwards &&!jumping_bool) {
 			position.x -= player_speed;
 			Current_Animation.GetCurrentFrame() = walking.GetCurrentFrame();
 			flip = SDL_FLIP_HORIZONTAL;
 		}
-		if ((App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) && !jumping) {
+		if ((App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) && !jumping_bool) {
 			Current_Animation.GetCurrentFrame() = duck.GetCurrentFrame();
 				ducking = true;
 		}
@@ -138,7 +138,7 @@ bool j1Player::PreUpdate() {
 	if ((App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) && (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)) {
 		Current_Animation.GetCurrentFrame() = idle.GetCurrentFrame();
 	}
-	
+	return true;
 }
 
 

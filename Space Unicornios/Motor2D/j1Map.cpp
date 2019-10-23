@@ -39,6 +39,10 @@ void j1Map::Draw()
 	int layer_width = layer->data->width;
 
 	while (layer != NULL) {
+		p2List_item<CustomProperties*>* prop = layer->data->properties.start;
+		if (prop->data->name.GetString() == "draw" && prop->data->info.b_data == false) {
+			continue;
+		}
 		int pos = 0;
 		for (int h = 0; h < layer_height; h++)
 		{
@@ -231,7 +235,7 @@ bool j1Map::LoadMap()
 	bool ret = true;
 	pugi::xml_node map = map_file.child("map");
 
-	if(map == NULL)
+	if (map == NULL)
 	{
 		LOG("Error parsing map xml file: Cannot find 'map' tag.");
 		ret = false;
@@ -249,7 +253,7 @@ bool j1Map::LoadMap()
 		data.background_color.b = 0;
 		data.background_color.a = 0;
 
-		if(bg_color.Length() > 0)
+		if (bg_color.Length() > 0)
 		{
 			p2SString red, green, blue;
 			bg_color.SubString(1, 2, red);
@@ -259,26 +263,26 @@ bool j1Map::LoadMap()
 			int v = 0;
 
 			sscanf_s(red.GetString(), "%x", &v);
-			if(v >= 0 && v <= 255) data.background_color.r = v;
+			if (v >= 0 && v <= 255) data.background_color.r = v;
 
 			sscanf_s(green.GetString(), "%x", &v);
-			if(v >= 0 && v <= 255) data.background_color.g = v;
+			if (v >= 0 && v <= 255) data.background_color.g = v;
 
 			sscanf_s(blue.GetString(), "%x", &v);
-			if(v >= 0 && v <= 255) data.background_color.b = v;
+			if (v >= 0 && v <= 255) data.background_color.b = v;
 		}
 
 		p2SString orientation(map.attribute("orientation").as_string());
 
-		if(orientation == "orthogonal")
+		if (orientation == "orthogonal")
 		{
 			data.type = MAPTYPE_ORTHOGONAL;
 		}
-		else if(orientation == "isometric")
+		else if (orientation == "isometric")
 		{
 			data.type = MAPTYPE_ISOMETRIC;
 		}
-		else if(orientation == "staggered")
+		else if (orientation == "staggered")
 		{
 			data.type = MAPTYPE_STAGGERED;
 		}
@@ -294,62 +298,103 @@ bool j1Map::LoadMap()
 bool j1Map::LoadTilesetDetails(pugi::xml_node& tileset_node, TileSet* set)
 {
 	bool ret = true;
-	set->name.create(tileset_node.attribute("name").as_string());
-	set->firstgid = tileset_node.attribute("firstgid").as_int();
-	set->tile_width = tileset_node.attribute("tilewidth").as_int();
-	set->tile_height = tileset_node.attribute("tileheight").as_int();
-	set->margin = tileset_node.attribute("margin").as_int();
-	set->spacing = tileset_node.attribute("spacing").as_int();
-	pugi::xml_node offset = tileset_node.child("tileoffset");
-
-	if(offset != NULL)
-	{
-		set->offset_x = offset.attribute("x").as_int();
-		set->offset_y = offset.attribute("y").as_int();
+	if (tileset_node.attribute("firstgid").as_int() != NULL) {
+		set->firstgid = tileset_node.attribute("firstgid").as_int();
 	}
-	else
-	{
-		set->offset_x = 0;
-		set->offset_y = 0;
+		
+	p2SString source = tileset_node.attribute("source").as_string();
+	LOG("%s", source.GetString());
+	if (source.Length() > 1) {
+		LOG("Loading tileset from another source");
+		pugi::xml_document source_doc;
+		p2SString tmp("%s%s", folder.GetString(), source.GetString());
+		LOG("%s", tmp.GetString());
+		pugi::xml_parse_result tileset_result = source_doc.load_file(tmp.GetString());
+		if (tileset_result == NULL)
+		{
+			LOG("Could not load map xml file %s. pugi error: %s", source.GetString(), tileset_result.description());
+			ret = false;
+		}
+		pugi::xml_node tileset_extern = source_doc.child("tileset");
+		ret = LoadTilesetDetails(tileset_extern, set);
+		return ret;
 	}
+	else {
+		set->name.create(tileset_node.attribute("name").as_string());
+		set->tile_width = tileset_node.attribute("tilewidth").as_int();
+		set->tile_height = tileset_node.attribute("tileheight").as_int();
+		set->margin = tileset_node.attribute("margin").as_int();
+		set->spacing = tileset_node.attribute("spacing").as_int();
+		pugi::xml_node offset = tileset_node.child("tileoffset");
 
-	return ret;
+		if (offset != NULL)
+		{
+			set->offset_x = offset.attribute("x").as_int();
+			set->offset_y = offset.attribute("y").as_int();
+		}
+		else
+		{
+			set->offset_x = 0;
+			set->offset_y = 0;
+		}
+
+		return ret;
+	}	
 }
 
 bool j1Map::LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set)
 {
 	bool ret = true;
-	pugi::xml_node image = tileset_node.child("image");
-
-	if(image == NULL)
-	{
-		LOG("Error parsing tileset xml file: Cannot find 'image' tag.");
-		ret = false;
-	}
-	else
-	{
-		set->texture = App->tex->Load(PATH(folder.GetString(), image.attribute("source").as_string()));
-		int w, h;
-		SDL_QueryTexture(set->texture, NULL, NULL, &w, &h);
-		set->tex_width = image.attribute("width").as_int();
-
-		if(set->tex_width <= 0)
+	p2SString source = tileset_node.attribute("source").as_string();
+	LOG("%s", source.GetString());
+	if (source.Length() > 1 ) {
+		LOG("Loading tileset from another source");
+		pugi::xml_document source_doc;
+		p2SString tmp("%s%s", folder.GetString(), source.GetString());
+		LOG("%s", tmp.GetString());
+		pugi::xml_parse_result tileset_result = source_doc.load_file(tmp.GetString());
+		if (tileset_result == NULL)
 		{
-			set->tex_width = w;
+			LOG("Could not load map xml file %s. pugi error: %s", source.GetString(), tileset_result.description());
+			ret = false;
+		}
+		pugi::xml_node tileset_extern = source_doc.child("tileset");
+		ret = LoadTilesetImage(tileset_extern, set);
+		return ret;
+	}
+	else {
+		pugi::xml_node image = tileset_node.child("image");
+
+		if (image == NULL)
+		{
+			LOG("Error parsing tileset xml file: Cannot find 'image' tag.");
+			ret = false;
+		}
+		else
+		{
+			set->texture = App->tex->Load(PATH(folder.GetString(), image.attribute("source").as_string()));
+			int w, h;
+			SDL_QueryTexture(set->texture, NULL, NULL, &w, &h);
+			set->tex_width = image.attribute("width").as_int();
+
+			if (set->tex_width <= 0)
+			{
+				set->tex_width = w;
+			}
+
+			set->tex_height = image.attribute("height").as_int();
+
+			if (set->tex_height <= 0)
+			{
+				set->tex_height = h;
+			}
+
+			set->num_tiles_width = set->tex_width / set->tile_width;
+			set->num_tiles_height = set->tex_height / set->tile_height;
 		}
 
-		set->tex_height = image.attribute("height").as_int();
-
-		if(set->tex_height <= 0)
-		{
-			set->tex_height = h;
-		}
-
-		set->num_tiles_width = set->tex_width / set->tile_width;
-		set->num_tiles_height = set->tex_height / set->tile_height;
+		return ret;
 	}
-
-	return ret;
 }
 
 bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
@@ -359,6 +404,29 @@ bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 	layer->name = node.attribute("name").as_string();
 	layer->width = node.attribute("width").as_int();
 	layer->height = node.attribute("height").as_int();
+
+	pugi::xml_node properties_data = node.child("properties");
+
+	if (properties_data == NULL)
+	{
+		LOG("There aren't custom properties");
+	}
+	else {
+		LOG("loading custom properties");
+		for (pugi::xml_node property_node = properties_data.child("property"); property_node; property_node = property_node.next_sibling("property")) {
+			CustomProperties* tmpProp;
+			tmpProp->name = property_node.attribute("name").as_string();
+			tmpProp->type = property_node.attribute("type").as_string();
+			if (tmpProp->type.GetString() == "bool") {
+				tmpProp->info.b_data = property_node.attribute("value").as_string();
+			}
+			if (tmpProp->type.GetString() == "int") {
+				tmpProp->info.ui_data = property_node.attribute("value").as_uint();
+			}
+			layer->properties.add(tmpProp);
+		}
+	}
+
 	pugi::xml_node layer_data = node.child("data");
 
 	if(layer_data == NULL)

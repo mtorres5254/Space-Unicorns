@@ -7,12 +7,25 @@
 #include "j1Module.h"
 
 // ----------------------------------------------------
+struct CustomProperties {
+	p2SString name;
+	p2SString type;
+	union data
+	{
+		p2SString b_data;
+		uint ui_data;
+	};
+	data info;
+};
+	
 struct MapLayer
 {
 	p2SString	name;
 	int			width;
 	int			height;
 	uint*		data;
+
+	p2List<CustomProperties*> properties;
 
 	MapLayer() : data(NULL)
 	{}

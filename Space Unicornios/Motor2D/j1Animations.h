@@ -30,7 +30,7 @@ public:
 				endframe = 1;
 			}
 			else endframe = 0;
-
+			return frames[(int)current_frame];
 		}
 
 		int GetEndframe() {

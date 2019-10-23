@@ -56,7 +56,7 @@ public:
 
 	bool PreUpdate();
 
-	bool Update();
+	bool PostUpdate();
 
 	// Called before quitting
 	bool CleanUp();
@@ -75,6 +75,6 @@ private:
 	Collider* colliders[MAX_COLLIDERS];
 	bool matrix[COLLIDER_MAX][COLLIDER_MAX];
 	bool debug = false;
-}
+};
 
 #endif // __j1COLLISIONS_H__

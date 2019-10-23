@@ -32,6 +32,8 @@ bool j1Collisions::Awake(pugi::xml_node& config) {
 	LOG("Loading colliders");
 	
 	folder.create(config.child("folder").child_value());
+
+	return true;
 }
 
 bool j1Collisions::Load(const char* file_name) {
@@ -54,7 +56,9 @@ bool j1Collisions::Load(const char* file_name) {
 		for (object = objectgroup.child("object"); object && ret; object = object.next_sibling("object")) {
 			SDL_Rect rect;
 			rect.x = object.attribute("x").as_uint();
+			rect.x = rect.x * -1;
 			rect.y = object.attribute("y").as_uint();
+			rect.y = rect.y * -1;
 			rect.w = object.attribute("width").as_uint();
 			rect.h = object.attribute("heigth").as_uint();
 
@@ -67,6 +71,7 @@ bool j1Collisions::Load(const char* file_name) {
 			}
 		}
 	}
+	return true;
 }
 
 bool j1Collisions::PreUpdate() {
@@ -117,7 +122,7 @@ bool j1Collisions::PreUpdate() {
 	return true;
 }
 
-bool j1Collisions::Update()
+bool j1Collisions::PostUpdate()
 {
 	DebugDraw();
 
@@ -125,11 +130,15 @@ bool j1Collisions::Update()
 }
 
 void j1Collisions::DebugDraw() {
-	if (App->input->GetKey(SDL_SCANCODE_F1) ==  KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) {
 		debug = !debug;
+	}
 
-	if (debug == false)
+	if (debug == false) {
 		return;
+	}
+
+	LOG("showing colliders");
 
 	Uint8 alpha = 80;
 	for (uint i = 0; i < MAX_COLLIDERS; ++i)
@@ -171,7 +180,7 @@ bool j1Collisions::CleanUp()
 	return true;
 }
 
-Collider* j1Collisions::AddCollider(SDL_Rect rect, COLLIDER_TYPE typeC, j1Module* callbackC = nullptr)
+Collider* j1Collisions::AddCollider(SDL_Rect rectC, COLLIDER_TYPE typeC, j1Module* callbackC)
 {
 	Collider* ret = nullptr;
 
@@ -179,7 +188,7 @@ Collider* j1Collisions::AddCollider(SDL_Rect rect, COLLIDER_TYPE typeC, j1Module
 	{
 		if (colliders[i] == nullptr)
 		{
-			ret = colliders[i] = new Collider(rect, typeC, callbackC);
+			ret = colliders[i] = new Collider(rectC, typeC, callbackC);
 			break;
 		}
 	}

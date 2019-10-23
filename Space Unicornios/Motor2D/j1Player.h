@@ -73,12 +73,12 @@ public:
 	SDL_RendererFlip flip = SDL_FLIP_NONE;
 	
 	bool godmode = false;
-	bool jumping = false;
+	bool jumping_bool = false;
 	bool falling = false;
 	bool ducking = false;
 	bool not_forward = false;
 	bool not_backwards = false;
-	bool death = false;
+	bool death_bool = false;
 	state actual;
 	
 	//position and limitators

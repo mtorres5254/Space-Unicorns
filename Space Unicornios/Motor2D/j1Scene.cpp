@@ -32,6 +32,8 @@ bool j1Scene::Start()
 {
 	//Load Map file
 	App->map->Load("mapa.tmx");
+	App->render->camera.x = -124;
+	App->render->camera.y = -1256;
 	return true;
 }
 
