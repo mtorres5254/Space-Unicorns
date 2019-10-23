@@ -10,12 +10,9 @@
 struct CustomProperties {
 	p2SString name;
 	p2SString type;
-	union data
-	{
-		p2SString b_data;
-		uint ui_data;
-	};
-	data info;
+	//Values
+	p2SString b_data;
+	uint ui_data;
 };
 	
 struct MapLayer

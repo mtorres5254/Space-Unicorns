@@ -4,6 +4,7 @@
 #include "j1Render.h"
 #include "j1Textures.h"
 #include "j1Map.h"
+#include "j1Collisions.h"
 #include <math.h>
 
 j1Map::j1Map() : j1Module(), map_loaded(false)
@@ -34,29 +35,25 @@ void j1Map::Draw()
 	//(old): Prepare the loop to draw all tilesets + Blit
 	p2List_item<MapLayer*>* layer = data.layers.start; // for now we just use the first layer and tileset
 	p2List_item<TileSet*>* tileset = data.tilesets.start;
+	p2List_item<CustomProperties*>* prop = layer->data->properties.start;
 	//(old): Complete the draw function
 	int layer_height = layer->data->height;
 	int layer_width = layer->data->width;
 
 	while (layer != NULL) {
-		p2List_item<CustomProperties*>* prop = layer->data->properties.start;
-		if (prop->data->name.GetString() == "draw" && prop->data->info.b_data == false) {
-			continue;
-		}
-		int pos = 0;
-		for (int h = 0; h < layer_height; h++)
-		{
-			for (int w = 0; w < layer_width; w++)
+			int pos = 0;
+			for (int h = 0; h < layer_height; h++)
 			{
-				SDL_Rect section = tileset->data->GetTileRect(layer->data->data[pos]);
-				iPoint position = MapToWorld(w, h);
-				App->render->Blit(tileset->data->texture, position.x, position.y, &section);
-				pos++;
+				for (int w = 0; w < layer_width; w++)
+				{
+					SDL_Rect section = tileset->data->GetTileRect(layer->data->data[pos]);
+					iPoint position = MapToWorld(w, h);
+					App->render->Blit(tileset->data->texture, position.x, position.y, &section);
+					pos++;
+				}
 			}
-		}
 		layer = layer->next;
 	}
-	
 }
 
 iPoint j1Map::MapToWorld(int x, int y) const
@@ -196,11 +193,17 @@ bool j1Map::Load(const char* file_name)
 			data.layers.add(lay);
 	}
 
+	//Load colliders info -------------------------------------------
+	if (ret == true) {
+		ret = App->col->LoadColliders(map_file.child("map"));
+	}
+
 	if(ret == true)
 	{
 		LOG("Successfully parsed map XML file: %s", file_name);
 		LOG("width: %d height: %d", data.width, data.height);
 		LOG("tile_width: %d tile_height: %d", data.tile_width, data.tile_height);
+		LOG("");
 
 		p2List_item<TileSet*>* item = data.tilesets.start;
 		while(item != NULL)
@@ -210,6 +213,7 @@ bool j1Map::Load(const char* file_name)
 			LOG("name: %s firstgid: %d", s->name.GetString(), s->firstgid);
 			LOG("tile width: %d tile height: %d", s->tile_width, s->tile_height);
 			LOG("spacing: %d margin: %d", s->spacing, s->margin);
+			
 			item = item->next;
 		}
 
@@ -220,6 +224,7 @@ bool j1Map::Load(const char* file_name)
 			LOG("Layer ----");
 			LOG("name: %s", l->name.GetString());
 			LOG("tile width: %d tile height: %d", l->width, l->height);
+			LOG("");
 			item_layer = item_layer->next;
 		}
 	}
@@ -418,10 +423,10 @@ bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 			tmpProp.name = property_node.attribute("name").as_string();
 			tmpProp.type = property_node.attribute("type").as_string();
 			if (tmpProp.type.GetString() == "bool") {
-				tmpProp.info.b_data = property_node.attribute("value").as_string();
+				tmpProp.b_data = property_node.attribute("value").as_string();
 			}
 			if (tmpProp.type.GetString() == "int") {
-				tmpProp.info.ui_data = property_node.attribute("value").as_uint();
+				tmpProp.ui_data = property_node.attribute("value").as_uint();
 			}
 			layer->properties.add(&tmpProp);
 		}

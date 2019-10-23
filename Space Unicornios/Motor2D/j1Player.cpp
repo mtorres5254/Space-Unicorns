@@ -57,8 +57,8 @@ bool j1Player::Start() {
 
 	//load conditions
 	//flip = false
-	position.x = 50;//check positions 
-	position.y = 200;
+	position.x = -224;//check positions 
+	position.y = -1856;
 	Current_Animation = idle;
 
 	//load graphics

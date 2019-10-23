@@ -29,28 +29,16 @@ j1Collisions::~j1Collisions()
 {}
 
 bool j1Collisions::Awake(pugi::xml_node& config) {
-	LOG("Loading colliders");
-	
-	folder.create(config.child("folder").child_value());
-
 	return true;
 }
 
-bool j1Collisions::Load(const char* file_name) {
+bool j1Collisions::LoadColliders(pugi::xml_node& node) {
 	bool ret = true;
-	p2SString tmp("%s%s", folder.GetString(), file_name);
-
-	pugi::xml_parse_result result = collisions_data.load_file(tmp.GetString());
-
-	if (result == NULL)
-	{
-		LOG("Could not load map xml file %s. pugi error: %s", file_name, result.description());
-		ret = false;
-	}
+	
 	//Load Collider
 
 	pugi::xml_node objectgroup;
-	for (objectgroup = collisions_data.child("map").child("objectgroup"); objectgroup && ret; objectgroup = objectgroup.next_sibling("objectgroup"))
+	for (objectgroup = node.child("objectgroup"); objectgroup && ret; objectgroup = objectgroup.next_sibling("objectgroup"))
 	{
 		pugi::xml_node object;
 		for (object = objectgroup.child("object"); object && ret; object = object.next_sibling("object")) {
@@ -69,6 +57,9 @@ bool j1Collisions::Load(const char* file_name) {
 
 				AddCollider(rect, coltype);
 			}
+			LOG("Colliders:");
+			LOG("Rect: %i x %i x %i x %i", rect.x, rect.y, rect.w, rect.h);
+			LOG("Name: %s", object.attribute("name").as_string());
 		}
 	}
 	return true;
@@ -122,7 +113,7 @@ bool j1Collisions::PreUpdate() {
 	return true;
 }
 
-bool j1Collisions::PostUpdate()
+bool j1Collisions::Update()
 {
 	DebugDraw();
 

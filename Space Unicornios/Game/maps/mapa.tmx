@@ -4,7 +4,7 @@
  <tileset firstgid="65" source="tile02.tsx"/>
  <layer id="6" name="Fons" width="202" height="116">
   <properties>
-   <property name="draw" type="bool" value="false"/>
+   <property name="draw" type="bool" value="true"/>
   </properties>
   <data>
    <tile/>
