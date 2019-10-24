@@ -4,6 +4,7 @@
   <app>
     <title>Game Development Testbed</title>
     <organization>UPC</organization>
+    <time value="1"/>
   </app>
 	
   <renderer>
@@ -17,6 +18,7 @@
     <borderless value="false"/>
     <resizable value="false"/>
     <fullscreen_window value="false"/>
+    <vsync value="true"/>
   </window>
 
   <file_system>

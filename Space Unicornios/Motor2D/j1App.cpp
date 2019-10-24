@@ -12,6 +12,7 @@
 #include "j1Scene.h"
 #include "j1Map.h"
 #include "j1App.h"
+#include "j1Player.h"
 #include "j1Collisions.h"
 
 // Constructor
@@ -27,6 +28,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	audio = new j1Audio();
 	scene = new j1Scene();
 	map = new j1Map();
+	player = new j1Player();
 	col = new j1Collisions();
 
 	// Ordered for awake / Start / Update
@@ -37,6 +39,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(audio);
 	AddModule(map);
 	AddModule(scene);
+	AddModule(player);
 	AddModule(col);
 
 	// render last to swap buffer
@@ -82,6 +85,7 @@ bool j1App::Awake()
 		app_config = config.child("app");
 		title.create(app_config.child("title").child_value());
 		organization.create(app_config.child("organization").child_value());
+		dt = app_config.child("time").attribute("value").as_float();
 	}
 
 	if(ret == true)
@@ -362,7 +366,7 @@ bool j1App::SavegameNow() const
 		data.save(stream);
 
 		// we are done, so write data to disk
-//		fs->Save(save_game.GetString(), stream.str().c_str(), stream.str().length());
+		//fs->Save(save_game.GetString(), stream.str().c_str(), stream.str().length());
 		LOG("... finished saving", save_game.GetString());
 	}
 	else

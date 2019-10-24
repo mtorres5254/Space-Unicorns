@@ -3,10 +3,11 @@
 #include "j1Input.h"
 #include "j1Render.h"
 #include "j1Player.h"
-#include "j1Scene.h"
 #include "j1Collisions.h"
+#include "j1Scene.h"
 #include "j1Map.h"
 #include "j1Audio.h"
+#include "p2Log.h"
 #include "SDL/include/SDL_timer.h"
 //include SDL_timer.h
 
@@ -16,7 +17,7 @@ j1Player::j1Player() {
 	
 	
 	//IDLE
-	idle.PushBack({ 256 , 0 ,32 , 32 });
+	idle.PushBack({ 0 , 0 ,76 , 76 });
 	idle.speed = 0.5f;
 
 	//WALKING
@@ -46,111 +47,145 @@ j1Player::j1Player() {
 	death.PushBack({32 , 512, 32 , 32 });
 	death.speed = 0.3f;
 
-
-		
+	
 }
 
 j1Player::~j1Player()
 {}
 
+bool j1Player::Awake(pugi::xml_node& conf) {
+	return true;
+}
+
 bool j1Player::Start() {
 
 	//load conditions
 	//flip = false
-	position.x = -224;//check positions 
-	position.y = -1856;
-	Current_Animation = idle;
+	position.x = 0;//check positions 
+	position.y = 0;
+	App->render->camera.x = 0;
+	App->render->camera.y = 0;
+	Current_Animation = &idle;
 
 	//load graphics
-	normal_graphics = App->tex->Load("textures/walk.png");
-	current_graphics = normal_graphics;
+	graphics = App->tex->Load("textures/Spritesheet.png");
+	if (graphics == NULL) {
+		return false;
+	}
 	//load sounds and collisions
+	col = App->col->AddCollider({ 0, 0, 76, 76 }, COLLIDER_PLAYER, this);
+	col_prova = App->col->AddCollider({ 0, 100, 150, 25 }, COLLIDER_FLOOR, this);
 	return true;
 }
 
 bool j1Player::CleanUp() {
 	//unload graphics
-	App->tex->UnLoad(normal_graphics);
-	App->tex->UnLoad(current_graphics);
+	App->tex->UnLoad(graphics);
 	return true;
 }
 
 bool j1Player::PreUpdate() {
-	//inputs
-	Current_Animation.GetCurrentFrame() = idle.GetCurrentFrame();
-
-	//Godmode movement
-	if (godmode == true){
-		if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) {
-		position.y -= player_speed;
-		
-		}
-		if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT) {
-		position.y += player_speed;
-		}
-		if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) {
-		position.x += player_speed;
-		flip = SDL_FLIP_NONE;
-		}
-		if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) {
-		position.x -= player_speed;
-		flip = SDL_FLIP_HORIZONTAL;
-		}
-	}
-
-	if (falling == false && ducking == false) {
-
-		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
-			position.y += player_speed;
-			jumping_bool = true;
-		}
-		if ((App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) && !not_forward && !jumping_bool) {
-			position.x += player_speed;
-			Current_Animation.GetCurrentFrame() = walking.GetCurrentFrame();
-			flip = SDL_FLIP_NONE;
-		}
-		if ((App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) && !not_backwards &&!jumping_bool) {
-			position.x -= player_speed;
-			Current_Animation.GetCurrentFrame() = walking.GetCurrentFrame();
-			flip = SDL_FLIP_HORIZONTAL;
-		}
-		if ((App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) && !jumping_bool) {
-			Current_Animation.GetCurrentFrame() = duck.GetCurrentFrame();
-				ducking = true;
-		}
-	
-	}
-	//Fix Jumping//Add gravity
-	
-	//if (jumping = true) {} Add gravity. Allow player to move while its in the air
-
-	// Add gravity make movement while player is in air/falling
-
-	//flip
-
-	//special move
-	if (App->input->GetKey(SDL_SCANCODE_V) == KEY_DOWN) {
-		Current_Animation.GetCurrentFrame() = special.GetCurrentFrame();
-		//add special mechanics
-	}
-
-	//input fails
-	if ((App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) && (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)) {
-		Current_Animation.GetCurrentFrame() = idle.GetCurrentFrame();
-	}
+	falling = true;
+	flip = SDL_FLIP_NONE;
 	return true;
 }
 
 
 
-bool j1Player::Update() { return true; }
+bool j1Player::Update(float dt) { 
+	inputs = GetInput();
+
+	switch (inputs)
+	{
+	case IN_NONE:
+		Current_Animation = &idle;
+		break;
+	case IN_JUMP:
+		Current_Animation = &jumping;
+		//-----------
+		break;
+	case IN_FALLING:
+		//LOG("falling");
+		position.y = position.y + 1.2 * dt;
+		break;
+	case IN_JUMP_LEFT:
+
+
+		break;
+	case IN_JUMP_RIGHT:
+
+
+		break;
+	case IN_LEFT:
+		Current_Animation = &walking;
+		flip = SDL_FLIP_HORIZONTAL;
+		//-----------
+		position.x = position.x - 1 * (int)dt;
+		break;
+	case IN_RIGHT:
+		Current_Animation = &walking;
+		//-----------
+		position.x = position.x + 1 * (int)dt;
+		break;
+	case IN_CROUCH:
+		Current_Animation = &crouch;
+
+		break;
+	}
+
+	col->SetPos(position.x, position.y);
+	App->render->Blit(graphics, position.x, position.y, &(Current_Animation->GetCurrentFrame()), 1.5f, 0, 0, 0, flip);
+	return true; 
+}
 
 
 bool j1Player::PostUpdate() {
-	App->render->Blit(current_graphics, position.x, position.y, &(Current_Animation.GetCurrentFrame()), 1.5f, 0, 0, 0, flip);
-
 	return true;
 }
 
-//collisions
+input j1Player::GetInput() {
+
+	input in = IN_NONE;
+	bool jump = false;
+
+	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
+		in = IN_CROUCH;
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT){
+		in = IN_LEFT;
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
+		in = IN_RIGHT;
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
+		in = IN_SPECIAL;
+	}
+	else {
+		in = IN_NONE;
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN) {
+		jump = true;
+	}
+
+	if (jump == true && in == IN_LEFT) {
+		in = IN_JUMP_LEFT;
+	}
+	if (jump == true && in == IN_RIGHT) {
+		in = IN_JUMP_RIGHT;
+	}
+
+	if (falling == true) {
+		in = IN_FALLING;
+	}
+
+
+	return in;
+}
+
+void j1Player::OnCollision(Collider* c1, Collider* c2) {
+	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_FLOOR) {
+		falling = false;
+	}
+}
 

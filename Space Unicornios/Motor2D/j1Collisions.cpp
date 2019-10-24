@@ -113,7 +113,7 @@ bool j1Collisions::PreUpdate() {
 	return true;
 }
 
-bool j1Collisions::Update()
+bool j1Collisions::Update(float dt)
 {
 	DebugDraw();
 

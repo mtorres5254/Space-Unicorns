@@ -21,13 +21,26 @@ enum state {
 
 enum input {
 	//add inputs
-
+	IN_NONE = 0,
+	IN_JUMP,
+	IN_FALLING,
+	IN_JUMP_LEFT,
+	IN_JUMP_RIGHT,
+	IN_LEFT,
+	IN_RIGHT,
+	IN_CROUCH,
+	IN_SPECIAL,
 
 };
 
 enum inputout {
 	//add inputsout
+	OUT_NONE = 0,
+	OUT_JUMP,
+
 };
+
+struct Collider;
 
 class j1Player :public j1Module {
 public:
@@ -36,29 +49,33 @@ public:
 
 
 	bool Start();
-	bool Awake();
+	bool Awake(pugi::xml_node& conf);
 	bool PreUpdate();
-	bool Update();
+	bool Update(float dt);
 	bool PostUpdate();
 	bool CleanUp();
+
+	input GetInput();
+
+	void OnCollision(Collider* c1, Collider* c2);
 	//add colliders
 public:
 	
 	iPoint position;
 	//texture , animations and sounds
-	SDL_Texture* current_graphics = nullptr;
-	SDL_Texture* normal_graphics = nullptr;
+	SDL_Texture* graphics = nullptr;
 
-	Animation Current_Animation;
+	Animation* Current_Animation;
 	Animation idle;
 	Animation walking;
 	Animation jumping;
-	Animation duck;
+	Animation crouch;
 	Animation death;
 	Animation special;
 
-
-	//add more animations + sound
+	//------------------
+	Collider* col;
+	Collider* col_prova;
 	
 	SDL_Rect rectplayer;
 	SDL_Rect rectoli;
@@ -79,7 +96,10 @@ public:
 	bool not_forward = false;
 	bool not_backwards = false;
 	bool death_bool = false;
-	state actual;
+
+	//--------------------
+	state states;
+	input inputs;
 	
 	//position and limitators
 };
