@@ -105,7 +105,6 @@ bool j1Player::Update(float dt) {
 		//-----------
 		break;
 	case IN_FALLING:
-		//LOG("falling");
 		position.y = position.y + 1.2 * dt;
 		break;
 	case IN_JUMP_LEFT:
@@ -134,7 +133,7 @@ bool j1Player::Update(float dt) {
 	}
 
 	col->SetPos(position.x, position.y);
-	App->render->Blit(graphics, position.x, position.y, &(Current_Animation->GetCurrentFrame()), 1.5f, 0, 0, 0, flip);
+	App->render->Blit(graphics, position.x, position.y, &(Current_Animation->GetCurrentFrame()), 1.0f, 0, 0, 0, flip);
 	return true; 
 }
 
@@ -147,38 +146,59 @@ input j1Player::GetInput() {
 
 	input in = IN_NONE;
 	bool jump = false;
+	bool left = false;
+	bool right = false;
+	bool crouch = false;
+	bool special = false;
 
+	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN) {
+		jump = true;
+	}
 	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
-		in = IN_CROUCH;
+		crouch = true;
 	}
-	else if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT){
-		in = IN_LEFT;
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT){
+		left = true;
 	}
-	else if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
-		in = IN_RIGHT;
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
+		right = true;
 	}
-	else if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
-		in = IN_SPECIAL;
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
+		special = true;
 	}
 	else {
 		in = IN_NONE;
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN) {
-		jump = true;
-	}
 
-	if (jump == true && in == IN_LEFT) {
+	if (jump == true && left == true) {
 		in = IN_JUMP_LEFT;
 	}
-	if (jump == true && in == IN_RIGHT) {
+	if (jump == true && right == true) {
 		in = IN_JUMP_RIGHT;
 	}
 
+	if (left == true) {
+		in = IN_LEFT;
+	}
+	if (right == true) {
+		in = IN_RIGHT;
+	}
+	if(left == true && right == true) {
+		in = IN_NONE;
+	}
+
+	if (special == true) {
+		in = IN_SPECIAL;
+	}
+
+	if (crouch == true) {
+		in = IN_CROUCH;
+	}
+	
 	if (falling == true) {
 		in = IN_FALLING;
 	}
-
 
 	return in;
 }

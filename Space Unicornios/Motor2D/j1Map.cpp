@@ -34,18 +34,29 @@ void j1Map::Draw()
 
 	//(old): Prepare the loop to draw all tilesets + Blit
 	p2List_item<MapLayer*>* layer = data.layers.start; // for now we just use the first layer and tileset
+
 	p2List_item<TileSet*>* tileset = data.tilesets.start;
 	p2List_item<CustomProperties*>* prop = layer->data->properties.start;
+
+	p2List_item<ImageLayer*>* img_layer = data.img_layers.start;
 	//(old): Complete the draw function
 	int layer_height = layer->data->height;
 	int layer_width = layer->data->width;
 
+	while (img_layer != NULL) {
+		App->render->Blit(img_layer->data->text, img_layer->data->offsetx, img_layer->data->offsety);
+		img_layer = img_layer->next;
+	}
 	while (layer != NULL) {
 			int pos = 0;
 			for (int h = 0; h < layer_height; h++)
 			{
 				for (int w = 0; w < layer_width; w++)
 				{
+					if (layer->data->data[pos] == 0) {
+						pos++;
+						continue;
+					}
 					SDL_Rect section = tileset->data->GetTileRect(layer->data->data[pos]);
 					iPoint position = MapToWorld(w, h);
 					App->render->Blit(tileset->data->texture, position.x, position.y, &section);
@@ -102,8 +113,8 @@ SDL_Rect TileSet::GetTileRect(int id) const
 	int x = (id - 1) % num_tiles_width;
 	//LOG("%i x %i", y, x);
 	//LOG("%i x %i",tileset->data->num_tiles_width, tileset->data->num_tiles_height);
-	Section.x = (margin * x) + (x * w) + 1;
-	Section.y = (spacing * y) + (y * h) + 1;
+	Section.x = (margin * x) + (x * w);
+	Section.y = (spacing * y) + (y * h);
 	//LOG("%i %i %i %i",Section.x, Section.y, Section.w, Section.h);
 
 	return Section;
@@ -191,6 +202,17 @@ bool j1Map::Load(const char* file_name)
 
 		if(ret == true)
 			data.layers.add(lay);
+	}
+	//Load images layer info ----------------------------------------
+	pugi::xml_node img_layer;
+	for (img_layer = map_file.child("map").child("imagelayer"); img_layer && ret; img_layer = img_layer.next_sibling("imagelayer")) {
+
+		ImageLayer* img_lay = new ImageLayer();
+
+		ret = LoadImgLayer(img_layer, img_lay);
+
+		if (ret == true)
+			data.img_layers.add(img_lay);
 	}
 
 	//Load colliders info -------------------------------------------
@@ -451,6 +473,29 @@ bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 			layer->data[i++] = tile.attribute("gid").as_int(0);
 		}
 	}
+
+	return ret;
+}
+
+bool j1Map::LoadImgLayer(pugi::xml_node& node, ImageLayer* layer) {
+	bool ret = true;
+
+	layer->name = node.attribute("name").as_string();
+	p2SString image;
+	
+	image = node.child("image").attribute("source").as_string();
+	p2SString tmp("%s%s", folder.GetString(), image.GetString());
+
+	layer->text = App->tex->Load(tmp.GetString());
+	layer->img_width = node.child("image").attribute("width").as_int();
+	layer->img_height = node.child("image").attribute("height").as_int();
+	layer->offsetx = node.attribute("offsetx").as_int();
+	layer->offsety = node.attribute("offsety").as_int();
+
+	LOG("LOADING IMG LAYER:------------------");
+	LOG("NAME: %s", layer->name.GetString());
+	LOG("TEXT: %s. img: %i x %i", image.GetString(), layer->img_width, layer->img_height);
+	LOG("offset x: %i y: %i", layer->offsetx, layer->offsety);
 
 	return ret;
 }

@@ -1,6 +1,7 @@
 #include "j1App.h"
 #include "j1Input.h"
 #include "j1Render.h"
+#include "j1Window.h"
 #include "j1Collisions.h"
 #include "p2Log.h"
 
@@ -34,7 +35,8 @@ bool j1Collisions::Awake(pugi::xml_node& config) {
 
 bool j1Collisions::LoadColliders(pugi::xml_node& node) {
 	bool ret = true;
-	
+	uint scale = App->win->GetScale();
+
 	//Load Collider
 
 	pugi::xml_node objectgroup;
@@ -44,22 +46,20 @@ bool j1Collisions::LoadColliders(pugi::xml_node& node) {
 		for (object = objectgroup.child("object"); object && ret; object = object.next_sibling("object")) {
 			SDL_Rect rect;
 			rect.x = object.attribute("x").as_uint();
-			rect.x = rect.x * -1;
+			rect.x = rect.x * scale;
 			rect.y = object.attribute("y").as_uint();
-			rect.y = rect.y * -1;
+			rect.y = rect.y * scale;
 			rect.w = object.attribute("width").as_uint();
 			rect.h = object.attribute("heigth").as_uint();
 
+			p2SString name = object.attribute("name").as_string();
 			COLLIDER_TYPE coltype;
-			if (object.attribute("name").as_string() == "Floor") {
+			if (name.GetString() == "Floor") {
 				coltype = COLLIDER_FLOOR;
-				//j1Module* module_ptr = App->map;
-
-				AddCollider(rect, coltype);
+				LOG("hola");
+				AddCollider(rect, coltype, this);
 			}
-			LOG("Colliders:");
-			LOG("Rect: %i x %i x %i x %i", rect.x, rect.y, rect.w, rect.h);
-			LOG("Name: %s", object.attribute("name").as_string());
+				LOG("%i x %i", rect.x, rect.y);
 		}
 	}
 	return true;
