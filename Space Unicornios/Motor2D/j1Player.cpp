@@ -17,35 +17,24 @@ j1Player::j1Player() {
 	
 	
 	//IDLE
-	idle.PushBack({ 0 , 0 ,76 , 76 });
-	idle.speed = 0.5f;
+	idle.PushBack({ 2, 2, 37, 74 });
+	idle.PushBack({ 43, 4, 33, 72 });
+	idle.PushBack({ 82, 4, 33, 72 });
+	idle.PushBack({ 123, 6, 29, 70 });
+	idle.PushBack({ 162, 2, 37, 74 });
+	idle.speed = 0.05f;
 
 	//WALKING
+	walking.PushBack({ 2, 2, 37, 74});
+	walking.PushBack({ 43, 4, 33, 72});
+	walking.PushBack({ 82, 4, 33, 72});
+	walking.PushBack({ 123, 6, 29, 70});
+	walking.PushBack({ 162, 2, 37, 74});
+	walking.speed = 0.05f; //no son sprites corrent per tant camina tot puesto com la policia nacional
 
-	walking.PushBack({ 0,0 , 32 , 32 });
-	walking.PushBack({ 32 , 0 , 32 , 32 });
-	walking.PushBack({ 64 , 0 ,	32, 32 });
-	walking.PushBack({128 , 0 ,	32 , 32 });
-	walking.PushBack({ 256 , 0 ,32 , 32});
-	walking.PushBack({ 512 , 0 , 32 , 32});
-	walking.speed = 6.0f; //no son sprites corrent per tant camina tot puesto com la policia nacional
-
-	//JUMPING
-	jumping.PushBack({8, 101, 18, 28});
-	jumping.PushBack({30 , 101, 16 , 28});
-	jumping.PushBack({ 49 , 101 , 19, 28 });
-	jumping.speed = 1.0f;
-
-	//HOOK
-
-	//DEATH
-	death.PushBack({32, 0 , 32 , 32});
-	death.PushBack({32, 32, 32, 32});
-	death.PushBack({32, 64, 32 , 32});
-	death.PushBack({32, 128 , 32 , 32});
-	death.PushBack({32, 256, 32 , 32 });
-	death.PushBack({32 , 512, 32 , 32 });
-	death.speed = 0.3f;
+	//CROUCH
+	crouching.PushBack({ 208, 32, 43, 44 });
+	crouching.loop = false;
 
 	
 }
@@ -68,12 +57,12 @@ bool j1Player::Start() {
 	Current_Animation = &idle;
 
 	//load graphics
-	graphics = App->tex->Load("textures/Spritesheet.png");
+	graphics = App->tex->Load("textures/player.png");
 	if (graphics == NULL) {
 		return false;
 	}
 	//load sounds and collisions
-	col = App->col->AddCollider({ 0, 0, 76, 76 }, COLLIDER_PLAYER, this);
+	col = App->col->AddCollider({ position.x, position.y, 37, 80 }, COLLIDER_PLAYER, this);
 	return true;
 }
 
@@ -128,12 +117,12 @@ bool j1Player::Update(float dt) {
 		Current_Animation = &walking;
 		flip = SDL_FLIP_HORIZONTAL;
 		//-----------
-		position.x = position.x - 1 * (int)dt;
+		position.x = position.x - (int)1.2f;
 		break;
 	case IN_RIGHT:
 		Current_Animation = &walking;
 		//-----------
-		position.x = position.x + 1 * (int)dt;
+		position.x = position.x + (int)1.2f;
 		break;
 	case IN_CROUCH:
 		Current_Animation = &crouching;

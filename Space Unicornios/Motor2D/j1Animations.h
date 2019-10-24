@@ -12,32 +12,39 @@ class Animation
 public:
 	SDL_Rect frames[MAX_FRAMES];
 	float speed = 1.0f;
-public:
+	bool loop;
+
+private:
 	float endframe = 0;
 	int last_frame = 0;
+	int loops = 0;
 	float current_frame;
 
+public:
 		void PushBack(const SDL_Rect& rect) {
 			frames[last_frame++] = rect;
-	}
+		}
 
 		SDL_Rect& GetCurrentFrame()
 		{
 			current_frame += speed;
-			
-			if (current_frame >= last_frame) {
-				current_frame = 0;
-				endframe = 1;
+			if (current_frame >= last_frame)
+			{
+				current_frame = (loop) ? 0.0f : last_frame - 1;
+				loops++;
 			}
-			else endframe = 0;
+
 			return frames[(int)current_frame];
 		}
-
+		void Reset()
+		{
+			current_frame = 0;
+		}
 		int GetEndframe() {
 			return endframe;
 		}
-		void Finished() {
-			endframe = 1;
+		bool Finished() {
+			return loops > 0;
 		}
 		//add reset(?)
 };
