@@ -14,14 +14,22 @@ j1Collisions::j1Collisions()
 	matrix[COLLIDER_PLAYER][COLLIDER_ENEMY] = true;
 	matrix[COLLIDER_PLAYER][COLLIDER_FLOOR] = true;
 	matrix[COLLIDER_PLAYER][COLLIDER_PLAYER] = true;
+	matrix[COLLIDER_PLAYER][COLLIDER_WALL] = true;
 
 	matrix[COLLIDER_ENEMY][COLLIDER_PLAYER] = true;
 	matrix[COLLIDER_ENEMY][COLLIDER_FLOOR] = true;
 	matrix[COLLIDER_ENEMY][COLLIDER_ENEMY] = true;
+	matrix[COLLIDER_ENEMY][COLLIDER_WALL] = true;
 
 	matrix[COLLIDER_FLOOR][COLLIDER_PLAYER] = true;
 	matrix[COLLIDER_FLOOR][COLLIDER_ENEMY] = true;
-	matrix[COLLIDER_FLOOR][COLLIDER_FLOOR] = true;
+	matrix[COLLIDER_FLOOR][COLLIDER_FLOOR] = false;
+	matrix[COLLIDER_ENEMY][COLLIDER_WALL] = false;
+
+	matrix[COLLIDER_WALL][COLLIDER_PLAYER] = true;
+	matrix[COLLIDER_WALL][COLLIDER_ENEMY] = true;
+	matrix[COLLIDER_WALL][COLLIDER_FLOOR] = false;
+	matrix[COLLIDER_WALL][COLLIDER_WALL] = false;
 
 	name.create("map");
 }
@@ -35,30 +43,39 @@ bool j1Collisions::Awake(pugi::xml_node& config) {
 
 bool j1Collisions::LoadColliders(pugi::xml_node& node) {
 	bool ret = true;
-	uint scale = App->win->GetScale();
-
-	//Load Collider
+	COLLIDER_TYPE coltype;
+	p2SString type;
 
 	pugi::xml_node objectgroup;
 	for (objectgroup = node.child("objectgroup"); objectgroup && ret; objectgroup = objectgroup.next_sibling("objectgroup"))
 	{
 		pugi::xml_node object;
 		for (object = objectgroup.child("object"); object && ret; object = object.next_sibling("object")) {
+
 			SDL_Rect rect;
+			type = object.attribute("type").as_string();
+			if (type == "floor")
+			{
+				coltype = COLLIDER_FLOOR;
+				LOG("Colider floor");
+			}
+			else if (type == "wall") {
+				coltype = COLLIDER_WALL;
+				LOG("collider wall");
+			}
+			else
+			{
+				LOG("Collider type undefined");
+				continue;
+			}
+
 			rect.x = object.attribute("x").as_uint();
-			rect.x = rect.x * scale;
 			rect.y = object.attribute("y").as_uint();
-			rect.y = rect.y * scale;
 			rect.w = object.attribute("width").as_uint();
 			rect.h = object.attribute("heigth").as_uint();
 
-			p2SString name = object.attribute("name").as_string();
-			COLLIDER_TYPE coltype;
-			if (name.GetString() == "Floor") {
-				coltype = COLLIDER_FLOOR;
-				LOG("hola");
-				AddCollider(rect, coltype, this);
-			}
+			Collider* col = AddCollider(rect, coltype);
+			App->map->data.colliders.add(col);
 				LOG("%i x %i", rect.x, rect.y);
 		}
 	}
@@ -139,17 +156,17 @@ void j1Collisions::DebugDraw() {
 
 		switch (colliders[i]->type)
 		{
-		case COLLIDER_NONE: // white
-			App->render->DrawQuad(colliders[i]->rect, 255, 255, 255, alpha);
-			break;
-		case COLLIDER_PLAYER: // blue
-			App->render->DrawQuad(colliders[i]->rect, 0, 0, 255, alpha);
-			break;
-		case COLLIDER_ENEMY: // blue
-			App->render->DrawQuad(colliders[i]->rect, 0, 0, 255, alpha);
-			break;
-		case COLLIDER_FLOOR: // green
+		case COLLIDER_PLAYER: // green
 			App->render->DrawQuad(colliders[i]->rect, 0, 255, 0, alpha);
+			break;
+		case COLLIDER_ENEMY: // red
+			App->render->DrawQuad(colliders[i]->rect, 255, 0, 0, alpha);
+			break;
+		case COLLIDER_FLOOR: // blue
+			App->render->DrawQuad(colliders[i]->rect, 0, 0, 255, alpha);
+			break;
+		case COLLIDER_WALL:
+			App->render->DrawQuad(colliders[i]->rect, 255, 255, 0, alpha);
 			break;
 		}
 	}

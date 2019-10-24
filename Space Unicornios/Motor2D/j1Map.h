@@ -68,6 +68,8 @@ enum MapTypes
 	MAPTYPE_ISOMETRIC,
 	MAPTYPE_STAGGERED
 };
+
+struct Collider;
 // ----------------------------------------------------
 struct MapData
 {
@@ -80,6 +82,7 @@ struct MapData
 	p2List<TileSet*>	tilesets;
 	p2List<MapLayer*>	layers;
 	p2List<ImageLayer*> img_layers;
+	p2List<Collider*>   colliders;
 };
 
 // ----------------------------------------------------

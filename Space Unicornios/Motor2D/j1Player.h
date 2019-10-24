@@ -70,9 +70,9 @@ public:
 	Animation idle;
 	Animation walking;
 	Animation jumping;
-	Animation crouch;
+	Animation crouching;
 	Animation death;
-	Animation special;
+	Animation special_anim;
 
 	//------------------
 	Collider* col;
@@ -91,6 +91,11 @@ public:
 	SDL_RendererFlip flip = SDL_FLIP_NONE;
 	
 	bool godmode = false;
+	bool jump = false;
+	bool left = false;
+	bool right = false;
+	bool crouch = false;
+	bool special = false;
 
 	bool falling = true;
 

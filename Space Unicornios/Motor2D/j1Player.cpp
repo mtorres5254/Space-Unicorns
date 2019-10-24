@@ -74,7 +74,6 @@ bool j1Player::Start() {
 	}
 	//load sounds and collisions
 	col = App->col->AddCollider({ 0, 0, 76, 76 }, COLLIDER_PLAYER, this);
-	col_prova = App->col->AddCollider({ 0, 100, 150, 25 }, COLLIDER_FLOOR, this);
 	return true;
 }
 
@@ -137,7 +136,11 @@ bool j1Player::Update(float dt) {
 		position.x = position.x + 1 * (int)dt;
 		break;
 	case IN_CROUCH:
-		Current_Animation = &crouch;
+		Current_Animation = &crouching;
+
+		break;
+	case IN_SPECIAL:
+		Current_Animation = &special_anim;
 
 		break;
 	}
@@ -216,24 +219,24 @@ input j1Player::GetInput() {
 input j1Player::GetLeftRight() {
 	input in = IN_NONE;
 
-	bool left = false;
-	bool right = false;
+	bool left2 = false;
+	bool right2 = false;
 
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
-		left = true;
+		left2 = true;
 	}
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
-		right = true;
+		right2 = true;
 	}
 
 	
-	if (right == true) {
+	if (right2 == true) {
 		in = IN_RIGHT;
 	}
-	if (left == true) {
+	if (left2 == true) {
 		in = IN_LEFT;
 	}
-	if (left == true && right == true) {
+	if (left2 == true && right2 == true) {
 		in = IN_NONE;
 	}
 
