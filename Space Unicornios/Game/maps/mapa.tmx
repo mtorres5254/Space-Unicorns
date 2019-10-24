@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="202" height="116" tilewidth="32" tileheight="32" infinite="0" nextlayerid="25" nextobjectid="68">
+<map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="202" height="116" tilewidth="32" tileheight="32" infinite="0" nextlayerid="29" nextobjectid="68">
  <tileset firstgid="1" source="tile01.tsx"/>
- <imagelayer id="12" name="Fons" offsetx="12.1212" offsety="0">
-  <image source="sky.png" width="2835" height="176"/>
+ <imagelayer id="28" name="Copiar desde Sky" offsetx="312" offsety="1084">
+  <image source="../../../../sky.png" width="5600" height="416"/>
  </imagelayer>
- <imagelayer id="13" name="Parallax" offsetx="64" offsety="896">
+ <imagelayer id="13" name="Parallax" offsetx="257.939" offsety="1226.3">
   <image source="towers.png" width="2835" height="176"/>
  </imagelayer>
- <imagelayer id="23" name="Background1" visible="0" offsetx="-12" offsety="20">
-  <image source="../../../../Background1.png"/>
+ <imagelayer id="26" name="Parallax_" offsetx="3054.91" offsety="1232.36">
+  <image source="towers.png" width="2835" height="176"/>
  </imagelayer>
- <imagelayer id="24" name="Background2" offsetx="4" offsety="-716">
-  <image source="../../../../Dev i need2save/Background1.png" width="5694" height="2764"/>
+ <imagelayer id="25" name="Background3" offsetx="24.2424" offsety="-715.152">
+  <image source="../../../../Capa 5.png" width="5694" height="2764"/>
  </imagelayer>
  <layer id="8" name="No fons 1" width="202" height="116">
   <data>
