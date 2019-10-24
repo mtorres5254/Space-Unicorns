@@ -56,6 +56,7 @@ public:
 	bool CleanUp();
 
 	input GetInput();
+	input GetLeftRight();
 
 	void OnCollision(Collider* c1, Collider* c2);
 	//add colliders
@@ -90,12 +91,8 @@ public:
 	SDL_RendererFlip flip = SDL_FLIP_NONE;
 	
 	bool godmode = false;
-	bool jumping_bool = false;
-	bool falling = false;
-	bool ducking = false;
-	bool not_forward = false;
-	bool not_backwards = false;
-	bool death_bool = false;
+
+	bool falling = true;
 
 	//--------------------
 	state states;

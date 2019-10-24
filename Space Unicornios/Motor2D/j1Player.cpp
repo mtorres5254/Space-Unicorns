@@ -95,6 +95,8 @@ bool j1Player::PreUpdate() {
 bool j1Player::Update(float dt) { 
 	inputs = GetInput();
 
+	input inputtmp = GetLeftRight();
+
 	switch (inputs)
 	{
 	case IN_NONE:
@@ -105,7 +107,16 @@ bool j1Player::Update(float dt) {
 		//-----------
 		break;
 	case IN_FALLING:
-		position.y = position.y + 1.2 * dt;
+		position.y = position.y + (int)(2 * dt);
+		
+
+		if (inputtmp == IN_LEFT) {
+			position.x = position.x - 1;
+		}
+		if (inputtmp == IN_RIGHT) {
+			position.x = position.x + 1;
+		}
+
 		break;
 	case IN_JUMP_LEFT:
 
@@ -198,6 +209,33 @@ input j1Player::GetInput() {
 	
 	if (falling == true) {
 		in = IN_FALLING;
+	}
+
+	return in;
+}
+
+input j1Player::GetLeftRight() {
+	input in = IN_NONE;
+
+	bool left = false;
+	bool right = false;
+
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
+		left = true;
+	}
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
+		right = true;
+	}
+
+	
+	if (right == true) {
+		in = IN_RIGHT;
+	}
+	if (left == true) {
+		in = IN_LEFT;
+	}
+	if (left == true && right == true) {
+		in = IN_NONE;
 	}
 
 	return in;
