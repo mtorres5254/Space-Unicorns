@@ -108,7 +108,6 @@ bool j1Player::Update(float dt) {
 		break;
 	case IN_FALLING:
 		position.y = position.y + (int)(2 * dt);
-		
 
 		if (inputtmp == IN_LEFT) {
 			position.x = position.x - 1;
