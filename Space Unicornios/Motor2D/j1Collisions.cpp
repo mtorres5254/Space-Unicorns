@@ -53,8 +53,8 @@ bool j1Collisions::LoadColliders(pugi::xml_node& node) {
 		for (object = objectgroup.child("object"); object && ret; object = object.next_sibling("object")) {
 
 			SDL_Rect rect;
-			type = object.attribute("type").as_string();
-			if (type == "floor")
+			type = object.attribute("name").as_string();
+			if (type == "Floor")
 			{
 				coltype = COLLIDER_FLOOR;
 				LOG("Colider floor");

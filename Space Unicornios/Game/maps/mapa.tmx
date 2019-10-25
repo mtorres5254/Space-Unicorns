@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="202" height="116" tilewidth="32" tileheight="32" infinite="0" nextlayerid="29" nextobjectid="68">
+<map version="1.2" tiledversion="1.2.5" orientation="orthogonal" renderorder="right-down" width="202" height="116" tilewidth="32" tileheight="32" infinite="0" nextlayerid="29" nextobjectid="68">
  <tileset firstgid="1" source="tile01.tsx"/>
  <imagelayer id="28" name="Copiar desde Sky" offsetx="312" offsety="1084">
-  <image source="../../../../sky.png" width="5600" height="416"/>
+  <image source="../../../../sky.png"/>
  </imagelayer>
  <imagelayer id="13" name="Parallax" offsetx="257.939" offsety="1226.3">
   <image source="towers.png" width="2835" height="176"/>
@@ -11,7 +11,7 @@
   <image source="towers.png" width="2835" height="176"/>
  </imagelayer>
  <imagelayer id="25" name="Background3" offsetx="24.2424" offsety="-715.152">
-  <image source="../../../../Capa 5.png" width="5694" height="2764"/>
+  <image source="../../../../Capa 5.png"/>
  </imagelayer>
  <layer id="8" name="No fons 1" width="202" height="116">
   <data>
@@ -46886,9 +46886,9 @@
   </data>
  </layer>
  <objectgroup color="#ffffff" id="3" name="Colliders">
-  <object id="13" name="Floor" x="1066.67" y="1521.21" width="339.394" height="63.6364"/>
+  <object id="13" name="Floor" x="1058.67" y="1506.54" width="348.727" height="90.3031"/>
   <object id="15" name="Floor" x="1441.52" y="803.03" width="285.758" height="90.8485"/>
-  <object id="16" name="Floor" type="Collider" x="330.303" y="554.545" width="278.788" height="78.7879"/>
+  <object id="16" name="Floor" type="Collider" x="320.97" y="544.545" width="288.121" height="95.4546"/>
   <object id="18" name="Floor" x="702.667" y="1246" width="290" height="65.3333"/>
   <object id="19" name="Floor" x="481.333" y="1631.33" width="318" height="64"/>
   <object id="20" name="Floor" x="-2" y="1410.67" width="449.333" height="640.667"/>
