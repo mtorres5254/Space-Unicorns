@@ -65,8 +65,11 @@ bool j1Render::Start()
 bool j1Render::PreUpdate()
 {
 	//camera boundaries
-	if (camera.x > 0) {
-		camera.x = 0;
+	if (camera.x >= 0) {
+		camera.x = -1;
+	}
+	if (camera.y >= 0) {
+		camera.y = -1;
 	}
 	SDL_RenderClear(renderer);
 	return true;
@@ -86,12 +89,20 @@ bool j1Render::PostUpdate()
 
 	App->win->GetWindowSize(winX, winY);
 	//LOG("%i x %i", camera.x, camera.y);
-	if (camera.x < 0) {
+	if (camera.x <= 0) {
 		if (App->player->position.x < (camera.x * -1) + (winX / 4)) {
 			camera.x = camera.x + SPEED;
 		}
 		if (App->player->position.x > (camera.x * -1) + (winX - (winX / 4))) {
-			camera.x = camera.x - SPEED * 1.2;
+			camera.x = camera.x - SPEED ;
+		}
+	}
+	if (camera.y < 0) {
+		if (App->player->position.y < (camera.y * -1) + (winY / 4)) {
+			camera.y = camera.y + SPEED;
+		}
+		if (App->player->position.y > (camera.y * -1) + (winY - (winY / 4))) {
+			camera.y = camera.y - SPEED;
 		}
 	}
 

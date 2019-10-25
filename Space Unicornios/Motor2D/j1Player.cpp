@@ -49,9 +49,11 @@ j1Player::j1Player() {
 	jumping.loop = false;
 
 	//fall
+	fall.PushBack({ 440,165,53,39 });
 	fall.PushBack({ 182,156,30,52 });
 	fall.PushBack({ 234,156,52,29 });
 	fall.PushBack({ 307,156,30,52 });
+	fall.PushBack({ 361,165,53,39 });
 	fall.speed = 0.1f;
 
 }
@@ -137,6 +139,13 @@ bool j1Player::Update(float dt) {
 		else {
 			inputs = IN_FALLING;
 			jumping.Reset();
+		}
+		//------------
+		if (inputtmp == IN_LEFT) {
+			position.x = position.x - JUMP_SPEED;
+		}
+		if (inputtmp == IN_RIGHT) {
+			position.x = position.x + JUMP_SPEED;
 		}
 		
 		break;

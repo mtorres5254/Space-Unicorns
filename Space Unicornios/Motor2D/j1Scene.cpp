@@ -31,7 +31,7 @@ bool j1Scene::Awake()
 bool j1Scene::Start()
 {
 	//Load Map file
-	App->map->Load("mapa2.tmx");
+	App->map->Load("mapa.tmx");
 	App->render->camera.x = 0;
 	App->render->camera.y = 0;
 	return true;

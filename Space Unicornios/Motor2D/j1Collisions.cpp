@@ -13,23 +13,44 @@ j1Collisions::j1Collisions()
 	//colliders matrix
 	matrix[COLLIDER_PLAYER][COLLIDER_ENEMY] = true;
 	matrix[COLLIDER_PLAYER][COLLIDER_FLOOR] = true;
-	matrix[COLLIDER_PLAYER][COLLIDER_PLAYER] = true;
+	matrix[COLLIDER_PLAYER][COLLIDER_PLAYER] = false;
 	matrix[COLLIDER_PLAYER][COLLIDER_WALL] = true;
+	matrix[COLLIDER_PLAYER][COLLIDER_DEAD] = true;
+	matrix[COLLIDER_PLAYER][COLLIDER_END] = true;
 
 	matrix[COLLIDER_ENEMY][COLLIDER_PLAYER] = true;
 	matrix[COLLIDER_ENEMY][COLLIDER_FLOOR] = true;
 	matrix[COLLIDER_ENEMY][COLLIDER_ENEMY] = true;
 	matrix[COLLIDER_ENEMY][COLLIDER_WALL] = true;
+	matrix[COLLIDER_ENEMY][COLLIDER_DEAD] = true;
+	matrix[COLLIDER_ENEMY][COLLIDER_END] = false;
 
 	matrix[COLLIDER_FLOOR][COLLIDER_PLAYER] = true;
 	matrix[COLLIDER_FLOOR][COLLIDER_ENEMY] = true;
 	matrix[COLLIDER_FLOOR][COLLIDER_FLOOR] = false;
-	matrix[COLLIDER_ENEMY][COLLIDER_WALL] = false;
+	matrix[COLLIDER_FLOOR][COLLIDER_WALL] = false;
+	matrix[COLLIDER_FLOOR][COLLIDER_DEAD] = false;
 
 	matrix[COLLIDER_WALL][COLLIDER_PLAYER] = true;
 	matrix[COLLIDER_WALL][COLLIDER_ENEMY] = true;
 	matrix[COLLIDER_WALL][COLLIDER_FLOOR] = false;
 	matrix[COLLIDER_WALL][COLLIDER_WALL] = false;
+	matrix[COLLIDER_WALL][COLLIDER_DEAD] = false;
+	matrix[COLLIDER_WALL][COLLIDER_END] = false;
+
+	matrix[COLLIDER_DEAD][COLLIDER_PLAYER] = true;
+	matrix[COLLIDER_DEAD][COLLIDER_ENEMY] = true;
+	matrix[COLLIDER_DEAD][COLLIDER_FLOOR] = false;
+	matrix[COLLIDER_DEAD][COLLIDER_WALL] = false;
+	matrix[COLLIDER_DEAD][COLLIDER_DEAD] = false;
+	matrix[COLLIDER_DEAD][COLLIDER_END] = false;
+
+	matrix[COLLIDER_END][COLLIDER_PLAYER] = true;
+	matrix[COLLIDER_END][COLLIDER_ENEMY] = false;
+	matrix[COLLIDER_END][COLLIDER_FLOOR] = false;
+	matrix[COLLIDER_END][COLLIDER_WALL] = false;
+	matrix[COLLIDER_END][COLLIDER_DEAD] = false;
+	matrix[COLLIDER_END][COLLIDER_END] = false;
 
 	name.create("map");
 }
@@ -45,7 +66,7 @@ bool j1Collisions::LoadColliders(pugi::xml_node& node) {
 	bool ret = true;
 	COLLIDER_TYPE coltype;
 	p2SString type;
-	j1Module* call;
+	j1Module* call = nullptr;
 
 	pugi::xml_node objectgroup;
 	for (objectgroup = node.child("objectgroup"); objectgroup && ret; objectgroup = objectgroup.next_sibling("objectgroup"))
@@ -58,8 +79,21 @@ bool j1Collisions::LoadColliders(pugi::xml_node& node) {
 			if (type == "Floor")
 			{
 				coltype = COLLIDER_FLOOR;
-				LOG("Colider floor");
+				LOG("Collider floor");
 				call = App->map;
+			}
+			else if (type == "Wall") {
+				coltype = COLLIDER_WALL;
+				LOG("Collider wall");
+				call = App->map;
+			}
+			else if (type == "Dead") {
+				coltype = COLLIDER_DEAD;
+				LOG("Collider dead");
+			}
+			else if (type == "End") {
+				coltype = COLLIDER_END;
+				LOG("Collider end");
 			}
 			else
 			{
