@@ -113,6 +113,8 @@ public:
 
 private:
 
+	p2List_item<TileSet*>* GetTilset(int id);
+
 	bool LoadMap();
 	bool LoadTilesetDetails(pugi::xml_node& tileset_node, TileSet* set);
 	bool LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set);

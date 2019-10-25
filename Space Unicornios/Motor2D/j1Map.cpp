@@ -34,8 +34,6 @@ void j1Map::Draw()
 
 	//(old): Prepare the loop to draw all tilesets + Blit
 	p2List_item<MapLayer*>* layer = data.layers.start; // for now we just use the first layer and tileset
-
-	p2List_item<TileSet*>* tileset = data.tilesets.start;
 	p2List_item<CustomProperties*>* prop = layer->data->properties.start;
 
 	p2List_item<ImageLayer*>* img_layer = data.img_layers.start;
@@ -57,6 +55,7 @@ void j1Map::Draw()
 						pos++;
 						continue;
 					}
+					p2List_item<TileSet*>* tileset = GetTilset(layer->data->data[pos]);
 					SDL_Rect section = tileset->data->GetTileRect(layer->data->data[pos]);
 					iPoint position = MapToWorld(w, h);
 					App->render->Blit(tileset->data->texture, position.x, position.y, &section);
@@ -65,6 +64,18 @@ void j1Map::Draw()
 			}
 		layer = layer->next;
 	}
+}
+
+p2List_item<TileSet*>* j1Map::GetTilset(int id) {
+	p2List_item<TileSet*>* tileset = data.tilesets.end;
+
+	while (tileset != NULL) {
+		if (id >= tileset->data->firstgid) {
+			return tileset;
+		}
+		tileset = tileset->prev;
+	}
+
 }
 
 iPoint j1Map::MapToWorld(int x, int y) const
@@ -330,12 +341,11 @@ bool j1Map::LoadTilesetDetails(pugi::xml_node& tileset_node, TileSet* set)
 	}
 		
 	p2SString source = tileset_node.attribute("source").as_string();
-	LOG("%s", source.GetString());
+	//LOG("%s", source.GetString());
 	if (source.Length() > 1) {
 		LOG("Loading tileset from another source");
 		pugi::xml_document source_doc;
 		p2SString tmp("%s%s", folder.GetString(), source.GetString());
-		LOG("%s", tmp.GetString());
 		pugi::xml_parse_result tileset_result = source_doc.load_file(tmp.GetString());
 		if (tileset_result == NULL)
 		{

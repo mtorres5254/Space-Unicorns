@@ -1,18 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.2" tiledversion="1.2.5" orientation="orthogonal" renderorder="right-down" width="202" height="116" tilewidth="32" tileheight="32" infinite="0" nextlayerid="29" nextobjectid="68">
  <tileset firstgid="1" source="tile01.tsx"/>
- <imagelayer id="28" name="Copiar desde Sky" offsetx="312" offsety="1084">
-  <image source="../../../../sky.png"/>
- </imagelayer>
- <imagelayer id="13" name="Parallax" offsetx="257.939" offsety="1226.3">
-  <image source="towers.png" width="2835" height="176"/>
- </imagelayer>
- <imagelayer id="26" name="Parallax_" offsetx="3054.91" offsety="1232.36">
-  <image source="towers.png" width="2835" height="176"/>
- </imagelayer>
- <imagelayer id="25" name="Background3" offsetx="24.2424" offsety="-715.152">
-  <image source="../../../../Capa 5.png"/>
- </imagelayer>
  <layer id="8" name="No fons 1" width="202" height="116">
   <data>
    <tile gid="35"/>
