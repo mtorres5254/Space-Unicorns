@@ -17,26 +17,46 @@ j1Player::j1Player() {
 	
 	
 	//IDLE
-	idle.PushBack({ 2, 2, 37, 74 });
-	idle.PushBack({ 43, 4, 33, 72 });
-	idle.PushBack({ 82, 4, 33, 72 });
-	idle.PushBack({ 123, 6, 29, 70 });
-	idle.PushBack({ 162, 2, 37, 74 });
+	idle.PushBack({2 , 2 , 37 , 74});
+	idle.PushBack({42 , 4 , 34 , 72});
+	idle.PushBack({82 , 4 , 33 , 72});
+	idle.PushBack({123 , 6 , 29 , 70});
+	idle.PushBack({162 , 2 , 37 , 74});
 	idle.speed = 0.05f;
 
 	//WALKING
-	walking.PushBack({ 2, 2, 37, 74});
-	walking.PushBack({ 43, 4, 33, 72});
-	walking.PushBack({ 82, 4, 33, 72});
-	walking.PushBack({ 123, 6, 29, 70});
-	walking.PushBack({ 162, 2, 37, 74});
+	walking.PushBack({13 , 87 , 39 , 64});
+	walking.PushBack({74 , 84 , 41 , 67});
+	walking.PushBack({125 , 82 , 48 , 67});
+	walking.PushBack({186 , 84 , 59 , 61});
+	walking.PushBack({253 , 86 , 46 , 65});
+	walking.PushBack({324 , 87 , 29 , 64});
+	walking.PushBack({381 , 84 , 34 , 67});
+	walking.PushBack({435 , 82 , 47 , 67});
+	walking.PushBack({495 , 84 , 55 , 61});
+	walking.PushBack({560 , 86 , 41 , 65});
 	walking.speed = 0.05f; //no son sprites corrent per tant camina tot puesto com la policia nacional
 
 	//CROUCH
 	crouching.PushBack({ 208, 32, 43, 44 });
 	crouching.loop = false;
 
-	
+	//JUMP
+	jumping.PushBack({7 , 154 ,51 , 7});
+	jumping.PushBack({60 , 169 , 53 , 39});
+	jumping.PushBack({117 , 175 , 52 , 30});
+	jumping.PushBack({182 , 156 , 30 , 52});
+	jumping.PushBack({234 , 166 , 52 , 29});
+	jumping.PushBack({307 , 156 , 30 , 52});
+	jumping.speed = 0.05f;
+
+	//HOOK
+	special_anim.PushBack({2 , 346 , 58 , 59});
+
+	//DEATH
+	death.PushBack({2 , 286 , 46 , 45});
+	death.PushBack({60 , 281 , 37 , 63});
+	death.speed = 0.0f;
 }
 
 j1Player::~j1Player()
