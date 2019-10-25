@@ -17,11 +17,11 @@ j1Player::j1Player() {
 	
 	
 	//IDLE
-	idle.PushBack({ 2, 2, 37, 74 });
-	idle.PushBack({ 43, 4, 33, 72 });
-	idle.PushBack({ 82, 4, 33, 72 });
-	idle.PushBack({ 123, 6, 29, 70 });
-	idle.PushBack({ 162, 2, 37, 74 });
+	idle.PushBack({2 , 2 , 37 , 74});
+	idle.PushBack({42 , 4 , 34 , 72});
+	idle.PushBack({82 , 4 , 33 , 72});
+	idle.PushBack({123 , 6 , 29 , 70});
+	idle.PushBack({162 , 2 , 37 , 74});
 	idle.speed = 0.05f;
 
 	//WALKING
@@ -41,7 +41,6 @@ j1Player::j1Player() {
 	crouching.PushBack({ 208, 32, 43, 44 });
 	crouching.loop = false;
 
-
 	//JUMPING
 	jumping.PushBack({ 7,154,51,71 });
 	jumping.PushBack({ 60,169,53,39 });
@@ -55,7 +54,6 @@ j1Player::j1Player() {
 	fall.PushBack({ 307,156,30,52 });
 	fall.speed = 0.1f;
 
-	
 }
 
 j1Player::~j1Player()
