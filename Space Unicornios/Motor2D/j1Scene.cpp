@@ -32,6 +32,7 @@ bool j1Scene::Start()
 {
 	//Load Map file
 	App->map->Load("mapa.tmx");
+	//App->map->Load("mapa2.tmx");
 	return true;
 }
 
