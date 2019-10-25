@@ -85,13 +85,13 @@ bool j1Render::PostUpdate()
 	uint winY;
 
 	App->win->GetWindowSize(winX, winY);
-	LOG("%i x %i", camera.x, camera.y);
+	//LOG("%i x %i", camera.x, camera.y);
 	if (camera.x < 0) {
 		if (App->player->position.x < (camera.x * -1) + (winX / 4)) {
 			camera.x = camera.x + SPEED;
 		}
 		if (App->player->position.x > (camera.x * -1) + (winX - (winX / 4))) {
-			camera.x = camera.x - SPEED;
+			camera.x = camera.x - SPEED * 1.2;
 		}
 	}
 

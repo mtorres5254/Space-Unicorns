@@ -8,9 +8,10 @@
 #include "j1Animations.h"
 
 #define INPUTSOUTS 7
-#define JUMP 70
+#define JUMP 80
 #define SPEED 3
 #define JUMP_SPEED 2.5
+#define JUMP_Y_SPEED 5
 
 enum state {
 	A_NONE = 0,

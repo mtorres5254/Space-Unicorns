@@ -121,8 +121,18 @@ bool j1Player::Update(float dt) {
 		}
 		//-----------
 		if (maxjump != JUMP) {
-			position.y = position.y - SPEED;
-			maxjump++;
+			if (maxjump >= 0 && maxjump < JUMP / 2) {
+				position.y = position.y - JUMP_Y_SPEED;
+				maxjump++;
+			}
+			else if (maxjump >= JUMP / 2 && maxjump < JUMP - (JUMP / 3)) {
+				position.y = position.y - JUMP_Y_SPEED / 2;
+				maxjump++;
+			}
+			else {
+				position.y = position.y - JUMP_Y_SPEED / 4;
+				maxjump++;
+			}
 		}
 		else {
 			inputs = IN_FALLING;
@@ -132,7 +142,7 @@ bool j1Player::Update(float dt) {
 		break;
 	case IN_FALLING:
 		Current_Animation = &fall;
-		position.y = position.y + (int)(2 * dt);
+		position.y = position.y + (int)(3 * dt);
 
 		if (inputtmp == IN_LEFT) {
 			position.x = position.x - JUMP_SPEED;
@@ -151,8 +161,18 @@ bool j1Player::Update(float dt) {
 		}
 		//-----------
 		if (maxjump != JUMP) {
-			position.y = position.y - SPEED;
-			maxjump++;
+			if (maxjump >= 0 && maxjump < JUMP / 2) {
+				position.y = position.y - JUMP_Y_SPEED;
+				maxjump++;
+			}
+			else if (maxjump >= JUMP / 2 && maxjump < JUMP - (JUMP / 3)) {
+				position.y = position.y - JUMP_Y_SPEED / 2;
+				maxjump++;
+			}
+			else {
+				position.y = position.y - JUMP_Y_SPEED / 4;
+				maxjump++;
+			}
 		}
 		else {
 			inputs = IN_FALLING;
@@ -175,8 +195,18 @@ bool j1Player::Update(float dt) {
 		}
 		//-----------
 		if (maxjump != JUMP) {
-			position.y = position.y - SPEED;
-			maxjump++;
+			if (maxjump >= 0 && maxjump < JUMP / 2) {
+				position.y = position.y - JUMP_Y_SPEED;
+				maxjump++;
+			}
+			else if (maxjump >= JUMP / 2 && maxjump < JUMP - (JUMP / 3)) {
+				position.y = position.y - JUMP_Y_SPEED / 2;
+				maxjump++;
+			}
+			else {
+				position.y = position.y - JUMP_Y_SPEED / 4;
+				maxjump++;
+			}
 		}
 		else {
 			inputs = IN_FALLING;
