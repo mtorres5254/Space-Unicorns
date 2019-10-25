@@ -45,6 +45,7 @@ bool j1Collisions::LoadColliders(pugi::xml_node& node) {
 	bool ret = true;
 	COLLIDER_TYPE coltype;
 	p2SString type;
+	j1Module* call;
 
 	pugi::xml_node objectgroup;
 	for (objectgroup = node.child("objectgroup"); objectgroup && ret; objectgroup = objectgroup.next_sibling("objectgroup"))
@@ -58,10 +59,7 @@ bool j1Collisions::LoadColliders(pugi::xml_node& node) {
 			{
 				coltype = COLLIDER_FLOOR;
 				LOG("Colider floor");
-			}
-			else if (type == "wall") {
-				coltype = COLLIDER_WALL;
-				LOG("collider wall");
+				call = App->map;
 			}
 			else
 			{
@@ -74,7 +72,7 @@ bool j1Collisions::LoadColliders(pugi::xml_node& node) {
 			rect.w = object.attribute("width").as_uint();
 			rect.h = object.attribute("heigth").as_uint();
 
-			Collider* col = AddCollider(rect, coltype);
+			Collider* col = AddCollider(rect, coltype, call);
 			App->map->data.colliders.add(col);
 				LOG("%i x %i", rect.x, rect.y);
 		}

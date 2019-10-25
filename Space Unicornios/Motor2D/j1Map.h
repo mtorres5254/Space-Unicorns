@@ -107,6 +107,8 @@ public:
 	// Load new map
 	bool Load(const char* path);
 
+	void OnCollision(Collider* c1, Collider* c2);
+
 	// Coordinate translation methods
 	iPoint MapToWorld(int x, int y) const;
 	iPoint WorldToMap(int x, int y) const;

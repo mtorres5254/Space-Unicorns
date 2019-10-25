@@ -12,7 +12,7 @@ class Animation
 public:
 	SDL_Rect frames[MAX_FRAMES];
 	float speed = 1.0f;
-	bool loop;
+	bool loop = true;
 
 private:
 	float endframe = 0;

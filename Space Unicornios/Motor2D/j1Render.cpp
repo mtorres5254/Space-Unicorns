@@ -2,6 +2,7 @@
 #include "p2Log.h"
 #include "j1App.h"
 #include "j1Window.h"
+#include "j1Player.h"
 #include "j1Render.h"
 
 #define VSYNC true
@@ -63,6 +64,10 @@ bool j1Render::Start()
 // Called each loop iteration
 bool j1Render::PreUpdate()
 {
+	//camera boundaries
+	if (camera.x > 0) {
+		camera.x = 0;
+	}
 	SDL_RenderClear(renderer);
 	return true;
 }
@@ -76,7 +81,20 @@ bool j1Render::Update(float dt)
 
 bool j1Render::PostUpdate()
 {
-	
+	uint winX;
+	uint winY;
+
+	App->win->GetWindowSize(winX, winY);
+	LOG("%i x %i", camera.x, camera.y);
+	if (camera.x < 0) {
+		if (App->player->position.x < (camera.x * -1) + (winX / 4)) {
+			camera.x = camera.x + SPEED;
+		}
+		if (App->player->position.x > (camera.x * -1) + (winX - (winX / 4))) {
+			camera.x = camera.x - SPEED;
+		}
+	}
+
 	return true;
 }
 

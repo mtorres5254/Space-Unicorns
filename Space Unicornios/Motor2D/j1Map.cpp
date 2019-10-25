@@ -5,6 +5,7 @@
 #include "j1Textures.h"
 #include "j1Map.h"
 #include "j1Collisions.h"
+#include "j1Player.h"
 #include <math.h>
 
 j1Map::j1Map() : j1Module(), map_loaded(false)
@@ -508,4 +509,17 @@ bool j1Map::LoadImgLayer(pugi::xml_node& node, ImageLayer* layer) {
 	LOG("offset x: %i y: %i", layer->offsetx, layer->offsety);
 
 	return ret;
+}
+
+void j1Map::OnCollision(Collider* c1, Collider* c2) {
+	if (c1->type == COLLIDER_FLOOR && c2->type == COLLIDER_PLAYER) {
+		if (c1->rect.y < c2->rect.y + c2->rect.h - 3) {
+			if (c1->rect.x < c2->rect.x + c2->rect.w && c1->rect.x + c1->rect.w / 2 > c2->rect.x) {
+				App->player->position.x = c1->rect.x - c2->rect.w;
+			}
+			if (c1->rect.x + c1->rect.w > c2->rect.x && c1->rect.x + c1->rect.w / 2 < c2->rect.x) {
+				App->player->position.x = c1->rect.x + c1->rect.w;
+			}
+		}		
+	}
 }

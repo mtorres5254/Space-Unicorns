@@ -4,9 +4,13 @@
 #include "p2Point.h"
 #include "p2Defs.h"
 #include "j1Module.h"
+#include "SDL/include/SDL.h"
 #include "j1Animations.h"
 
 #define INPUTSOUTS 7
+#define JUMP 70
+#define SPEED 3
+#define JUMP_SPEED 2.5
 
 enum state {
 	A_NONE = 0,
@@ -63,13 +67,14 @@ public:
 public:
 	
 	iPoint position;
-	//texture , animations and sounds
+
 	SDL_Texture* graphics = nullptr;
 
 	Animation* Current_Animation;
 	Animation idle;
 	Animation walking;
 	Animation jumping;
+	Animation fall;
 	Animation crouching;
 	Animation death;
 	Animation special_anim;
@@ -79,14 +84,6 @@ public:
 	Collider* col_prova;
 	
 	SDL_Rect rectplayer;
-	SDL_Rect rectoli;
-
-	int gravity = 2;
-	int max_gravity = 20;
-	int player_speed = 5;
-	int jumping_speed = 25;
-	int mult;
-	int max_jumpheight = 40;
 
 	SDL_RendererFlip flip = SDL_FLIP_NONE;
 	
@@ -97,7 +94,11 @@ public:
 	bool crouch = false;
 	bool special = false;
 
+	bool has_jump = false;
+
 	bool falling = true;
+
+	int maxjump;
 
 	//--------------------
 	state states;

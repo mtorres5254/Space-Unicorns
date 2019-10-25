@@ -25,16 +25,35 @@ j1Player::j1Player() {
 	idle.speed = 0.05f;
 
 	//WALKING
-	walking.PushBack({ 2, 2, 37, 74});
-	walking.PushBack({ 43, 4, 33, 72});
-	walking.PushBack({ 82, 4, 33, 72});
-	walking.PushBack({ 123, 6, 29, 70});
-	walking.PushBack({ 162, 2, 37, 74});
-	walking.speed = 0.05f; //no son sprites corrent per tant camina tot puesto com la policia nacional
+	walking.PushBack({ 13,87,39,64 });
+	walking.PushBack({ 74,84,41,67 });
+	walking.PushBack({ 125,82,48,67 });
+	walking.PushBack({ 186,84,59,61 });
+	walking.PushBack({ 253,86,46,65 });
+	walking.PushBack({ 324,87,29,64 });
+	walking.PushBack({ 381,84,34,67 });
+	walking.PushBack({ 435,82,47,67 });
+	walking.PushBack({ 495,84,55,61 });
+	walking.PushBack({ 560,86,41,65 });
+	walking.speed = 0.12f; //no son sprites corrent per tant camina tot puesto com la policia nacional
 
 	//CROUCH
 	crouching.PushBack({ 208, 32, 43, 44 });
 	crouching.loop = false;
+
+
+	//JUMPING
+	jumping.PushBack({ 7,154,51,71 });
+	jumping.PushBack({ 60,169,53,39 });
+	jumping.PushBack({ 117,175,52,30 });
+	jumping.speed = 0.1f;
+	jumping.loop = false;
+
+	//fall
+	fall.PushBack({ 182,156,30,52 });
+	fall.PushBack({ 234,156,52,29 });
+	fall.PushBack({ 307,156,30,52 });
+	fall.speed = 0.1f;
 
 	
 }
@@ -73,15 +92,20 @@ bool j1Player::CleanUp() {
 }
 
 bool j1Player::PreUpdate() {
-	falling = true;
 	flip = SDL_FLIP_NONE;
+	if (position.x < 0) {
+		position.x = 0;
+	}
 	return true;
 }
 
 
 
 bool j1Player::Update(float dt) { 
-	inputs = GetInput();
+	if (inputs != IN_JUMP && inputs != IN_JUMP_LEFT && inputs != IN_JUMP_RIGHT) {
+		maxjump = 0;
+		inputs = GetInput();
+	}
 
 	input inputtmp = GetLeftRight();
 
@@ -91,38 +115,93 @@ bool j1Player::Update(float dt) {
 		Current_Animation = &idle;
 		break;
 	case IN_JUMP:
-		Current_Animation = &jumping;
+		if (jumping.Finished() == true) {
+			Current_Animation = &fall;
+		}
+		else {
+			Current_Animation = &jumping;
+		}
 		//-----------
+		if (maxjump != JUMP) {
+			position.y = position.y - SPEED;
+			maxjump++;
+		}
+		else {
+			inputs = IN_FALLING;
+			jumping.Reset();
+		}
+		
 		break;
 	case IN_FALLING:
+		Current_Animation = &fall;
 		position.y = position.y + (int)(2 * dt);
 
 		if (inputtmp == IN_LEFT) {
-			position.x = position.x - 1;
+			position.x = position.x - JUMP_SPEED;
 		}
 		if (inputtmp == IN_RIGHT) {
-			position.x = position.x + 1;
+			position.x = position.x + JUMP_SPEED;
 		}
 
 		break;
 	case IN_JUMP_LEFT:
-
-
+		if (jumping.Finished() == true) {
+			Current_Animation = &fall;
+		}
+		else {
+			Current_Animation = &jumping;
+		}
+		//-----------
+		if (maxjump != JUMP) {
+			position.y = position.y - SPEED;
+			maxjump++;
+		}
+		else {
+			inputs = IN_FALLING;
+			jumping.Reset();
+		}
+		//------------
+		if (inputtmp == IN_LEFT) {
+			position.x = position.x - JUMP_SPEED;
+		}
+		if (inputtmp == IN_RIGHT) {
+			position.x = position.x + JUMP_SPEED;
+		}
 		break;
 	case IN_JUMP_RIGHT:
-
-
+		if (jumping.Finished() == true) {
+			Current_Animation = &fall;
+		}
+		else {
+			Current_Animation = &jumping;
+		}
+		//-----------
+		if (maxjump != JUMP) {
+			position.y = position.y - SPEED;
+			maxjump++;
+		}
+		else {
+			inputs = IN_FALLING;
+			jumping.Reset();
+		}
+		//------------
+		if (inputtmp == IN_LEFT) {
+			position.x = position.x - JUMP_SPEED;
+		}
+		if (inputtmp == IN_RIGHT) {
+			position.x = position.x + JUMP_SPEED;
+		}
 		break;
 	case IN_LEFT:
 		Current_Animation = &walking;
 		flip = SDL_FLIP_HORIZONTAL;
 		//-----------
-		position.x = position.x - (int)1.2f;
+		position.x = position.x - SPEED;
 		break;
 	case IN_RIGHT:
 		Current_Animation = &walking;
 		//-----------
-		position.x = position.x + (int)1.2f;
+		position.x = position.x + SPEED;
 		break;
 	case IN_CROUCH:
 		Current_Animation = &crouching;
@@ -141,6 +220,12 @@ bool j1Player::Update(float dt) {
 
 
 bool j1Player::PostUpdate() {
+	if (inputs != IN_JUMP && inputs != IN_JUMP_LEFT && inputs != IN_JUMP_RIGHT) {
+		falling = true;
+	}
+	if (inputs == IN_JUMP && inputs == IN_JUMP_LEFT && inputs == IN_JUMP_RIGHT) {
+		falling = false;
+	}
 	return true;
 }
 
@@ -153,9 +238,6 @@ input j1Player::GetInput() {
 	bool crouch = false;
 	bool special = false;
 
-	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN) {
-		jump = true;
-	}
 	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
 		crouch = true;
 	}
@@ -168,16 +250,15 @@ input j1Player::GetInput() {
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
 		special = true;
 	}
+	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN) {
+		jump = true;
+	}
 	else {
 		in = IN_NONE;
 	}
 
-
-	if (jump == true && left == true) {
-		in = IN_JUMP_LEFT;
-	}
-	if (jump == true && right == true) {
-		in = IN_JUMP_RIGHT;
+	if (jump == true) {
+		in = IN_JUMP;
 	}
 
 	if (left == true) {
@@ -196,6 +277,13 @@ input j1Player::GetInput() {
 
 	if (crouch == true) {
 		in = IN_CROUCH;
+	}
+
+	if (jump == true && left == true) {
+		in = IN_JUMP_LEFT;
+	}
+	if (jump == true && right == true) {
+		in = IN_JUMP_RIGHT;
 	}
 	
 	if (falling == true) {
