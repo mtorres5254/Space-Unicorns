@@ -15,7 +15,7 @@ public:
 	virtual ~j1Scene();
 
 	// Called before render is available
-	bool Awake();
+	bool Awake(pugi::xml_node& config);
 
 	// Called before the first frame
 	bool Start();
@@ -37,11 +37,14 @@ public:
 	Collider* End;
 	int Endx;
 	int Endy;
-	bool colliderEnd = false;
 	bool ChangeScene = false;
+	bool colliderEnd = false;
 	bool ColliderEnd1 = false;
 	bool ColliderEnd2 = false;
 	bool changelevel = false;
+ 
+	int initialposx;
+		int initialposy;
 
 private:
 };

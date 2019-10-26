@@ -369,7 +369,7 @@ input j1Player::GetLeftRight() {
 void j1Player::OnCollision(Collider* c1, Collider* c2) {
 
 	/*if (c1->type == COLLIDER_PLAYER) {
-		if (c2 ->type == COLLIDER_FLOOR) {
+		if (c2->type == COLLIDER_FLOOR) {
 			falling = false;
 		}
 		if (c2->type == COLLIDER_END) {
@@ -378,8 +378,9 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 		if (c2->type == COLLIDER_DEAD) {
 			died = true;
 		}
-	}*/
-	
+	}
+}
+	*/
 	//collisions for walls, death and end
 
 
@@ -392,8 +393,11 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 
 
 	}
-	
+	/*if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_END) {
+		App->player->ChangeLevel();
 
+
+	}*/
 }
 
 
@@ -404,4 +408,6 @@ void j1Player::ChangeLevel()
 	App->scene->ColliderEnd1 = true;
 	App->scene->ChangeScene = true;
 	//change position of the player to restart
+	position.x = App->scene->initialposx;
+	position.y = App->scene->initialposy;
 }

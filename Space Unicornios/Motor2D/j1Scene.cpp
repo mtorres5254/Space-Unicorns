@@ -19,11 +19,12 @@ j1Scene::~j1Scene()
 {}
 
 // Called before render is available
-bool j1Scene::Awake()
+bool j1Scene::Awake(pugi::xml_node& config)
 {
 	LOG("Loading Scene");
 	bool ret = true;
-
+	initialposx = config.child("initialposx").attribute("x").as_int();
+	initialposy = config.child("initialposy").attribute("y").as_int();
 	return ret;
 }
 

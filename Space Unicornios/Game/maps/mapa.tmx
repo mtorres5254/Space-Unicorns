@@ -46928,9 +46928,9 @@
   <object id="62" name="Dead" x="2572.73" y="2030.3" width="530.303" height="18.1818"/>
   <object id="64" name="Dead" x="4194" y="2035" width="158" height="26"/>
   <object id="65" name="Dead" x="4618" y="2042" width="634" height="8"/>
-  <object id="70" name="End" x="5672" y="-324" width="21.3333" height="577.333"/>
+  <object id="70" name="End" x="5646.67" y="-325.333" width="21.3333" height="577.333"/>
   <object id="72" name="Wall" x="4801.33" y="417.333" width="441.333" height="310.667"/>
   <object id="73" name="Wall" x="5221.33" y="733.333" width="28" height="1316"/>
-  <object id="75" x="4546.67" y="257.333" width="1149.33" height="168"/>
+  <object id="75" name="Floor" x="4546.67" y="257.333" width="1529.33" height="168"/>
  </objectgroup>
 </map>
