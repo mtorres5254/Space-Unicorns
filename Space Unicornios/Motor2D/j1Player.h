@@ -64,7 +64,8 @@ public:
 	input GetLeftRight();
 
 	void OnCollision(Collider* c1, Collider* c2);
-	void ChangeLevel();
+	void ChangeLevel1();
+	void ChangeLevel2();
 	//add colliders
 public:
 	

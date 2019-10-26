@@ -40,6 +40,7 @@ struct Collider
 		rect.x = x;
 		rect.y = y;
 	}
+	
 
 	bool CheckCollision(const SDL_Rect& r) const;
 };

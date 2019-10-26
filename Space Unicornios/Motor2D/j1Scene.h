@@ -37,11 +37,11 @@ public:
 	Collider* End;
 	int Endx;
 	int Endy;
-	bool ChangeScene = false;
+
 	bool colliderEnd = false;
 	bool ColliderEnd1 = false;
 	bool ColliderEnd2 = false;
-	bool changelevel = false;
+	bool ChangeLevel = false;
  
 	int initialposx;
 		int initialposy;

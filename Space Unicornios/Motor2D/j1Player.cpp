@@ -7,6 +7,7 @@
 #include "j1Scene.h"
 #include "j1Map.h"
 #include "j1Audio.h"
+#include "j1Collisions.h"
 #include "p2Log.h"
 #include "SDL/include/SDL_timer.h"
 //include SDL_timer.h
@@ -282,7 +283,9 @@ input j1Player::GetInput() {
 	bool right = false;
 	bool crouch = false;
 	bool special = false;
-
+	
+	
+	if(godmode = false){
 	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
 		crouch = true;
 		
@@ -323,6 +326,7 @@ input j1Player::GetInput() {
 
 	if (crouch == true) {
 		in = IN_CROUCH;
+	
 	}
 
 	if (jump == true && left == true) {
@@ -337,6 +341,7 @@ input j1Player::GetInput() {
 	}
 
 	return in;
+
 }
 
 input j1Player::GetLeftRight() {
@@ -368,32 +373,51 @@ input j1Player::GetLeftRight() {
 
 void j1Player::OnCollision(Collider* c1, Collider* c2) {
 
-	/*if (c1->type == COLLIDER_PLAYER) {
+	if (c1->type == COLLIDER_PLAYER) {
 		if (c2->type == COLLIDER_FLOOR) {
 			falling = false;
+			jump = false;
+			if (godmode = false){
+				if (position.y = c2->rect.y) {
+					jump = false;
+					falling = true;
+					Current_Animation = &idle;
+					if (right = true && position.x == c2->rect.x) {
+						right = false;
+					
+					}
+					if (left = true &&position.x == c2->rect.x) {
+						
+						left = false;
+					}
+				}
+				
+				if (position.y = c1->rect.y) {
+					position.y = c1->rect.y - 32;
+				}
 		}
-		if (c2->type == COLLIDER_END) {
-			App->player->ChangeLevel();
+		if (c2->type == COLLIDER_END && c2->type == COLLIDER_FLOOR) {
+			App->player->ChangeLevel2();
 		}
-		if (c2->type == COLLIDER_DEAD) {
-			died = true;
-		}
+		//if (c2->type == COLLIDER_DEAD) {
+			//died = true;
+		//}
 	}
 }
-	*/
+	
 	//collisions for walls, death and end
 
 
 
 
 
-	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_FLOOR) {
+	/*if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_FLOOR) {
 		falling = false;
 
 
 
 	}
-	/*if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_END) {
+	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_END) {
 		App->player->ChangeLevel();
 
 
@@ -401,12 +425,22 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 }
 
 
-void j1Player::ChangeLevel()
+void j1Player::ChangeLevel1()
+{
+	App->map->CleanUp();
+	App->map->Load("mapa.tmx");
+	App->scene->ColliderEnd1 = false;
+	App->scene->ChangeLevel = false;
+	//change position of the player to restart
+	position.x = App->scene->initialposx;
+	position.y = App->scene->initialposy;
+}
+void j1Player::ChangeLevel2()
 {
 	App->map->CleanUp();
 	App->map->Load("mapa2.tmx");
 	App->scene->ColliderEnd1 = true;
-	App->scene->ChangeScene = true;
+	App->scene->ChangeLevel = true;
 	//change position of the player to restart
 	position.x = App->scene->initialposx;
 	position.y = App->scene->initialposy;
