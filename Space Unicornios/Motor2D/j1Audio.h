@@ -6,6 +6,9 @@
 
 #define DEFAULT_MUSIC_FADE_TIME 2.0f
 
+struct _Mix_Music;
+struct Mix_Chunk;
+
 class j1Audio : public j1Module
 {
 public:
@@ -29,7 +32,7 @@ public:
 
 	// Play a previously loaded WAV
 	bool PlayFx(unsigned int fx, int repeat = 0);
-
+	void StopFx();
 private:
 
 	Mix_Music* back_music;

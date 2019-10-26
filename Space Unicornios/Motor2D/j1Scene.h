@@ -31,6 +31,17 @@ public:
 
 	// Called before quitting
 	bool CleanUp();
+	void ResetLevel(bool);
+public: 
+
+	Collider* End;
+	int Endx;
+	int Endy;
+	bool colliderEnd = false;
+	bool ChangeScene = false;
+	bool ColliderEnd1 = false;
+	bool ColliderEnd2 = false;
+	bool changelevel = false;
 
 private:
 };

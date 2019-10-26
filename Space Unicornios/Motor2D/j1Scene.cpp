@@ -8,7 +8,7 @@
 #include "j1Window.h"
 #include "j1Map.h"
 #include "j1Scene.h"
-
+#include "j1Collisions.h"
 j1Scene::j1Scene() : j1Module()
 {
 	name.create("scene");
@@ -34,13 +34,18 @@ bool j1Scene::Start()
 	App->map->Load("mapa.tmx");
 	App->render->camera.x = 0;
 	App->render->camera.y = 0;
+	App->audio->PlayMusic("audio/music/Ambient.wav");
 	return true;
 }
 
 // Called each loop iteration
-bool j1Scene::PreUpdate()
-{
-	return true;
+bool j1Scene::PreUpdate() {
+	if (ChangeScene == false && ColliderEnd1 == false) {
+		End = App->col->AddCollider({ Endx + 30 , Endy , 2 , 70 }, COLLIDER_END, this);
+		ColliderEnd1 == true;
+		return true;
+	}
+	
 }
 
 // Called each loop iteration
@@ -94,6 +99,8 @@ bool j1Scene::PostUpdate()
 bool j1Scene::CleanUp()
 {
 	LOG("Freeing scene");
-
+	App->map->CleanUp();
+	
 	return true;
 }
+

@@ -81,6 +81,7 @@ bool j1Player::Start() {
 		return false;
 	}
 	//load sounds and collisions
+	jumpingsound = App->audio->LoadFx("audio/fx/jump.wav");
 	col = App->col->AddCollider({ position.x, position.y, 37, 80 }, COLLIDER_PLAYER, this);
 	return true;
 }
@@ -120,6 +121,7 @@ bool j1Player::Update(float dt) {
 		}
 		else {
 			Current_Animation = &jumping;
+			App->audio->PlayFx(jumpingsound, 0);
 		}
 		//-----------
 		if (maxjump != JUMP) {
@@ -201,6 +203,7 @@ bool j1Player::Update(float dt) {
 		}
 		else {
 			Current_Animation = &jumping;
+			
 		}
 		//-----------
 		if (maxjump != JUMP) {
@@ -250,6 +253,11 @@ bool j1Player::Update(float dt) {
 		break;
 	}
 
+	//////DEATH/////
+	//if (dead = true) 
+	//reset scene
+	
+
 	col->SetPos(position.x, position.y);
 	App->render->Blit(graphics, position.x, position.y, &(Current_Animation->GetCurrentFrame()), 1.0f, 0, 0, 0, flip);
 	return true; 
@@ -277,6 +285,7 @@ input j1Player::GetInput() {
 
 	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
 		crouch = true;
+		
 	}
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT){
 		left = true;
@@ -358,8 +367,41 @@ input j1Player::GetLeftRight() {
 }
 
 void j1Player::OnCollision(Collider* c1, Collider* c2) {
+
+	/*if (c1->type == COLLIDER_PLAYER) {
+		if (c2 ->type == COLLIDER_FLOOR) {
+			falling = false;
+		}
+		if (c2->type == COLLIDER_END) {
+			App->player->ChangeLevel();
+		}
+		if (c2->type == COLLIDER_DEAD) {
+			died = true;
+		}
+	}*/
+	
+	//collisions for walls, death and end
+
+
+
+
+
 	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_FLOOR) {
 		falling = false;
+
+
+
 	}
+	
+
 }
 
+
+void j1Player::ChangeLevel()
+{
+	App->map->CleanUp();
+	App->map->Load("mapa2.tmx");
+	App->scene->ColliderEnd1 = true;
+	App->scene->ChangeScene = true;
+	//change position of the player to restart
+}

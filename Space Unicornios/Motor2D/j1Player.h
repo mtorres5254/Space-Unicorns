@@ -64,6 +64,7 @@ public:
 	input GetLeftRight();
 
 	void OnCollision(Collider* c1, Collider* c2);
+	void ChangeLevel();
 	//add colliders
 public:
 	
@@ -94,12 +95,16 @@ public:
 	bool right = false;
 	bool crouch = false;
 	bool special = false;
+	bool died = false;
 
 	bool has_jump = false;
 
 	bool falling = true;
 
 	int maxjump;
+
+	unsigned int walkingsound;
+	unsigned int jumpingsound;
 
 	//--------------------
 	state states;
