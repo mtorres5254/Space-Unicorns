@@ -56,6 +56,9 @@ j1Player::j1Player() {
 	fall.PushBack({ 307,156,30,52 });
 	fall.PushBack({ 361,165,53,39 });
 	fall.speed = 0.1f;
+	//dead;
+	death.PushBack({});
+	death.speed = 0.1f;
 
 }
 
@@ -83,13 +86,16 @@ bool j1Player::Start() {
 	}
 	//load sounds and collisions
 	jumpingsound = App->audio->LoadFx("audio/fx/jump.wav");
-	col = App->col->AddCollider({ position.x, position.y, 37, 80 }, COLLIDER_PLAYER, this);
+	//col_prova = App->col->AddCollider({ position.x + 5, position.y, 37, 80 },COLLIDER_PLAYER, this);//
+	
+
 	return true;
 }
 
 bool j1Player::CleanUp() {
 	//unload graphics
 	App->tex->UnLoad(graphics);
+	App->audio->StopFx();
 	return true;
 }
 
@@ -377,29 +383,27 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 			jump = false;
 
 			if (godmode = false) {
-				if (position.y = (c2->type == COLLIDER_FLOOR )) {
-					jump = false;
-					falling = true;
+				if (position.y >= c2->rect.y) {
+					jump = true;
 					Current_Animation = &fall;
-					if (right = true && position.x == (c2->type == COLLIDER_FLOOR)) {
+					//stop y+
+					if (position.x < c2->rect.x) {
 						right = false;
-
+						Current_Animation = &idle;
+						//stop x+
 					}
-					if (left = true && position.x == (c2->type == COLLIDER_FLOOR)) {
-
+					if (position.x > c2->rect.x) {
 						left = false;
-						//position.x = position.x;
-					}
-				}
+						Current_Animation = &idle;
 
-				if (position.y = c2->rect.y) {
-					position.y = c2->rect.y - 32;
+					}
 				}
 			}
-			if (position.x ==(c2->type ==COLLIDER_END)) {
+		}
+			if (c2->type ==COLLIDER_END) {
 				App->player->ChangeLevel2();
 			}
-			if (position.x ==(c2->type == COLLIDER_DEAD)) {
+			if (c2->type == COLLIDER_DEAD) {
 				right = false;
 				left = false;
 				jump = false;
@@ -408,12 +412,14 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 				special = false;
 				died = true;
 				App->player->ChangeLevel1();
-				//}
+				Current_Animation = &death;
+				//restart from level1(?)}
 			}
 			if (c2->type == COLLIDER_WIN) {
 				App->player->ChangeLevel1();
+				//restars game
 			}
-		}
+	}
 
 
 
@@ -433,7 +439,7 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 
 		}*/
 	}
-}
+
 
 
 void j1Player::ChangeLevel1()

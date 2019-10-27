@@ -81,6 +81,7 @@ bool j1Collisions::LoadColliders(pugi::xml_node& node) {
 				coltype = COLLIDER_FLOOR;
 				LOG("Collider floor");
 				call = App->map;
+				
 			}
 			else if (type == "Wall") {
 				coltype = COLLIDER_WALL;
@@ -229,39 +230,53 @@ bool j1Collisions::CleanUp()
 Collider* j1Collisions::AddCollider(SDL_Rect rectC, COLLIDER_TYPE typeC, j1Module* callbackC)
 {
 	Collider* ret = nullptr;
-	//bool loc = true;
+	bool loc = true;
 	for (uint j = 0; j < MAX_COLLIDERS; ++j)
 	{
 		if (colliders[j] == nullptr)
 		{
-			
-			ret = colliders[j] = new Collider(rectC, typeC, callbackC);
-			break;
+			if (colliders[j] != nullptr) {
+				if ((colliders[j]->rect.x == rectC.x) && (colliders[j]->rect.y == rectC.y) && (colliders[j]->rect.w == rectC.w) && (colliders[j]->rect.h == rectC.h)) {
+					loc = false;
+				}
+				//ret = colliders[j] = new Collider(rectC, typeC, callbackC);
+				//break;
+			}
 		}
-	}
 
-	return ret;
+		for (uint i = 0; i < MAX_COLLIDERS; ++i)
+		{
+
+			if (colliders[i] == nullptr)
+			{
+				if (loc == true) {
+					ret = colliders[i] = new Collider(rectC, typeC, callbackC);
+					break;
+				}
+			}
+		}
+		return ret;
+	}
 }
 
 // -----------------------------------------------------
 
 bool Collider::CheckCollision(const SDL_Rect& r) const
 {
-	return !(r.x + r.w<rect.x || r.x>rect.x + rect.w || r.y + r.h<rect.y || r.y>rect.y + rect.h);
-	/*return (rect.x < r.x + r.w &&
+	//return !(r.x + r.w<rect.x || r.x>rect.x + rect.w || r.y + r.h<rect.y || r.y>rect.y + rect.h);
+	return (rect.x < r.x + r.w &&
 		rect.x + rect.w > r.x &&
 		rect.y < r.y + r.h &&
-		rect.h + rect.y > r.y);*/
+		rect.h + rect.y > r.y);
 }
 
 //-----------------------------------------------------
-
+void Collider::SetPos(int x, int y) {
+	rect.x = x;
+	rect.y = y;
+}
 void j1Collisions::DeleteCollider(Collider* collider) {
 	if (collider != nullptr) {
 		collider->to_delete = true;
 	}
-}
-void Collider::SetPos(int x, int y) {
-	rect.x = x;
-	rect.y = y;
 }
