@@ -39,6 +39,7 @@ struct ImageLayer {
 	SDL_Texture* text;
 	int img_width;
 	int img_height;
+	float paralax = 1.0f;
 };
 
 // ----------------------------------------------------

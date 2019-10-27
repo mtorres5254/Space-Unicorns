@@ -43,7 +43,7 @@ void j1Map::Draw()
 	int layer_width = layer->data->width;
 
 	while (img_layer != NULL) {
-		App->render->Blit(img_layer->data->text, img_layer->data->offsetx, img_layer->data->offsety);
+		App->render->BlitParal(img_layer->data->text, img_layer->data->offsetx, img_layer->data->offsety, NULL, img_layer->data->paralax);
 		img_layer = img_layer->next;
 	}
 	while (layer != NULL) {
@@ -541,6 +541,9 @@ bool j1Map::LoadImgLayer(pugi::xml_node& node, ImageLayer* layer) {
 
 	layer->name = node.attribute("name").as_string();
 	p2SString image;
+	if (layer->name == "Parallax") {
+		layer->paralax = 1.1f;
+	}
 	
 	image = node.child("image").attribute("source").as_string();
 	p2SString tmp("%s%s", folder.GetString(), image.GetString());
