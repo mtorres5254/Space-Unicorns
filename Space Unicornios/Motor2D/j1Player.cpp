@@ -254,9 +254,6 @@ bool j1Player::Update(float dt) {
 		break;
 	}
 
-	//////DEATH/////
-	//if (dead = true) 
-	//reset scene
 	
 
 	col->SetPos(position.x, position.y);
@@ -283,65 +280,66 @@ input j1Player::GetInput() {
 	bool right = false;
 	bool crouch = false;
 	bool special = false;
-	
-	
-	if(godmode = false){
-	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
-		crouch = true;
-		
-	}
-	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT){
-		left = true;
-	}
-	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
-		right = true;
-	}
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
-		special = true;
-	}
-	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN) {
-		jump = true;
-	}
-	else {
-		in = IN_NONE;
-	}
 
-	if (jump == true) {
-		in = IN_JUMP;
-	}
 
-	if (left == true) {
-		in = IN_LEFT;
-	}
-	if (right == true) {
-		in = IN_RIGHT;
-	}
-	if(left == true && right == true) {
-		in = IN_NONE;
-	}
+	if (godmode = false) {
+		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
+			crouch = true;
 
-	if (special == true) {
-		in = IN_SPECIAL;
-	}
+		}
+		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
+			left = true;
+		}
+		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
+			right = true;
+		}
+		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
+			special = true;
+		}
+		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN) {
+			jump = true;
+		}
+		else {
+			in = IN_NONE;
+		}
 
-	if (crouch == true) {
-		in = IN_CROUCH;
-	
-	}
+		if (jump == true) {
+			in = IN_JUMP;
+		}
 
-	if (jump == true && left == true) {
-		in = IN_JUMP_LEFT;
-	}
-	if (jump == true && right == true) {
-		in = IN_JUMP_RIGHT;
-	}
-	
-	if (falling == true) {
-		in = IN_FALLING;
-	}
+		if (left == true) {
+			in = IN_LEFT;
+		}
+		if (right == true) {
+			in = IN_RIGHT;
+		}
+		if (left == true && right == true) {
+			in = IN_NONE;
+		}
 
-	return in;
+		if (special == true) {
+			in = IN_SPECIAL;
+		}
 
+		if (crouch == true) {
+			in = IN_CROUCH;
+
+		}
+
+		if (jump == true && left == true) {
+			in = IN_JUMP_LEFT;
+		}
+		if (jump == true && right == true) {
+			in = IN_JUMP_RIGHT;
+		}
+
+		if (falling == true) {
+			in = IN_FALLING;
+		}
+
+		return in;
+
+	}
 }
 
 input j1Player::GetLeftRight() {
@@ -377,51 +375,64 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 		if (c2->type == COLLIDER_FLOOR) {
 			falling = false;
 			jump = false;
-			if (godmode = false){
-				if (position.y = c2->rect.y) {
+
+			if (godmode = false) {
+				if (position.y = (c2->type == COLLIDER_FLOOR )) {
 					jump = false;
 					falling = true;
-					Current_Animation = &idle;
-					if (right = true && position.x == c2->rect.x) {
+					Current_Animation = &fall;
+					if (right = true && position.x == (c2->type == COLLIDER_FLOOR)) {
 						right = false;
-					
+
 					}
-					if (left = true &&position.x == c2->rect.x) {
-						
+					if (left = true && position.x == (c2->type == COLLIDER_FLOOR)) {
+
 						left = false;
+						//position.x = position.x;
 					}
 				}
-				
-				if (position.y = c1->rect.y) {
-					position.y = c1->rect.y - 32;
+
+				if (position.y = c2->rect.y) {
+					position.y = c2->rect.y - 32;
 				}
+			}
+			if (position.x ==(c2->type ==COLLIDER_END)) {
+				App->player->ChangeLevel2();
+			}
+			if (position.x ==(c2->type == COLLIDER_DEAD)) {
+				right = false;
+				left = false;
+				jump = false;
+				falling = false;
+				crouch = false;
+				special = false;
+				died = true;
+				App->player->ChangeLevel1();
+				//}
+			}
+			if (c2->type == COLLIDER_WIN) {
+				App->player->ChangeLevel1();
+			}
 		}
-		if (c2->type == COLLIDER_END && c2->type == COLLIDER_FLOOR) {
-			App->player->ChangeLevel2();
+
+
+
+
+
+
+
+		/*if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_FLOOR) {
+			falling = false;
+
+
+
 		}
-		//if (c2->type == COLLIDER_DEAD) {
-			//died = true;
-		//}
+		if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_END) {
+			App->player->ChangeLevel();
+
+
+		}*/
 	}
-}
-	
-	//collisions for walls, death and end
-
-
-
-
-
-	/*if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_FLOOR) {
-		falling = false;
-
-
-
-	}
-	if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_END) {
-		App->player->ChangeLevel();
-
-
-	}*/
 }
 
 
@@ -437,6 +448,7 @@ void j1Player::ChangeLevel1()
 }
 void j1Player::ChangeLevel2()
 {
+	died = false;
 	App->map->CleanUp();
 	App->map->Load("mapa2.tmx");
 	App->scene->ColliderEnd1 = true;
@@ -445,3 +457,4 @@ void j1Player::ChangeLevel2()
 	position.x = App->scene->initialposx;
 	position.y = App->scene->initialposy;
 }
+

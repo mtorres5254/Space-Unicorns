@@ -195,10 +195,16 @@ void j1Collisions::DebugDraw() {
 			App->render->DrawQuad(colliders[i]->rect, 255, 0, 0, alpha);
 			break;
 		case COLLIDER_FLOOR: // blue
-			App->render->DrawQuad(colliders[i]->rect, 0, 0, 255, alpha);
+			App->render->DrawQuad(colliders[i]->rect, 255, 255, 0, alpha);
 			break;
 		case COLLIDER_WALL:
-			App->render->DrawQuad(colliders[i]->rect, 255, 255, 0, alpha);
+			App->render->DrawQuad(colliders[i]->rect, 0, 0, 255, alpha);
+			break;
+		case COLLIDER_END:
+			App->render->DrawQuad(colliders[i]->rect, 0, 255, 255, alpha);
+			break;
+		case COLLIDER_DEAD:
+			App->render->DrawQuad(colliders[i]->rect, 255, 0, 0, alpha);
 			break;
 		}
 	}
@@ -210,7 +216,7 @@ bool j1Collisions::CleanUp()
 
 	for (uint i = 0; i < MAX_COLLIDERS; ++i)
 	{
-		if (colliders[i] != nullptr)
+		if ((colliders[i] != nullptr)&& (colliders[i]->type != COLLIDER_PLAYER))
 		{
 			delete colliders[i];
 			colliders[i] = nullptr;
@@ -223,12 +229,13 @@ bool j1Collisions::CleanUp()
 Collider* j1Collisions::AddCollider(SDL_Rect rectC, COLLIDER_TYPE typeC, j1Module* callbackC)
 {
 	Collider* ret = nullptr;
-
-	for (uint i = 0; i < MAX_COLLIDERS; ++i)
+	//bool loc = true;
+	for (uint j = 0; j < MAX_COLLIDERS; ++j)
 	{
-		if (colliders[i] == nullptr)
+		if (colliders[j] == nullptr)
 		{
-			ret = colliders[i] = new Collider(rectC, typeC, callbackC);
+			
+			ret = colliders[j] = new Collider(rectC, typeC, callbackC);
 			break;
 		}
 	}
@@ -240,10 +247,11 @@ Collider* j1Collisions::AddCollider(SDL_Rect rectC, COLLIDER_TYPE typeC, j1Modul
 
 bool Collider::CheckCollision(const SDL_Rect& r) const
 {
-	return (rect.x < r.x + r.w &&
+	return !(r.x + r.w<rect.x || r.x>rect.x + rect.w || r.y + r.h<rect.y || r.y>rect.y + rect.h);
+	/*return (rect.x < r.x + r.w &&
 		rect.x + rect.w > r.x &&
 		rect.y < r.y + r.h &&
-		rect.h + rect.y > r.y);
+		rect.h + rect.y > r.y);*/
 }
 
 //-----------------------------------------------------
@@ -252,4 +260,8 @@ void j1Collisions::DeleteCollider(Collider* collider) {
 	if (collider != nullptr) {
 		collider->to_delete = true;
 	}
+}
+void Collider::SetPos(int x, int y) {
+	rect.x = x;
+	rect.y = y;
 }

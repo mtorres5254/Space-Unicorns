@@ -66,10 +66,13 @@ public:
 	void OnCollision(Collider* c1, Collider* c2);
 	void ChangeLevel1();
 	void ChangeLevel2();
+	//void RestartLevel1();
+	//void RestartLevel2();
 	//add colliders
 public:
 	
 	iPoint position;
+
 
 	SDL_Texture* graphics = nullptr;
 

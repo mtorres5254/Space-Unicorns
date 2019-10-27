@@ -1,7 +1,7 @@
 #ifndef __ANIMATION_H__
 #define __ANIMATION_H__
 
-#define MAX_FRAMES 30000
+#define MAX_FRAMES 50000
 
 #include "SDL/include/SDL_timer.h"
 #include "SDL/include/SDL_rect.h"

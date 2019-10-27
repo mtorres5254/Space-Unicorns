@@ -25,6 +25,8 @@ bool j1Scene::Awake(pugi::xml_node& config)
 	bool ret = true;
 	initialposx = config.child("initialposx").attribute("x").as_int();
 	initialposy = config.child("initialposy").attribute("y").as_int();
+	App->Start->position.x = initialposx;
+	App->Start->position.y = initialposy;
 	return ret;
 }
 
