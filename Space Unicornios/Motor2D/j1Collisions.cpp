@@ -102,10 +102,10 @@ bool j1Collisions::LoadColliders(pugi::xml_node& node) {
 				continue;
 			}
 
-			rect.x = object.attribute("x").as_uint();
-			rect.y = object.attribute("y").as_uint();
-			rect.w = object.attribute("width").as_uint();
-			rect.h = object.attribute("heigth").as_uint();
+			rect.x = object.attribute("x").as_int();
+			rect.y = object.attribute("y").as_int();
+			rect.w = object.attribute("width").as_int();
+			rect.h = object.attribute("heigth").as_int();
 
 			App->map->data.colliders.add(AddCollider(rect, coltype, call));
 				LOG("%i x %i", rect.x, rect.y);
@@ -207,6 +207,32 @@ void j1Collisions::DebugDraw() {
 			App->render->DrawQuad(colliders[i]->rect, 255, 0, 0, alpha);
 			break;
 		}
+	}
+
+	p2List_item<Collider*>* col = App->map->data.colliders.start;
+	while (col != NULL) {
+		switch (col->data->type)
+		{
+		case COLLIDER_PLAYER: // green
+			App->render->DrawQuad(col->data->rect, 0, 255, 0, alpha);
+			break;
+		case COLLIDER_ENEMY: // red
+			App->render->DrawQuad(col->data->rect, 255, 0, 0, alpha);
+			break;
+		case COLLIDER_FLOOR: // blue
+			App->render->DrawQuad(col->data->rect, 255, 255, 0, alpha);
+			break;
+		case COLLIDER_WALL:
+			App->render->DrawQuad(col->data->rect, 0, 0, 255, alpha);
+			break;
+		case COLLIDER_END:
+			App->render->DrawQuad(col->data->rect, 0, 255, 255, alpha);
+			break;
+		case COLLIDER_DEAD:
+			App->render->DrawQuad(col->data->rect, 255, 0, 0, alpha);
+			break;
+		}
+		col = col->next;
 	}
 }
 

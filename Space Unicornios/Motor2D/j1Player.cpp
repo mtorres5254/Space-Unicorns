@@ -419,12 +419,9 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 
 		if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_FLOOR) {
 			falling = false;
-
-
-
 		}
 		if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_END) {
-			//App->player->ChangeLevel1();
+			App->player->ChangeLevel1();
 		}
 	}
 

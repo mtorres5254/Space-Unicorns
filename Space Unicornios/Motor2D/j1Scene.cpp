@@ -46,7 +46,7 @@ bool j1Scene::Start()
 // Called each loop iteration
 bool j1Scene::PreUpdate() {
 	if (ChangeLevel == false && ColliderEnd1 == false) {
-		End = App->col->AddCollider({ Endx + 30 , Endy , 2 , 70 }, COLLIDER_END, this);
+		//End = App->col->AddCollider({ Endx + 30 , Endy , 2 , 70 }, COLLIDER_END, this);
 		ColliderEnd1 == true;
 		return true;
 	}
