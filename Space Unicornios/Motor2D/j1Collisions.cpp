@@ -107,8 +107,7 @@ bool j1Collisions::LoadColliders(pugi::xml_node& node) {
 			rect.w = object.attribute("width").as_uint();
 			rect.h = object.attribute("heigth").as_uint();
 
-			Collider* col = AddCollider(rect, coltype, call);
-			App->map->data.colliders.add(col);
+			App->map->data.colliders.add(AddCollider(rect, coltype, call));
 				LOG("%i x %i", rect.x, rect.y);
 		}
 	}
@@ -230,33 +229,15 @@ bool j1Collisions::CleanUp()
 Collider* j1Collisions::AddCollider(SDL_Rect rectC, COLLIDER_TYPE typeC, j1Module* callbackC)
 {
 	Collider* ret = nullptr;
-	bool loc = true;
 	for (uint j = 0; j < MAX_COLLIDERS; ++j)
 	{
 		if (colliders[j] == nullptr)
 		{
-			if (colliders[j] != nullptr) {
-				if ((colliders[j]->rect.x == rectC.x) && (colliders[j]->rect.y == rectC.y) && (colliders[j]->rect.w == rectC.w) && (colliders[j]->rect.h == rectC.h)) {
-					loc = false;
-				}
-				//ret = colliders[j] = new Collider(rectC, typeC, callbackC);
-				//break;
-			}
+				ret = colliders[j] = new Collider(rectC, typeC, callbackC);
+				break;
 		}
-
-		for (uint i = 0; i < MAX_COLLIDERS; ++i)
-		{
-
-			if (colliders[i] == nullptr)
-			{
-				if (loc == true) {
-					ret = colliders[i] = new Collider(rectC, typeC, callbackC);
-					break;
-				}
-			}
-		}
-		return ret;
 	}
+		return ret;
 }
 
 // -----------------------------------------------------

@@ -7,9 +7,9 @@
 #include "j1Scene.h"
 #include "j1Map.h"
 #include "j1Audio.h"
-#include "j1Collisions.h"
 #include "p2Log.h"
 #include "SDL/include/SDL_timer.h"
+
 //include SDL_timer.h
 
 j1Player::j1Player() {
@@ -86,7 +86,7 @@ bool j1Player::Start() {
 	}
 	//load sounds and collisions
 	jumpingsound = App->audio->LoadFx("audio/fx/jump.wav");
-	//col_prova = App->col->AddCollider({ position.x + 5, position.y, 37, 80 },COLLIDER_PLAYER, this);//
+	col = App->col->AddCollider({ position.x, position.y, 37, 80 }, COLLIDER_PLAYER, this);
 	
 
 	return true;
@@ -287,8 +287,6 @@ input j1Player::GetInput() {
 	bool crouch = false;
 	bool special = false;
 
-
-	if (godmode = false) {
 		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
 			crouch = true;
 
@@ -344,8 +342,6 @@ input j1Player::GetInput() {
 		}
 
 		return in;
-
-	}
 }
 
 input j1Player::GetLeftRight() {
@@ -376,7 +372,7 @@ input j1Player::GetLeftRight() {
 }
 
 void j1Player::OnCollision(Collider* c1, Collider* c2) {
-
+	/*
 	if (c1->type == COLLIDER_PLAYER) {
 		if (c2->type == COLLIDER_FLOOR) {
 			falling = false;
@@ -419,25 +415,17 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 				App->player->ChangeLevel1();
 				//restars game
 			}
-	}
+	}*/
 
-
-
-
-
-
-
-		/*if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_FLOOR) {
+		if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_FLOOR) {
 			falling = false;
 
 
 
 		}
 		if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_END) {
-			App->player->ChangeLevel();
-
-
-		}*/
+			//App->player->ChangeLevel1();
+		}
 	}
 
 

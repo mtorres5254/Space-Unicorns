@@ -9,6 +9,8 @@
 #include "j1Map.h"
 #include "j1Scene.h"
 #include "j1Collisions.h"
+#include "j1Player.h"
+
 j1Scene::j1Scene() : j1Module()
 {
 	name.create("scene");
@@ -25,8 +27,8 @@ bool j1Scene::Awake(pugi::xml_node& config)
 	bool ret = true;
 	initialposx = config.child("initialposx").attribute("x").as_int();
 	initialposy = config.child("initialposy").attribute("y").as_int();
-	App->Start->position.x = initialposx;
-	App->Start->position.y = initialposy;
+	App->player->position.x = initialposx;
+	App->player->position.y = initialposy;
 	return ret;
 }
 
@@ -34,7 +36,7 @@ bool j1Scene::Awake(pugi::xml_node& config)
 bool j1Scene::Start()
 {
 	//Load Map file
-	App->map->Load("mapa.tmx");
+	App->map->Load("mapa2.tmx");
 	App->render->camera.x = 0;
 	App->render->camera.y = 0;
 	App->audio->PlayMusic("audio/music/Ambient.wav");
@@ -61,16 +63,16 @@ bool j1Scene::Update(float dt)
 		App->SaveGame("save_game.xml");
 
 	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
-		App->render->camera.y += 1;
+		App->render->camera.y += 10;
 
 	if(App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
-		App->render->camera.y -= 1;
+		App->render->camera.y -= 10;
 
 	if(App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
-		App->render->camera.x += 1;
+		App->render->camera.x += 10;
 
 	if(App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
-		App->render->camera.x -= 1;
+		App->render->camera.x -= 10;
 
 	App->map->Draw();
 
