@@ -116,151 +116,166 @@ bool j1Player::Update(float dt) {
 	}
 
 	input inputtmp = GetLeftRight();
-
-	switch (inputs)
-	{
-	case IN_NONE:
-		Current_Animation = &idle;
-		break;
-	case IN_JUMP:
-		if (jumping.Finished() == true) {
-			Current_Animation = &fall;
-		}
-		else {
-			Current_Animation = &jumping;
-			App->audio->PlayFx(jumpingsound, 0);
-		}
-		//-----------
-		if (maxjump != JUMP) {
-			if (maxjump >= 0 && maxjump < JUMP / 2) {
-				position.y = position.y - JUMP_Y_SPEED;
-				maxjump++;
-			}
-			else if (maxjump >= JUMP / 2 && maxjump < JUMP - (JUMP / 3)) {
-				position.y = position.y - JUMP_Y_SPEED / 2;
-				maxjump++;
-			}
-			else {
-				position.y = position.y - JUMP_Y_SPEED / 4;
-				maxjump++;
-			}
-		}
-		else {
-			inputs = IN_FALLING;
-			jumping.Reset();
-		}
-		//------------
-		if (inputtmp == IN_LEFT) {
-			position.x = position.x - JUMP_SPEED;
-		}
-		if (inputtmp == IN_RIGHT) {
-			position.x = position.x + JUMP_SPEED;
-		}
-		
-		break;
-	case IN_FALLING:
-		Current_Animation = &fall;
-		position.y = position.y + (int)(3 * dt);
-
-		if (inputtmp == IN_LEFT) {
-			position.x = position.x - JUMP_SPEED;
-		}
-		if (inputtmp == IN_RIGHT) {
-			position.x = position.x + JUMP_SPEED;
-		}
-
-		break;
-	case IN_JUMP_LEFT:
-		if (jumping.Finished() == true) {
-			Current_Animation = &fall;
-		}
-		else {
-			Current_Animation = &jumping;
-		}
-		//-----------
-		if (maxjump != JUMP) {
-			if (maxjump >= 0 && maxjump < JUMP / 2) {
-				position.y = position.y - JUMP_Y_SPEED;
-				maxjump++;
-			}
-			else if (maxjump >= JUMP / 2 && maxjump < JUMP - (JUMP / 3)) {
-				position.y = position.y - JUMP_Y_SPEED / 2;
-				maxjump++;
-			}
-			else {
-				position.y = position.y - JUMP_Y_SPEED / 4;
-				maxjump++;
-			}
-		}
-		else {
-			inputs = IN_FALLING;
-			jumping.Reset();
-		}
-		//------------
-		if (inputtmp == IN_LEFT) {
-			position.x = position.x - JUMP_SPEED;
-		}
-		if (inputtmp == IN_RIGHT) {
-			position.x = position.x + JUMP_SPEED;
-		}
-		break;
-	case IN_JUMP_RIGHT:
-		if (jumping.Finished() == true) {
-			Current_Animation = &fall;
-		}
-		else {
-			Current_Animation = &jumping;
-			
-		}
-		//-----------
-		if (maxjump != JUMP) {
-			if (maxjump >= 0 && maxjump < JUMP / 2) {
-				position.y = position.y - JUMP_Y_SPEED;
-				maxjump++;
-			}
-			else if (maxjump >= JUMP / 2 && maxjump < JUMP - (JUMP / 3)) {
-				position.y = position.y - JUMP_Y_SPEED / 2;
-				maxjump++;
-			}
-			else {
-				position.y = position.y - JUMP_Y_SPEED / 4;
-				maxjump++;
-			}
-		}
-		else {
-			inputs = IN_FALLING;
-			jumping.Reset();
-		}
-		//------------
-		if (inputtmp == IN_LEFT) {
-			position.x = position.x - JUMP_SPEED;
-		}
-		if (inputtmp == IN_RIGHT) {
-			position.x = position.x + JUMP_SPEED;
-		}
-		break;
-	case IN_LEFT:
-		Current_Animation = &walking;
-		flip = SDL_FLIP_HORIZONTAL;
-		//-----------
-		position.x = position.x - SPEED;
-		break;
-	case IN_RIGHT:
-		Current_Animation = &walking;
-		//-----------
-		position.x = position.x + SPEED;
-		break;
-	case IN_CROUCH:
-		Current_Animation = &crouching;
-
-		break;
-	case IN_SPECIAL:
-		Current_Animation = &special_anim;
-
-		break;
-	}
-
 	
+	if (godmode == false) {
+		switch (inputs)
+		{
+		case IN_NONE:
+			Current_Animation = &idle;
+			break;
+		case IN_JUMP:
+			if (jumping.Finished() == true) {
+				Current_Animation = &fall;
+			}
+			else {
+				Current_Animation = &jumping;
+				App->audio->PlayFx(jumpingsound, 0);
+			}
+			//-----------
+			if (maxjump != JUMP) {
+				if (maxjump >= 0 && maxjump < JUMP / 2) {
+					position.y = position.y - JUMP_Y_SPEED;
+					maxjump++;
+				}
+				else if (maxjump >= JUMP / 2 && maxjump < JUMP - (JUMP / 3)) {
+					position.y = position.y - JUMP_Y_SPEED / 2;
+					maxjump++;
+				}
+				else {
+					position.y = position.y - JUMP_Y_SPEED / 4;
+					maxjump++;
+				}
+			}
+			else {
+				inputs = IN_FALLING;
+				jumping.Reset();
+			}
+			//------------
+			if (inputtmp == IN_LEFT) {
+				position.x = position.x - JUMP_SPEED;
+			}
+			if (inputtmp == IN_RIGHT) {
+				position.x = position.x + JUMP_SPEED;
+			}
+
+			break;
+		case IN_FALLING:
+			Current_Animation = &fall;
+			position.y = position.y + (int)(3 * dt);
+
+			if (inputtmp == IN_LEFT) {
+				position.x = position.x - JUMP_SPEED;
+			}
+			if (inputtmp == IN_RIGHT) {
+				position.x = position.x + JUMP_SPEED;
+			}
+
+			break;
+		case IN_JUMP_LEFT:
+			if (jumping.Finished() == true) {
+				Current_Animation = &fall;
+			}
+			else {
+				Current_Animation = &jumping;
+			}
+			//-----------
+			if (maxjump != JUMP) {
+				if (maxjump >= 0 && maxjump < JUMP / 2) {
+					position.y = position.y - JUMP_Y_SPEED;
+					maxjump++;
+				}
+				else if (maxjump >= JUMP / 2 && maxjump < JUMP - (JUMP / 3)) {
+					position.y = position.y - JUMP_Y_SPEED / 2;
+					maxjump++;
+				}
+				else {
+					position.y = position.y - JUMP_Y_SPEED / 4;
+					maxjump++;
+				}
+			}
+			else {
+				inputs = IN_FALLING;
+				jumping.Reset();
+			}
+			//------------
+			if (inputtmp == IN_LEFT) {
+				position.x = position.x - JUMP_SPEED;
+			}
+			if (inputtmp == IN_RIGHT) {
+				position.x = position.x + JUMP_SPEED;
+			}
+			break;
+		case IN_JUMP_RIGHT:
+			if (jumping.Finished() == true) {
+				Current_Animation = &fall;
+			}
+			else {
+				Current_Animation = &jumping;
+
+			}
+			//-----------
+			if (maxjump != JUMP) {
+				if (maxjump >= 0 && maxjump < JUMP / 2) {
+					position.y = position.y - JUMP_Y_SPEED;
+					maxjump++;
+				}
+				else if (maxjump >= JUMP / 2 && maxjump < JUMP - (JUMP / 3)) {
+					position.y = position.y - JUMP_Y_SPEED / 2;
+					maxjump++;
+				}
+				else {
+					position.y = position.y - JUMP_Y_SPEED / 4;
+					maxjump++;
+				}
+			}
+			else {
+				inputs = IN_FALLING;
+				jumping.Reset();
+			}
+			//------------
+			if (inputtmp == IN_LEFT) {
+				position.x = position.x - JUMP_SPEED;
+			}
+			if (inputtmp == IN_RIGHT) {
+				position.x = position.x + JUMP_SPEED;
+			}
+			break;
+		case IN_LEFT:
+			Current_Animation = &walking;
+			flip = SDL_FLIP_HORIZONTAL;
+			//-----------
+			position.x = position.x - SPEED;
+			break;
+		case IN_RIGHT:
+			Current_Animation = &walking;
+			//-----------
+			position.x = position.x + SPEED;
+			break;
+		case IN_CROUCH:
+			Current_Animation = &crouching;
+
+			break;
+		case IN_SPECIAL:
+			Current_Animation = &special_anim;
+
+			break;
+		}
+	}
+	else if (godmode == true) {
+		if (inputs == IN_JUMP) {
+			position.y = position.y - SPEED;
+			}
+		else if (inputs == IN_LEFT) {
+			position.x = position.x - SPEED;
+		}
+		else if (inputs == IN_RIGHT) {
+			position.x = position.x + SPEED;
+		}
+		else if (inputs == IN_RIGHT) {
+			position.y = position.y + SPEED;
+		}
+
+	}
 
 	col->SetPos(position.x, position.y);
 	App->render->Blit(graphics, position.x, position.y, &(Current_Animation->GetCurrentFrame()), 1.0f, 0, 0, 0, flip);
@@ -416,7 +431,6 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 				//restars game
 			}
 	}*/
-
 		if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_FLOOR) {
 			falling = false;
 		}

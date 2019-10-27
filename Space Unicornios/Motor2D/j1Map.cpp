@@ -522,14 +522,14 @@ void j1Map::OnCollision(Collider* c1, Collider* c2) {
 					App->player->position.x = c1->rect.x + c1->rect.w;
 				}
 			}
-		}	
-	}
-	else if (c1->type == COLLIDER_WALL && c2->type == COLLIDER_PLAYER) {
-		if (c1->rect.x < c2->rect.x + c2->rect.w && c1->rect.x + c1->rect.w / 2 > c2->rect.x) {
-			App->player->position.x = c1->rect.x - c2->rect.w;
 		}
-		if (c1->rect.x + c1->rect.w > c2->rect.x && c1->rect.x + c1->rect.w / 2 < c2->rect.x) {
-			App->player->position.x = c1->rect.x + c1->rect.w;
+		else {
+			if (c1->rect.x < c2->rect.x + c2->rect.w && c1->rect.x + c1->rect.w / 2 > c2->rect.x) {
+				App->player->position.x = c1->rect.x - c2->rect.w;
+			}
+			if (c1->rect.x + c1->rect.w > c2->rect.x && c1->rect.x + c1->rect.w / 2 < c2->rect.x) {
+				App->player->position.x = c1->rect.x + c1->rect.w;
+			}
 		}
 	}
 }
