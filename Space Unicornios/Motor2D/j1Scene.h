@@ -31,7 +31,7 @@ public:
 
 	// Called before quitting
 	bool CleanUp();
-	void ResetLevel(bool);
+	//void ResetLevel(bool);
 public: 
 
 	Collider* End;
@@ -43,8 +43,13 @@ public:
 	bool ColliderEnd2 = false;
 	bool ChangeLevel = false;
  
+	p2SString map1 = "mapa.tmx";
+	bool map1Loaded = true;
+	p2SString map2 = "mapa2.tmx";
+	bool map2Loaded = false;
+
 	int initialposx;
-		int initialposy;
+	int initialposy;
 
 private:
 };

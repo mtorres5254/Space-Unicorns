@@ -64,11 +64,9 @@ public:
 	input GetLeftRight();
 
 	void OnCollision(Collider* c1, Collider* c2);
-	void ChangeLevel1();
-	void ChangeLevel2();
-	//void RestartLevel1();
-	//void RestartLevel2();
-	//add colliders
+
+	void Restart();
+
 public:
 	
 	iPoint position;
@@ -102,7 +100,7 @@ public:
 	bool died = false;
 
 	bool has_jump = false;
-
+	bool has_col = true;
 	bool falling = true;
 
 	int maxjump;

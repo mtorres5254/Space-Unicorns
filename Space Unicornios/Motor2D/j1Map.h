@@ -107,6 +107,8 @@ public:
 	// Load new map
 	bool Load(const char* path);
 
+	bool ReLoad(const char* path);
+
 	void OnCollision(Collider* c1, Collider* c2);
 
 	// Coordinate translation methods

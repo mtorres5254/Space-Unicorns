@@ -154,10 +154,44 @@ bool j1Map::CleanUp()
 
 	while(item2 != NULL)
 	{
+		p2List_item<CustomProperties*>* item21;
+		item21 = item2->data->properties.start;
+
+		while (item21 != NULL)
+		{
+			RELEASE(item21->data);
+			item21 = item21->next;
+		}
+		item2->data->properties.clear();
+
 		RELEASE(item2->data);
 		item2 = item2->next;
 	}
 	data.layers.clear();
+
+	// Remove images layers
+	p2List_item<ImageLayer*>* item3;
+	item3 = data.img_layers.start;
+
+	while (item2 != NULL)
+	{
+		RELEASE(item3->data);
+		item3 = item3->next;
+	}
+	data.img_layers.clear();
+
+	// Remove colliders
+	p2List_item<Collider*>* item4;
+	item4 = data.colliders.start;
+
+	while (item4 != NULL)
+	{
+		item4->data->to_delete = true;
+		item4 = item4->next;
+	}
+	data.colliders.clear();
+
+	
 
 	// Clean up the pugui tree
 	map_file.reset();
@@ -264,6 +298,20 @@ bool j1Map::Load(const char* file_name)
 	}
 
 	map_loaded = ret;
+
+	return ret;
+}
+
+bool j1Map::ReLoad(const char* file_name) {
+	bool ret = true;
+
+	if (ret == true) {
+		ret = CleanUp();
+	}
+
+	if (ret == true) {
+		ret = Load(file_name);
+	}
 
 	return ret;
 }

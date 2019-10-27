@@ -10,6 +10,7 @@
 #include "j1Scene.h"
 #include "j1Collisions.h"
 #include "j1Player.h"
+#include "j1SceneChange.h"
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -35,8 +36,9 @@ bool j1Scene::Awake(pugi::xml_node& config)
 // Called before the first frame
 bool j1Scene::Start()
 {
+
 	//Load Map file
-	App->map->Load("mapa2.tmx");
+	App->map->Load(map1.GetString());
 	App->render->camera.x = 0;
 	App->render->camera.y = 0;
 	App->audio->PlayMusic("audio/music/Ambient.wav");
@@ -73,6 +75,9 @@ bool j1Scene::Update(float dt)
 
 	if(App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 		App->render->camera.x -= 10;
+
+	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
+		App->scene_change->ChangeMap(2.0f);
 
 	App->map->Draw();
 
