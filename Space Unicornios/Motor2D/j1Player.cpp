@@ -74,7 +74,7 @@ bool j1Player::Start() {
 
 	//load conditions
 	//flip = false
-	position.x = 0;//check positions 
+	position.x = 60;//check positions 
 	position.y = 0;
 	App->render->camera.x = 0;
 	App->render->camera.y = 0;
@@ -130,6 +130,7 @@ bool j1Player::PreUpdate() {
 bool j1Player::Update(float dt) { 
 	if (inputs != IN_JUMP && inputs != IN_JUMP_LEFT && inputs != IN_JUMP_RIGHT) {
 		maxjump = 0;
+		has_jump = false;
 		inputs = GetInput();
 	}
 
@@ -152,6 +153,8 @@ bool j1Player::Update(float dt) {
 		case IN_NONE:
 			Current_Animation = &idle;
 			break;
+		case IN_JUMP_LEFT:
+		case IN_JUMP_RIGHT:
 		case IN_JUMP:
 			if (jumping.Finished() == true) {
 				Current_Animation = &fall;
@@ -160,25 +163,48 @@ bool j1Player::Update(float dt) {
 				Current_Animation = &jumping;
 				App->audio->PlayFx(jumpingsound, 0);
 			}
-			//-----------
-			if (maxjump != JUMP) {
-				if (maxjump >= 0 && maxjump < JUMP / 2) {
-					position.y = position.y - JUMP_Y_SPEED;
-					maxjump++;
-				}
-				else if (maxjump >= JUMP / 2 && maxjump < JUMP - (JUMP / 3)) {
-					position.y = position.y - JUMP_Y_SPEED / 2;
-					maxjump++;
+			//-------------------------------
+			if (has_jump == false) {
+				if (maxjump != JUMP) {
+					if (maxjump >= 0 && maxjump < JUMP / 2) {
+						position.y = position.y - JUMP_Y_SPEED;
+						maxjump++;
+					}
+					else if (maxjump >= JUMP / 2 && maxjump < JUMP - (JUMP / 3)) {
+						position.y = position.y - JUMP_Y_SPEED / 2;
+						maxjump++;
+					}
+					else {
+						position.y = position.y - JUMP_Y_SPEED / 4;
+						maxjump++;
+					}
 				}
 				else {
-					position.y = position.y - JUMP_Y_SPEED / 4;
-					maxjump++;
+					inputs = IN_FALLING;
+					jumping.Reset();
 				}
 			}
-			else {
-				inputs = IN_FALLING;
-				jumping.Reset();
+			else if (has_jump == true) {
+				if (maxjump != JUMP) {
+					if (maxjump >= 0 && maxjump < JUMP / 2) {
+						position.y = position.y - JUMP_Y_SPEED;
+						maxjump++;
+					}
+					else if (maxjump >= JUMP / 2 && maxjump < JUMP - (JUMP / 3)) {
+						position.y = position.y - JUMP_Y_SPEED / 2;
+						maxjump++;
+					}
+					else {
+						position.y = position.y - JUMP_Y_SPEED / 4;
+						maxjump++;
+					}
+				}
+				else {
+					inputs = IN_FALLING;
+					jumping.Reset();
+				}
 			}
+			
 			//------------
 			if (inputtmp == IN_LEFT) {
 				position.x = position.x - JUMP_SPEED;
@@ -200,75 +226,6 @@ bool j1Player::Update(float dt) {
 			}
 
 			break;
-		case IN_JUMP_LEFT:
-			if (jumping.Finished() == true) {
-				Current_Animation = &fall;
-			}
-			else {
-				Current_Animation = &jumping;
-			}
-			//-----------
-			if (maxjump != JUMP) {
-				if (maxjump >= 0 && maxjump < JUMP / 2) {
-					position.y = position.y - JUMP_Y_SPEED;
-					maxjump++;
-				}
-				else if (maxjump >= JUMP / 2 && maxjump < JUMP - (JUMP / 3)) {
-					position.y = position.y - JUMP_Y_SPEED / 2;
-					maxjump++;
-				}
-				else {
-					position.y = position.y - JUMP_Y_SPEED / 4;
-					maxjump++;
-				}
-			}
-			else {
-				inputs = IN_FALLING;
-				jumping.Reset();
-			}
-			//------------
-			if (inputtmp == IN_LEFT) {
-				position.x = position.x - JUMP_SPEED;
-			}
-			if (inputtmp == IN_RIGHT) {
-				position.x = position.x + JUMP_SPEED;
-			}
-			break;
-		case IN_JUMP_RIGHT:
-			if (jumping.Finished() == true) {
-				Current_Animation = &fall;
-			}
-			else {
-				Current_Animation = &jumping;
-
-			}
-			//-----------
-			if (maxjump != JUMP) {
-				if (maxjump >= 0 && maxjump < JUMP / 2) {
-					position.y = position.y - JUMP_Y_SPEED;
-					maxjump++;
-				}
-				else if (maxjump >= JUMP / 2 && maxjump < JUMP - (JUMP / 3)) {
-					position.y = position.y - JUMP_Y_SPEED / 2;
-					maxjump++;
-				}
-				else {
-					position.y = position.y - JUMP_Y_SPEED / 4;
-					maxjump++;
-				}
-			}
-			else {
-				inputs = IN_FALLING;
-				jumping.Reset();
-			}
-			//------------
-			if (inputtmp == IN_LEFT) {
-				position.x = position.x - JUMP_SPEED;
-			}
-			if (inputtmp == IN_RIGHT) {
-				position.x = position.x + JUMP_SPEED;
-			}
-			break;
 		case IN_LEFT:
 			Current_Animation = &walking;
 			flip = SDL_FLIP_HORIZONTAL;
@@ -289,19 +246,26 @@ bool j1Player::Update(float dt) {
 
 			break;
 		}
+
+		if (has_jump == false && App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
+		{
+			has_jump = true;
+			jumping.Reset();
+			maxjump = 0;
+		}
 	}
 	else if (godmode == true) {
-	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
-		position.y += 10;
+	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
+		position.y += SPEED;
 
-	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
-		position.y -= 10;
+	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
+		position.y -= SPEED;
 
-	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
-		position.x += 10;
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+		position.x += SPEED;
 
-	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
-		position.x -= 10;
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+		position.x -= SPEED;
 
 	}
 
@@ -399,6 +363,8 @@ input j1Player::GetLeftRight() {
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
 		right2 = true;
 	}
+	
+
 
 	
 	if (right2 == true) {
@@ -415,50 +381,6 @@ input j1Player::GetLeftRight() {
 }
 
 void j1Player::OnCollision(Collider* c1, Collider* c2) {
-	/*
-	if (c1->type == COLLIDER_PLAYER) {
-		if (c2->type == COLLIDER_FLOOR) {
-			falling = false;
-			jump = false;
-
-			if (godmode = false) {
-				if (position.y >= c2->rect.y) {
-					jump = true;
-					Current_Animation = &fall;
-					//stop y+
-					if (position.x < c2->rect.x) {
-						right = false;
-						Current_Animation = &idle;
-						//stop x+
-					}
-					if (position.x > c2->rect.x) {
-						left = false;
-						Current_Animation = &idle;
-
-					}
-				}
-			}
-		}
-			if (c2->type ==COLLIDER_END) {
-				App->player->ChangeLevel2();
-			}
-			if (c2->type == COLLIDER_DEAD) {
-				right = false;
-				left = false;
-				jump = false;
-				falling = false;
-				crouch = false;
-				special = false;
-				died = true;
-				App->player->ChangeLevel1();
-				Current_Animation = &death;
-				//restart from level1(?)}
-			}
-			if (c2->type == COLLIDER_WIN) {
-				App->player->ChangeLevel1();
-				//restars game
-			}
-	}*/
 		if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_FLOOR) {
 			falling = false;
 		}

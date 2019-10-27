@@ -55,7 +55,6 @@ bool j1MapChange::Update(float dt)
 		{
 			if (now >= total_time)
 			{
-				App->player->Restart();
 				if (App->scene->map1Loaded == true) {
 					App->map->ReLoad(App->scene->map2.GetString());
 					App->scene->map1Loaded = false;
