@@ -59,6 +59,16 @@ struct MapLayer
 	}
 };
 
+struct ImageLayer {
+	p2SString name;
+	int offsetx;
+	int offsety;
+	SDL_Texture* text;
+	int img_width;
+	int img_height;
+	float paralax = 1.0f;
+};
+
 // ----------------------------------------------------
 struct TileSet
 {
@@ -97,6 +107,7 @@ struct MapData
 	MapTypes			type;
 	p2List<TileSet*>	tilesets;
 	p2List<MapLayer*>	layers;
+	p2List<ImageLayer*> img_layers;
 };
 
 // ----------------------------------------------------
@@ -132,6 +143,7 @@ private:
 	bool LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set);
 	bool LoadLayer(pugi::xml_node& node, MapLayer* layer);
 	bool LoadProperties(pugi::xml_node& node, Properties& properties);
+	bool LoadImgLayer(pugi::xml_node& node, ImageLayer* layer);
 
 	TileSet* GetTilesetFromTileId(int id) const;
 

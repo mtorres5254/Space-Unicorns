@@ -32,7 +32,12 @@ void j1Map::Draw()
 		return;
 
 	p2List_item<MapLayer*>* item = data.layers.start;
+	p2List_item<ImageLayer*>* img_layer = data.img_layers.start;
 
+	while (img_layer != NULL) {
+		App->render->Blit(img_layer->data->text, img_layer->data->offsetx, img_layer->data->offsety, NULL);
+		img_layer = img_layer->next;
+	}
 	for(; item != NULL; item = item->next)
 	{
 		MapLayer* layer = item->data;
@@ -236,6 +241,18 @@ bool j1Map::Load(const char* file_name)
 			data.layers.add(lay);
 	}
 
+	//Load images layer info ----------------------------------------
+	pugi::xml_node img_layer;
+	for (img_layer = map_file.child("map").child("imagelayer"); img_layer && ret; img_layer = img_layer.next_sibling("imagelayer")) {
+
+		ImageLayer* img_lay = new ImageLayer();
+
+		ret = LoadImgLayer(img_layer, img_lay);
+
+		if (ret == true)
+			data.img_layers.add(img_lay);
+	}
+
 	if(ret == true)
 	{
 		LOG("Successfully parsed map XML file: %s", file_name);
@@ -423,6 +440,32 @@ bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 			layer->data[i++] = tile.attribute("gid").as_int(0);
 		}
 	}
+
+	return ret;
+}
+
+bool j1Map::LoadImgLayer(pugi::xml_node& node, ImageLayer* layer) {
+	bool ret = true;
+
+	layer->name = node.attribute("name").as_string();
+	p2SString image;
+	if (layer->name == "Parallax") {
+		layer->paralax = 1.1f;
+	}
+
+	image = node.child("image").attribute("source").as_string();
+	p2SString tmp("%s%s", folder.GetString(), image.GetString());
+
+	layer->text = App->tex->Load(tmp.GetString());
+	layer->img_width = node.child("image").attribute("width").as_int();
+	layer->img_height = node.child("image").attribute("height").as_int();
+	layer->offsetx = node.attribute("offsetx").as_int();
+	layer->offsety = node.attribute("offsety").as_int();
+
+	LOG("LOADING IMG LAYER:------------------");
+	LOG("NAME: %s", layer->name.GetString());
+	LOG("TEXT: %s. img: %i x %i", image.GetString(), layer->img_width, layer->img_height);
+	LOG("offset x: %i y: %i", layer->offsetx, layer->offsety);
 
 	return ret;
 }
