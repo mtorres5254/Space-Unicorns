@@ -124,6 +124,7 @@ bool j1Input::PreUpdate(float dt)
 				mouse_x = event.motion.x / scale;
 				mouse_y = event.motion.y / scale;
 				//LOG("Mouse motion x %d y %d", mouse_motion_x, mouse_motion_y);
+				//LOG("Mouse motion x %d y %d", mouse_x, mouse_y);
 			break;
 		}
 	}

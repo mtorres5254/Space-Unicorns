@@ -57,9 +57,9 @@ bool j1Scene::PreUpdate(float dt)
 	static bool origin_selected = false;
 
 	int x, y;
-	App->input->GetMousePosition(x, y);
-	iPoint p = App->render->ScreenToWorld(x, y);
-	p = App->map->WorldToMap(p.x, p.y);
+	App->input->GetMousePosition(x, y);				//here we get mouse pixel position
+	iPoint p = App->render->ScreenToWorld(x, y);	// we convert the pixel info to world pixels info
+	p = App->map->WorldToMap(p.x, p.y);				//we convert the world position to tiles info
 
 	if(App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
 	{
@@ -115,12 +115,13 @@ bool j1Scene::Update(float dt)
 
 	// Debug pathfinding ------------------------------
 	//int x, y;
+
 	App->input->GetMousePosition(x, y);
 	iPoint p = App->render->ScreenToWorld(x, y);
 	p = App->map->WorldToMap(p.x, p.y);
 	p = App->map->MapToWorld(p.x, p.y);
 
-	App->render->Blit(debug_tex, p.x, p.y);
+	//App->render->Blit(debug_tex, p.x, p.y);
 
 	const p2DynArray<iPoint>* path = App->pathfinding->GetLastPath();
 
