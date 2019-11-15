@@ -1,6 +1,7 @@
 #include "p2Defs.h"
 #include "p2Log.h"
 #include "j1App.h"
+#include "j1Map.h"
 #include "j1PathFinding.h"
 
 j1PathFinding::j1PathFinding() : j1Module(), map(NULL), last_path(DEFAULT_PATH_LENGTH),width(0), height(0)
@@ -167,85 +168,91 @@ int PathNode::CalculateF(const iPoint& destination)
 // ----------------------------------------------------------------------------------
 int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 {
-	//clear last path
-	last_path.Clear();
+	if (App->map->data.type == MAPTYPE_ISOMETRIC) {
+		//clear last path
+		last_path.Clear();
 
-	// 1: if origin or destination are not walkable, return -1
-	if (IsWalkable(origin) == false || IsWalkable(destination) == false) {
-		return -1;
-	}
-
-	// 2: Create two lists: open, close
-	// Add the origin tile to open
-	// Iterate while we have tile in the open list
-	PathList open;
-	PathList close;
-
-	PathNode originNode(0, origin.DistanceManhattan(destination), origin, NULL);
-	open.list.add(originNode);
-
-	while (open.list.count() > 0) {
-
-		//  3: Move the lowest score cell from open list to the closed list
-		p2List_item<PathNode>* NodeVisited = open.GetNodeLowestScore();
-		close.list.add(NodeVisited->data);
-		open.list.del(NodeVisited);
-
-		//  4: If we just added the destination, we are done!
-		// Backtrack to create the final path
-		// Use the Pathnode::parent and Flip() the path when you are finish
-		p2List_item<PathNode>* Node = close.list.end;
-		if (Node->data.pos == destination) {
-
-			last_path.PushBack(Node->data.pos);
-			const PathNode* AuxFinal;
-			AuxFinal = &Node->data;
-
-			while (AuxFinal != NULL) {
-				last_path.PushBack(AuxFinal->pos);
-
-				AuxFinal = AuxFinal->parent;
-			}
-			last_path.Flip();
-			return 1;
+		// 1: if origin or destination are not walkable, return -1
+		if (IsWalkable(origin) == false || IsWalkable(destination) == false) {
+			return -1;
 		}
 
-		//  5: Fill a list of all adjancent nodes
-		PathList adjacent;
-		Node->data.FindWalkableAdjacents(adjacent);
-		p2List_item<PathNode>* AdjacentNode = adjacent.list.start;
+		// 2: Create two lists: open, close
+		// Add the origin tile to open
+		// Iterate while we have tile in the open list
+		PathList open;
+		PathList close;
 
-		//  6: Iterate adjancent nodes:
-		// ignore nodes in the closed list
-		// If it is NOT found, calculate its F and add it to the open list
-		// If it is already in the open list, check if it is a better path (compare G)
-		// If it is a better path, Update the parent
-		while (AdjacentNode != NULL) {
-			AdjacentNode->data.CalculateF(destination);
-			if (close.Find(AdjacentNode->data.pos) != NULL) {
-				AdjacentNode = AdjacentNode->next;
-				continue;
+		PathNode originNode(0, origin.DistanceManhattan(destination), origin, NULL);
+		open.list.add(originNode);
+
+		while (open.list.count() > 0) {
+
+			//  3: Move the lowest score cell from open list to the closed list
+			p2List_item<PathNode>* NodeVisited = open.GetNodeLowestScore();
+			close.list.add(NodeVisited->data);
+			open.list.del(NodeVisited);
+
+			//  4: If we just added the destination, we are done!
+			// Backtrack to create the final path
+			// Use the Pathnode::parent and Flip() the path when you are finish
+			p2List_item<PathNode>* Node = close.list.end;
+			if (Node->data.pos == destination) {
+
+				last_path.PushBack(Node->data.pos);
+				const PathNode* AuxFinal;
+				AuxFinal = &Node->data;
+
+				while (AuxFinal != NULL) {
+					last_path.PushBack(AuxFinal->pos);
+
+					AuxFinal = AuxFinal->parent;
+				}
+				last_path.Flip();
+				return 1;
 			}
 
-			if (open.Find(AdjacentNode->data.pos) != NULL) {
-				if (AdjacentNode->data.g < open.Find(AdjacentNode->data.pos)->data.g) {
-					open.Find(AdjacentNode->data.pos)->data.g = AdjacentNode->data.pos.DistanceTo(origin);
+			//  5: Fill a list of all adjancent nodes
+			PathList adjacent;
+			Node->data.FindWalkableAdjacents(adjacent);
+			p2List_item<PathNode>* AdjacentNode = adjacent.list.start;
+
+			//  6: Iterate adjancent nodes:
+			// ignore nodes in the closed list
+			// If it is NOT found, calculate its F and add it to the open list
+			// If it is already in the open list, check if it is a better path (compare G)
+			// If it is a better path, Update the parent
+			while (AdjacentNode != NULL) {
+				AdjacentNode->data.CalculateF(destination);
+				if (close.Find(AdjacentNode->data.pos) != NULL) {
+					AdjacentNode = AdjacentNode->next;
+					continue;
+				}
+
+				if (open.Find(AdjacentNode->data.pos) != NULL) {
+					if (AdjacentNode->data.g < open.Find(AdjacentNode->data.pos)->data.g) {
+						open.Find(AdjacentNode->data.pos)->data.g = AdjacentNode->data.pos.DistanceTo(origin);
+
+						AdjacentNode = AdjacentNode->next;
+						continue;
+					}
+				}
+				else {
+					PathNode NextNode(AdjacentNode->data.g, AdjacentNode->data.h, AdjacentNode->data.pos, AdjacentNode->data.parent);
+					open.list.add(NextNode);
 
 					AdjacentNode = AdjacentNode->next;
 					continue;
 				}
-			}
-			else {
-				PathNode NextNode(AdjacentNode->data.g, AdjacentNode->data.h, AdjacentNode->data.pos, AdjacentNode->data.parent);
-				open.list.add(NextNode);
 
 				AdjacentNode = AdjacentNode->next;
-				continue;
 			}
-
-			AdjacentNode = AdjacentNode->next;
 		}
+		return -1;
 	}
-	return -1;
+	else if (App->map->data.type == MAPTYPE_ORTHOGONAL) {
+
+		return -1;
+	}
 }
 

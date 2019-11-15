@@ -214,7 +214,7 @@ void j1App::FinishUpdate()
 		SDL_Delay(max_frame_ms - last_frame_ms);
 		LOG("We waited for %i miliseconds and got back in %f", (int)max_frame_ms, Delay_ms.ReadMs());
 	}
-	// TODO3: Measure accurately the amount of time it SDL_Delay actually waits compared to what was expected
+	// 3: Measure accurately the amount of time it SDL_Delay actually waits compared to what was expected
 }
 
 // Call modules before each loop iteration
