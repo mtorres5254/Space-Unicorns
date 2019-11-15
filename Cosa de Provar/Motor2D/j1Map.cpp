@@ -4,6 +4,8 @@
 #include "j1Render.h"
 #include "j1Textures.h"
 #include "j1Map.h"
+#include "j1Collisions.h"
+#include "j1Entities.h"
 #include <math.h>
 
 j1Map::j1Map() : j1Module(), map_loaded(false)
@@ -267,6 +269,11 @@ bool j1Map::Load(const char* file_name)
 			data.img_layers.add(img_lay);
 	}
 
+	//Load Colliders info ------------------------------------------
+	if (ret == true) {
+		ret = LoadColliders(map_file.child("map"));
+	}
+
 	if(ret == true)
 	{
 		LOG("Successfully parsed map XML file: %s", file_name);
@@ -514,6 +521,60 @@ bool j1Map::LoadProperties(pugi::xml_node& node, Properties& properties)
 	}
 
 	return ret;
+}
+
+bool j1Map::LoadColliders(pugi::xml_node& node) {
+	bool ret = true;
+	COLLIDER_TYPE coltype;
+	p2SString type;
+	j1Module* call = nullptr;
+
+	pugi::xml_node objectgroup;
+	for (objectgroup = node.child("objectgroup"); objectgroup && ret; objectgroup = objectgroup.next_sibling("objectgroup"))
+	{
+		p2SString clas = objectgroup.attribute("name").as_string();
+		if (clas == "colliders") {
+			pugi::xml_node object;
+			for (object = objectgroup.child("object"); object && ret; object = object.next_sibling("object")) {
+
+				SDL_Rect rect;
+				type = object.attribute("name").as_string();
+				if (type == "Floor")
+				{
+					coltype = COLLIDER_FLOOR;
+					LOG("Collider floor");
+					call = App->map;
+				}
+				else if (type == "Wall") {
+					coltype = COLLIDER_WALL;
+					LOG("Collider wall");
+					call = App->map;
+				}
+				else if (type == "Dead") {
+					coltype = COLLIDER_DEAD;
+					LOG("Collider dead");
+				}
+				else if (type == "End") {
+					coltype = COLLIDER_END;
+					LOG("Collider end");
+				}
+				else
+				{
+					LOG("Collider type undefined");
+					continue;
+				}
+
+				rect.x = object.attribute("x").as_int();
+				rect.y = object.attribute("y").as_int();
+				rect.w = object.attribute("width").as_int();
+				rect.h = object.attribute("heigth").as_int();
+
+				data.colliders.add(App->col->AddCollider(rect, coltype, call));
+				LOG("%i x %i", rect.x, rect.y);
+			}
+		}
+	}
+	return true;
 }
 
 bool j1Map::CreateWalkabilityMap(int& width, int& height, uchar** buffer) const

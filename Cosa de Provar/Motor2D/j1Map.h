@@ -9,6 +9,9 @@
 #include "SDL/include/SDL.h"
 
 // ----------------------------------------------------
+
+struct Collider;
+
 struct Properties
 {
 	struct Property
@@ -111,6 +114,7 @@ struct MapData
 	p2List<TileSet*>	tilesets;
 	p2List<MapLayer*>	layers;
 	p2List<ImageLayer*> img_layers;
+	p2List<Collider*>   colliders;
 };
 
 // ----------------------------------------------------
@@ -147,6 +151,7 @@ private:
 	bool LoadLayer(pugi::xml_node& node, MapLayer* layer);
 	bool LoadProperties(pugi::xml_node& node, Properties& properties);
 	bool LoadImgLayer(pugi::xml_node& node, ImageLayer* layer);
+	bool LoadColliders(pugi::xml_node& node);
 
 	TileSet* GetTilesetFromTileId(int id) const;
 

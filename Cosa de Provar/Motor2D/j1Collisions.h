@@ -64,9 +64,6 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	// Load new map
-	bool LoadColliders(pugi::xml_node& node);
-
 	Collider* AddCollider(SDL_Rect rectC, COLLIDER_TYPE typeC, j1Module* callbackC = nullptr);
 	void DebugDraw();
 	void DeleteCollider(Collider*);

@@ -8,12 +8,11 @@
 #include "j1Map.h"
 #include "j1Audio.h"
 #include "p2Log.h"
-#include "j1SceneChange.h"
 #include "SDL/include/SDL_timer.h"
 
 //include SDL_timer.h
 
-j1Player::j1Player() {
+j1Player::j1Player(iPoint pos) : Entity(EntityType::player) {
 
 	//add animation pushbacks
 	
@@ -61,6 +60,7 @@ j1Player::j1Player() {
 	death.PushBack({});
 	death.speed = 0.1f;
 
+	col = App->col->AddCollider({ position.x, position.y, 50, 50 }, COLLIDER_PLAYER, App->entity);
 }
 
 j1Player::~j1Player()
@@ -73,11 +73,6 @@ bool j1Player::Awake(pugi::xml_node& conf) {
 bool j1Player::Start() {
 
 	//load conditions
-	//flip = false
-	position.x = 60;//check positions 
-	position.y = 0;
-	App->render->camera.x = 0;
-	App->render->camera.y = 0;
 	Current_Animation = &idle;
 
 	//load graphics
@@ -87,7 +82,6 @@ bool j1Player::Start() {
 	}
 	//load sounds and collisions
 	jumpingsound = App->audio->LoadFx("audio/fx/jump.wav");
-	col = App->col->AddCollider({ position.x, position.y, 37, 80 }, COLLIDER_PLAYER, this);
 	
 	bool godmode = false;
 	bool jump = false;
@@ -100,6 +94,8 @@ bool j1Player::Start() {
 	bool has_jump = false;
 	bool has_col = true;
 	bool falling = true;
+
+	col = App->col->AddCollider({ position.x, position.y, 50, 50 }, COLLIDER_PLAYER, App->entity);
 
 	return true;
 }
@@ -127,7 +123,7 @@ bool j1Player::PreUpdate() {
 
 
 
-bool j1Player::Update(float dt) { 
+void j1Player::Update(float dt) { 
 	if (inputs != IN_JUMP && inputs != IN_JUMP_LEFT && inputs != IN_JUMP_RIGHT) {
 		maxjump = 0;
 		has_jump = false;
@@ -135,7 +131,7 @@ bool j1Player::Update(float dt) {
 	}
 
 	if (has_col == false && godmode == false) {
-		col = App->col->AddCollider({ position.x, position.y, 37, 80 }, COLLIDER_PLAYER, this);
+		col = App->col->AddCollider({ position.x, position.y, 50, 50 }, COLLIDER_PLAYER, App->entity);
 		has_col = true;
 	}
 
@@ -271,7 +267,6 @@ bool j1Player::Update(float dt) {
 
 	col->SetPos(position.x, position.y);
 	App->render->Blit(graphics, position.x, position.y, &(Current_Animation->GetCurrentFrame()), 1.0f, 0, 0, 0, flip);
-	return true; 
 }
 
 
@@ -381,10 +376,5 @@ input j1Player::GetLeftRight() {
 }
 
 void j1Player::OnCollision(Collider* c1, Collider* c2) {
-		if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_FLOOR) {
-			falling = false;
-		}
-		if (c1->type == COLLIDER_PLAYER && c2->type == COLLIDER_END) {
-			App->scene_change->ChangeMap(2.0f);
-		}
+
 	}

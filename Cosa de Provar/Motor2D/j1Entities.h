@@ -6,7 +6,7 @@
 #include "p2List.h"
 #include "j1Render.h"
 
-
+struct Collider;
 
 class Entity
 {
@@ -22,6 +22,8 @@ public:
 	EntityType type;
 	SDL_Texture* sprite;
 
+	Collider* col;
+
 	//-------------------
 	Entity::Entity(EntityType type) : type(type)
 	{}
@@ -29,6 +31,7 @@ public:
 	virtual void Update(float dt) {}
 	virtual void Draw() {}
 	virtual void HandeInput() {}
+	virtual void OnCollision(Collider* c1, Collider* c2) {}
 };
 
 class j1Entities : public j1Module 
@@ -39,8 +42,9 @@ public:
 
 	bool Update(float dt);
 	bool Awake(pugi::xml_node& config);
+	void OnCollision(Collider* c1, Collider* c2);
 
-	Entity* CreateEntity(Entity::EntityType type);
+	Entity* CreateEntity(Entity::EntityType type, iPoint pos);
 	void DestroyEntity(Entity* entity);
 
 private:

@@ -50,7 +50,7 @@ struct Collider;
 
 class j1Player :public Entity{
 public:
-	j1Player();
+	j1Player(iPoint pos);
 	~j1Player();
 
 
@@ -84,11 +84,8 @@ public:
 	Animation death;
 	Animation special_anim;
 
-	//------------------
+	//------------------	
 	Collider* col;
-	Collider* col_prova;
-	
-	SDL_Rect rectplayer;
 
 	SDL_RendererFlip flip = SDL_FLIP_NONE;
 	

@@ -62,58 +62,6 @@ bool j1Collisions::Awake(pugi::xml_node& config) {
 	return true;
 }
 
-bool j1Collisions::LoadColliders(pugi::xml_node& node) {
-	bool ret = true;
-	COLLIDER_TYPE coltype;
-	p2SString type;
-	j1Module* call = nullptr;
-
-	pugi::xml_node objectgroup;
-	for (objectgroup = node.child("objectgroup"); objectgroup && ret; objectgroup = objectgroup.next_sibling("objectgroup"))
-	{
-		pugi::xml_node object;
-		for (object = objectgroup.child("object"); object && ret; object = object.next_sibling("object")) {
-
-			SDL_Rect rect;
-			type = object.attribute("name").as_string();
-			if (type == "Floor")
-			{
-				coltype = COLLIDER_FLOOR;
-				LOG("Collider floor");
-				call = App->map;
-				
-			}
-			else if (type == "Wall") {
-				coltype = COLLIDER_WALL;
-				LOG("Collider wall");
-				call = App->map;
-			}
-			else if (type == "Dead") {
-				coltype = COLLIDER_DEAD;
-				LOG("Collider dead");
-			}
-			else if (type == "End") {
-				coltype = COLLIDER_END;
-				LOG("Collider end");
-			}
-			else
-			{
-				LOG("Collider type undefined");
-				continue;
-			}
-
-			rect.x = object.attribute("x").as_int();
-			rect.y = object.attribute("y").as_int();
-			rect.w = object.attribute("width").as_int();
-			rect.h = object.attribute("heigth").as_int();
-
-			App->map->data.colliders.add(AddCollider(rect, coltype, call));
-				LOG("%i x %i", rect.x, rect.y);
-		}
-	}
-	return true;
-}
-
 bool j1Collisions::PreUpdate() {
 	//Remove all colliders scheduled for deletion
 	for (uint i = 0; i < MAX_COLLIDERS; ++i) {
@@ -207,32 +155,6 @@ void j1Collisions::DebugDraw() {
 			App->render->DrawQuad(colliders[i]->rect, 255, 0, 0, alpha);
 			break;
 		}
-	}
-
-	p2List_item<Collider*>* col = App->map->data.colliders.start;
-	while (col != NULL) {
-		switch (col->data->type)
-		{
-		case COLLIDER_PLAYER: // green
-			App->render->DrawQuad(col->data->rect, 0, 255, 0, alpha);
-			break;
-		case COLLIDER_ENEMY: // red
-			App->render->DrawQuad(col->data->rect, 255, 0, 0, alpha);
-			break;
-		case COLLIDER_FLOOR: // blue
-			App->render->DrawQuad(col->data->rect, 255, 255, 0, alpha);
-			break;
-		case COLLIDER_WALL:
-			App->render->DrawQuad(col->data->rect, 0, 0, 255, alpha);
-			break;
-		case COLLIDER_END:
-			App->render->DrawQuad(col->data->rect, 0, 255, 255, alpha);
-			break;
-		case COLLIDER_DEAD:
-			App->render->DrawQuad(col->data->rect, 255, 0, 0, alpha);
-			break;
-		}
-		col = col->next;
 	}
 }
 
