@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="202" height="116" tilewidth="32" tileheight="32" infinite="0" nextlayerid="39" nextobjectid="258">
+<map version="1.2" tiledversion="1.2.5" orientation="orthogonal" renderorder="right-down" width="202" height="116" tilewidth="32" tileheight="32" infinite="0" nextlayerid="39" nextobjectid="258">
  <tileset firstgid="1" name="TilesetMap2" tilewidth="32" tileheight="32" tilecount="60" columns="15">
   <image source="tilesetguay.png" trans="ff00ff" width="480" height="128"/>
  </tileset>
  <imagelayer id="32" name="Background" locked="1">
-  <image source="aw_back.png" width="8504" height="1101"/>
+  <image source="aw_back.png" width="6652" height="1158"/>
+  <properties>
+   <property name="Parallax" type="float" value="0.5"/>
+  </properties>
  </imagelayer>
- <imagelayer id="38" name="Front">
-  <image source="aw_front.png" width="8504" height="1101"/>
+ <imagelayer id="38" name="Front" offsetx="4" offsety="120">
+  <image source="aw_front.png" width="6652" height="1158"/>
+  <properties>
+   <property name="Parallax" type="float" value="1.1"/>
+  </properties>
  </imagelayer>
  <layer id="35" name="Capa de patrones 1" width="202" height="116">
   <properties>

@@ -9,7 +9,7 @@
 
 j1Audio::j1Audio() : j1Module()
 {
-	music = NULL;
+	back_music = NULL;
 	name.create("audio");
 }
 
@@ -61,9 +61,9 @@ bool j1Audio::CleanUp()
 
 	LOG("Freeing sound FX, closing Mixer and Audio subsystem");
 
-	if(music != NULL)
+	if(back_music != NULL)
 	{
-		Mix_FreeMusic(music);
+		Mix_FreeMusic(back_music);
 	}
 
 	p2List_item<Mix_Chunk*>* item;
@@ -87,7 +87,7 @@ bool j1Audio::PlayMusic(const char* path, float fade_time)
 	if(!active)
 		return false;
 
-	if(music != NULL)
+	if(back_music != NULL)
 	{
 		if(fade_time > 0.0f)
 		{
@@ -99,12 +99,12 @@ bool j1Audio::PlayMusic(const char* path, float fade_time)
 		}
 
 		// this call blocks until fade out is done
-		Mix_FreeMusic(music);
+		Mix_FreeMusic(back_music);
 	}
 
-	music = Mix_LoadMUS(path);
+	back_music = Mix_LoadMUS(path);
 
-	if(music == NULL)
+	if(back_music == NULL)
 	{
 		LOG("Cannot load music %s. Mix_GetError(): %s\n", path, Mix_GetError());
 		ret = false;
@@ -113,7 +113,7 @@ bool j1Audio::PlayMusic(const char* path, float fade_time)
 	{
 		if(fade_time > 0.0f)
 		{
-			if(Mix_FadeInMusic(music, -1, (int) (fade_time * 1000.0f)) < 0)
+			if(Mix_FadeInMusic(back_music, -1, (int) (fade_time * 1000.0f)) < 0)
 			{
 				LOG("Cannot fade in music %s. Mix_GetError(): %s", path, Mix_GetError());
 				ret = false;
@@ -121,7 +121,7 @@ bool j1Audio::PlayMusic(const char* path, float fade_time)
 		}
 		else
 		{
-			if(Mix_PlayMusic(music, -1) < 0)
+			if(Mix_PlayMusic(back_music, -1) < 0)
 			{
 				LOG("Cannot play in music %s. Mix_GetError(): %s", path, Mix_GetError());
 				ret = false;
@@ -170,4 +170,7 @@ bool j1Audio::PlayFx(unsigned int id, int repeat)
 	}
 
 	return ret;
+}
+void j1Audio::StopFx() {
+	Mix_HaltChannel(-1);
 }

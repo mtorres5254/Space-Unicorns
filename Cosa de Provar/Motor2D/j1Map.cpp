@@ -35,7 +35,7 @@ void j1Map::Draw()
 	p2List_item<ImageLayer*>* img_layer = data.img_layers.start;
 
 	while (img_layer != NULL) {
-		App->render->Blit(img_layer->data->text, img_layer->data->offsetx, img_layer->data->offsety, NULL);
+		App->render->Blit(img_layer->data->text, img_layer->data->offsetx, img_layer->data->offsety, NULL, img_layer->data->properties.GetFloat("Parallax"));
 		img_layer = img_layer->next;
 	}
 	for(; item != NULL; item = item->next)
@@ -72,6 +72,20 @@ int Properties::Get(const char* value, int default_value) const
 	{
 		if(item->data->name == value)
 			return item->data->value;
+		item = item->next;
+	}
+
+	return default_value;
+}
+
+float Properties::GetFloat(const char* value, int default_value) const
+{
+	p2List_item<Property*>* item = list.start;
+
+	while (item)
+	{
+		if (item->data->name == value)
+			return item->data->f_value;
 		item = item->next;
 	}
 
@@ -449,9 +463,6 @@ bool j1Map::LoadImgLayer(pugi::xml_node& node, ImageLayer* layer) {
 
 	layer->name = node.attribute("name").as_string();
 	p2SString image;
-	if (layer->name == "Parallax") {
-		layer->paralax = 1.1f;
-	}
 
 	image = node.child("image").attribute("source").as_string();
 	p2SString tmp("%s%s", folder.GetString(), image.GetString());
@@ -461,6 +472,8 @@ bool j1Map::LoadImgLayer(pugi::xml_node& node, ImageLayer* layer) {
 	layer->img_height = node.child("image").attribute("height").as_int();
 	layer->offsetx = node.attribute("offsetx").as_int();
 	layer->offsety = node.attribute("offsety").as_int();
+
+	LoadProperties(node, layer->properties);
 
 	LOG("LOADING IMG LAYER:------------------");
 	LOG("NAME: %s", layer->name.GetString());
@@ -486,7 +499,15 @@ bool j1Map::LoadProperties(pugi::xml_node& node, Properties& properties)
 			Properties::Property* p = new Properties::Property();
 
 			p->name = prop.attribute("name").as_string();
-			p->value = prop.attribute("value").as_int();
+			p->type = prop.attribute("type").as_string();
+			if (p->type == "int") {
+				p->value = prop.attribute("value").as_int();
+			}
+			else if (p->type == "float") {
+				p->f_value = prop.attribute("value").as_float();
+			}
+			
+
 
 			properties.list.add(p);
 		}

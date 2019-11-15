@@ -14,6 +14,8 @@ struct Properties
 	struct Property
 	{
 		p2SString name;
+		p2SString type;
+		float f_value;
 		int value;
 	};
 
@@ -32,6 +34,7 @@ struct Properties
 	}
 
 	int Get(const char* name, int default_value = 0) const;
+	float GetFloat(const char* name, int default_value = 0) const;
 
 	p2List<Property*>	list;
 };
@@ -66,7 +69,7 @@ struct ImageLayer {
 	SDL_Texture* text;
 	int img_width;
 	int img_height;
-	float paralax = 1.0f;
+	Properties	properties;
 };
 
 // ----------------------------------------------------

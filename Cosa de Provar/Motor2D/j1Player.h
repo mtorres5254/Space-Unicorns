@@ -6,6 +6,7 @@
 #include "j1Module.h"
 #include "SDL/include/SDL.h"
 #include "j1Animations.h"
+#include "j1Entities.h"
 
 #define INPUTSOUTS 7
 #define JUMP 80
@@ -47,7 +48,7 @@ enum inputout {
 
 struct Collider;
 
-class j1Player :public j1Module {
+class j1Player :public Entity{
 public:
 	j1Player();
 	~j1Player();
@@ -56,7 +57,7 @@ public:
 	bool Start();
 	bool Awake(pugi::xml_node& conf);
 	bool PreUpdate();
-	bool Update(float dt);
+	void Update(float dt);
 	bool PostUpdate();
 	bool CleanUp();
 

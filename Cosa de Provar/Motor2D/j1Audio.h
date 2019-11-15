@@ -2,6 +2,7 @@
 #define __j1AUDIO_H__
 
 #include "j1Module.h"
+#include "SDL_mixer/include/SDL_mixer.h"
 
 #define DEFAULT_MUSIC_FADE_TIME 2.0f
 
@@ -31,10 +32,10 @@ public:
 
 	// Play a previously loaded WAV
 	bool PlayFx(unsigned int fx, int repeat = 0);
-
+	void StopFx();
 private:
 
-	_Mix_Music*			music = NULL;
+	Mix_Music* back_music;
 	p2List<Mix_Chunk*>	fx;
 };
 
