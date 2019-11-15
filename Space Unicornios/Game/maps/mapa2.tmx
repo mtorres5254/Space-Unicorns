@@ -23441,7 +23441,7 @@
   </data>
  </layer>
  <objectgroup id="37" name="colliders">
-  <object id="156" name="Floor" x="1" y="769" width="413" height="30" rotation="-180"/>
+  <object id="156" name="Floor" x="415" y="805" width="413" height="30" rotation="-180"/>
   <object id="157" name="Floor" x="417" y="738" width="29" height="29"/>
   <object id="158" name="Floor" x="450" y="779" width="29" height="23"/>
   <object id="159" name="Floor" x="482" y="802" width="125" height="23"/>
