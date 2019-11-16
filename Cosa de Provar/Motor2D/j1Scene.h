@@ -4,6 +4,7 @@
 #include "j1Module.h"
 
 struct SDL_Texture;
+struct j1Player;
 
 class j1Scene : public j1Module
 {
@@ -33,7 +34,7 @@ public:
 	bool CleanUp();
 
 private:
-	SDL_Texture* debug_tex;
+	j1Player* player;
 };
 
 #endif // __j1SCENE_H__

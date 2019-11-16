@@ -13,14 +13,11 @@
 //include SDL_timer.h
 
 j1Player::j1Player(iPoint pos) : Entity(EntityType::player) {
-
-	//add animation pushbacks
-	
 	
 	//IDLE
-	idle.PushBack({2 , 2 , 37 , 74});
-	idle.PushBack({42 , 4 , 34 , 72});
-	idle.PushBack({82 , 4 , 33 , 72});
+	idle.PushBack({ 2,2,37,74 });
+	idle.PushBack({ 42,4,34,72 });
+	idle.PushBack({ 82 , 4 , 33 , 72});
 	idle.PushBack({123 , 6 , 29 , 70});
 	idle.PushBack({162 , 2 , 37 , 74});
 	idle.speed = 0.05f;
@@ -36,7 +33,7 @@ j1Player::j1Player(iPoint pos) : Entity(EntityType::player) {
 	walking.PushBack({ 435,82,47,67 });
 	walking.PushBack({ 495,84,55,61 });
 	walking.PushBack({ 560,86,41,65 });
-	walking.speed = 0.12f; //no son sprites corrent per tant camina tot puesto com la policia nacional
+	walking.speed = 0.12f;
 
 	//CROUCH
 	crouching.PushBack({ 208, 32, 43, 44 });
@@ -60,29 +57,17 @@ j1Player::j1Player(iPoint pos) : Entity(EntityType::player) {
 	death.PushBack({});
 	death.speed = 0.1f;
 
-	col = App->col->AddCollider({ position.x, position.y, 50, 50 }, COLLIDER_PLAYER, App->entity);
-}
-
-j1Player::~j1Player()
-{}
-
-bool j1Player::Awake(pugi::xml_node& conf) {
-	return true;
-}
-
-bool j1Player::Start() {
-
 	//load conditions
 	Current_Animation = &idle;
 
 	//load graphics
-	graphics = App->tex->Load("textures/player.png");
-	if (graphics == NULL) {
-		return false;
+	sprite = App->tex->Load("textures/player.png");
+	if (sprite == NULL) {
+		LOG("Error loading graphics");
 	}
 	//load sounds and collisions
 	jumpingsound = App->audio->LoadFx("audio/fx/jump.wav");
-	
+
 	bool godmode = false;
 	bool jump = false;
 	bool left = false;
@@ -96,285 +81,30 @@ bool j1Player::Start() {
 	bool falling = true;
 
 	col = App->col->AddCollider({ position.x, position.y, 50, 50 }, COLLIDER_PLAYER, App->entity);
-
-	return true;
 }
 
-void j1Player::Restart() {
-	CleanUp();
-	Start();
-}
-
-bool j1Player::CleanUp() {
+j1Player::~j1Player()
+{
 	//unload graphics
-	App->tex->UnLoad(graphics);
+	App->tex->UnLoad(sprite);
 	App->audio->StopFx();
 	App->col->DeleteCollider(col);
-	return true;
 }
-
-bool j1Player::PreUpdate() {
-	flip = SDL_FLIP_NONE;
-	if (position.x < 0) {
-		position.x = 0;
-	}
-	return true;
-}
-
-
 
 void j1Player::Update(float dt) { 
-	if (inputs != IN_JUMP && inputs != IN_JUMP_LEFT && inputs != IN_JUMP_RIGHT) {
-		maxjump = 0;
-		has_jump = false;
-		inputs = GetInput();
-	}
+	Current_Animation = &idle;
 
-	if (has_col == false && godmode == false) {
-		col = App->col->AddCollider({ position.x, position.y, 50, 50 }, COLLIDER_PLAYER, App->entity);
-		has_col = true;
-	}
-
-	if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) {
-		godmode = !godmode;
-		has_col = false;
-		App->col->DeleteCollider(col);
-	}
-
-	input inputtmp = GetLeftRight();
-	
-	if (godmode == false) {
-		switch (inputs)
-		{
-		case IN_NONE:
-			Current_Animation = &idle;
-			break;
-		case IN_JUMP_LEFT:
-		case IN_JUMP_RIGHT:
-		case IN_JUMP:
-			if (jumping.Finished() == true) {
-				Current_Animation = &fall;
-			}
-			else {
-				Current_Animation = &jumping;
-				App->audio->PlayFx(jumpingsound, 0);
-			}
-			//-------------------------------
-			if (has_jump == false) {
-				if (maxjump != JUMP) {
-					if (maxjump >= 0 && maxjump < JUMP / 2) {
-						position.y = position.y - JUMP_Y_SPEED;
-						maxjump++;
-					}
-					else if (maxjump >= JUMP / 2 && maxjump < JUMP - (JUMP / 3)) {
-						position.y = position.y - JUMP_Y_SPEED / 2;
-						maxjump++;
-					}
-					else {
-						position.y = position.y - JUMP_Y_SPEED / 4;
-						maxjump++;
-					}
-				}
-				else {
-					inputs = IN_FALLING;
-					jumping.Reset();
-				}
-			}
-			else if (has_jump == true) {
-				if (maxjump != JUMP) {
-					if (maxjump >= 0 && maxjump < JUMP / 2) {
-						position.y = position.y - JUMP_Y_SPEED;
-						maxjump++;
-					}
-					else if (maxjump >= JUMP / 2 && maxjump < JUMP - (JUMP / 3)) {
-						position.y = position.y - JUMP_Y_SPEED / 2;
-						maxjump++;
-					}
-					else {
-						position.y = position.y - JUMP_Y_SPEED / 4;
-						maxjump++;
-					}
-				}
-				else {
-					inputs = IN_FALLING;
-					jumping.Reset();
-				}
-			}
-			
-			//------------
-			if (inputtmp == IN_LEFT) {
-				position.x = position.x - JUMP_SPEED;
-			}
-			if (inputtmp == IN_RIGHT) {
-				position.x = position.x + JUMP_SPEED;
-			}
-
-			break;
-		case IN_FALLING:
-			Current_Animation = &fall;
-			position.y = position.y + (int)(3 * dt);
-
-			if (inputtmp == IN_LEFT) {
-				position.x = position.x - JUMP_SPEED;
-			}
-			if (inputtmp == IN_RIGHT) {
-				position.x = position.x + JUMP_SPEED;
-			}
-
-			break;
-		case IN_LEFT:
-			Current_Animation = &walking;
-			flip = SDL_FLIP_HORIZONTAL;
-			//-----------
-			position.x = position.x - SPEED;
-			break;
-		case IN_RIGHT:
-			Current_Animation = &walking;
-			//-----------
-			position.x = position.x + SPEED;
-			break;
-		case IN_CROUCH:
-			Current_Animation = &crouching;
-
-			break;
-		case IN_SPECIAL:
-			Current_Animation = &special_anim;
-
-			break;
-		}
-
-		if (has_jump == false && App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
-		{
-			has_jump = true;
-			jumping.Reset();
-			maxjump = 0;
-		}
-	}
-	else if (godmode == true) {
-	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
-		position.y += SPEED;
-
-	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
-		position.y -= SPEED;
-
-	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
-		position.x += SPEED;
-
-	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
-		position.x -= SPEED;
-
-	}
-
-	col->SetPos(position.x, position.y);
-	App->render->Blit(graphics, position.x, position.y, &(Current_Animation->GetCurrentFrame()), 1.0f, 0, 0, 0, flip);
+	App->render->Blit(sprite, position.x, position.y, &Current_Animation->GetCurrentFrame(), 1.0f, NULL, NULL, NULL, SDL_FLIP_NONE);
 }
 
+void j1Player::Draw() {
 
-bool j1Player::PostUpdate() {
-	if (inputs != IN_JUMP && inputs != IN_JUMP_LEFT && inputs != IN_JUMP_RIGHT) {
-		falling = true;
-	}
-	if (inputs == IN_JUMP && inputs == IN_JUMP_LEFT && inputs == IN_JUMP_RIGHT) {
-		falling = false;
-	}
-	return true;
 }
 
-input j1Player::GetInput() {
+void j1Player::HandeInput() {
 
-	input in = IN_NONE;
-	bool jump = false;
-	bool left = false;
-	bool right = false;
-	bool crouch = false;
-	bool special = false;
-
-		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
-			crouch = true;
-
-		}
-		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
-			left = true;
-		}
-		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
-			right = true;
-		}
-		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
-			special = true;
-		}
-		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN) {
-			jump = true;
-		}
-		else {
-			in = IN_NONE;
-		}
-
-		if (jump == true) {
-			in = IN_JUMP;
-		}
-
-		if (left == true) {
-			in = IN_LEFT;
-		}
-		if (right == true) {
-			in = IN_RIGHT;
-		}
-		if (left == true && right == true) {
-			in = IN_NONE;
-		}
-
-		if (special == true) {
-			in = IN_SPECIAL;
-		}
-
-		if (crouch == true) {
-			in = IN_CROUCH;
-
-		}
-
-		if (jump == true && left == true) {
-			in = IN_JUMP_LEFT;
-		}
-		if (jump == true && right == true) {
-			in = IN_JUMP_RIGHT;
-		}
-
-		if (falling == true) {
-			in = IN_FALLING;
-		}
-
-		return in;
-}
-
-input j1Player::GetLeftRight() {
-	input in = IN_NONE;
-
-	bool left2 = false;
-	bool right2 = false;
-
-	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
-		left2 = true;
-	}
-	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
-		right2 = true;
-	}
-	
-
-
-	
-	if (right2 == true) {
-		in = IN_RIGHT;
-	}
-	if (left2 == true) {
-		in = IN_LEFT;
-	}
-	if (left2 == true && right2 == true) {
-		in = IN_NONE;
-	}
-
-	return in;
 }
 
 void j1Player::OnCollision(Collider* c1, Collider* c2) {
 
-	}
+}

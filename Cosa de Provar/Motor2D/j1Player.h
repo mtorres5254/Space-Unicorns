@@ -54,26 +54,12 @@ public:
 	~j1Player();
 
 
-	bool Start();
-	bool Awake(pugi::xml_node& conf);
-	bool PreUpdate();
 	void Update(float dt);
-	bool PostUpdate();
-	bool CleanUp();
-
-	input GetInput();
-	input GetLeftRight();
-
+	void Draw();
+	void HandeInput();
 	void OnCollision(Collider* c1, Collider* c2);
 
-	void Restart();
-
 public:
-	
-	iPoint position;
-
-
-	SDL_Texture* graphics = nullptr;
 
 	Animation* Current_Animation;
 	Animation idle;

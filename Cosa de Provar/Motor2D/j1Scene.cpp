@@ -8,6 +8,7 @@
 #include "j1Window.h"
 #include "j1Map.h"
 #include "j1PathFinding.h"
+#include "j1Player.h"
 #include "j1Scene.h"
 
 #define CAMERA_SPEED 500
@@ -43,7 +44,11 @@ bool j1Scene::Start()
 		RELEASE_ARRAY(data);
 	}
 
-	debug_tex = App->tex->Load("maps/path2.png");
+	iPoint pos;
+	pos.x = 0;
+	pos.y = 0;
+
+	player = (j1Player*) App->entity->CreateEntity(Entity::EntityType::player, pos);
 
 	return true;
 }
@@ -128,7 +133,7 @@ bool j1Scene::Update(float dt)
 	for(uint i = 0; i < path->Count(); ++i)
 	{
 		iPoint pos = App->map->MapToWorld(path->At(i)->x, path->At(i)->y);
-		App->render->Blit(debug_tex, pos.x, pos.y);
+		//App->render->Blit(debug_tex, pos.x, pos.y);
 	}
 
 	return true;
