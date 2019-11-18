@@ -80,7 +80,7 @@ j1Player::j1Player(iPoint pos) : Entity(EntityType::player) {
 	bool has_col = true;
 	bool falling = true;
 
-	col = App->col->AddCollider({ position.x, position.y, 25, 75 }, COLLIDER_PLAYER, App->entity);
+	col = App->col->AddCollider({ position.x, position.y, 40, 80 }, COLLIDER_PLAYER, App->entity);
 }
 
 j1Player::~j1Player()
@@ -92,6 +92,10 @@ j1Player::~j1Player()
 }
 
 void j1Player::Update(float dt) { 
+	if (lives == 0) {
+
+	}
+
 	HandeInput();
 
 	position.x += (vel.x * dt);
@@ -105,31 +109,115 @@ void j1Player::Update(float dt) {
 void j1Player::Draw() {
 	Current_Animation = &idle;
 
-	App->render->Blit(sprite, position.x, position.y, &Current_Animation->GetCurrentFrame(), 1.0f, NULL, NULL, NULL, SDL_FLIP_NONE);
+	flip = SDL_FLIP_NONE;
+
+	switch (states)
+	{
+	case A_IDLE:
+		Current_Animation = &idle;
+		break;
+	case A_WALK_FORWARD:
+		Current_Animation = &walking;
+		break;
+	case A_WALK_BACKWARDS:
+		Current_Animation = &walking;
+		flip = SDL_FLIP_HORIZONTAL;
+		break;
+	case A_JUMP_NEUTRAL:
+		if (jumping.Finished() == false) {
+			Current_Animation = &jumping;
+		}
+		else {
+			Current_Animation = &fall;
+		}
+		break;
+	case A_CROUCH:
+		Current_Animation = &crouching;
+		break;
+	case A_FALLING:
+		Current_Animation = &fall;
+		break;
+	}
+
+
+	App->render->Blit(sprite, position.x, position.y, &Current_Animation->GetCurrentFrame(), 1.0f, NULL, NULL, NULL, flip);
 }
 
 void j1Player::HandeInput() {
 	//reset velocity x
 	vel.x = 0;
 
-	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
-		vel.x = SPEED;
+	if (states == A_JUMP_NEUTRAL) {
+			states = A_JUMP_NEUTRAL;
+			if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
+				vel.x = (SPEED * 0.8);
+			}
+			if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
+				vel.x = (-1)*(SPEED * 0.8);
+			}
+			if (has_jump == false) {
+				if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN) {
+					vel.y = -425;
+					has_jump = true;
+				}
+			}
 	}
-	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
-		vel.x = (-1)*SPEED;
-	}
+	else {
+		states = A_IDLE;
 
-	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN) {
-		vel.y = -500;
+		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
+			vel.x = SPEED;
+			states = A_WALK_FORWARD;
+		}
+		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
+			vel.x = (-1)*SPEED;
+			states = A_WALK_BACKWARDS;
+		}
+
+		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN) {
+			vel.y = -425;
+			states = A_JUMP_NEUTRAL;
+		}
+		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
+			states = A_CROUCH;
+		}
 	}
 	vel.y += (float)9.8f;
 }
 
 void j1Player::OnCollision(Collider* c1, Collider* c2) {
 	if (c2->type == COLLIDER_FLOOR) {
+		//reset things
+		states = A_IDLE;
+		jumping.Reset();
+		has_jump = false;
+
 		if (vel.y > 0) {
 			vel.y = 0;
 		}
-		position.y = c2->rect.y - c1->rect.h + 1;
+		if (c2->rect.y > c1->rect.y) {
+			if (c1->rect.y > c2->rect.y + c2->rect.h - 3) {
+				if (c1->rect.x > c2->rect.x + c2->rect.w && c1->rect.x + c1->rect.w / 2 < c2->rect.x) {
+					position.x = c1->rect.x - c2->rect.w;
+				}
+				if (c1->rect.x + c1->rect.w < c2->rect.x && c1->rect.x + c1->rect.w / 2 > c2->rect.x) {
+					position.x = c1->rect.x + c1->rect.w;
+				}
+			}
+		}	
+	}
+
+	if (c2->type == COLLIDER_WALL) {
+		if (c1->rect.x + c1->rect.w < c2->rect.x + c2->rect.w / 2) {
+			position.x = c2->rect.x - c1->rect.w;
+		}
+		if (c1->rect.x > c2->rect.x + c2->rect.w / 2) {
+			position.x = c2->rect.x + c2->rect.w;
+		}
+	}
+
+	if (c2->type == COLLIDER_DEAD) {
+		lives -= 1;
+		//add effects and other things
 	}
 }

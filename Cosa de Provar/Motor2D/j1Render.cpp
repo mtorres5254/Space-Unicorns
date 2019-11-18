@@ -63,6 +63,13 @@ bool j1Render::Start()
 // Called each loop iteration
 bool j1Render::PreUpdate(float dt)
 {
+	if (camera.x >= 0) {
+		camera.x = -1;
+	}
+	if (camera.y >= 0) {
+		camera.y = -1;
+	}
+
 	SDL_RenderClear(renderer);
 	return true;
 }

@@ -21,6 +21,7 @@ public:
 	iPoint position;
 	EntityType type;
 	SDL_Texture* sprite;
+	int lives;
 
 	Collider* col;
 

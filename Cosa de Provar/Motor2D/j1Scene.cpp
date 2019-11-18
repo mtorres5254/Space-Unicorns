@@ -9,6 +9,7 @@
 #include "j1Map.h"
 #include "j1PathFinding.h"
 #include "j1Player.h"
+#include "j1SceneChange.h"
 #include "j1Scene.h"
 
 #define CAMERA_SPEED 500
@@ -42,13 +43,15 @@ bool j1Scene::Start()
 			App->pathfinding->SetMap(w, h, data);
 
 		RELEASE_ARRAY(data);
+
+		iPoint pos;
+		pos.x = 0;
+		pos.y = 0;
+
+		player = (j1Player*)App->entity->CreateEntity(Entity::EntityType::player, pos);
 	}
 
-	iPoint pos;
-	pos.x = 0;
-	pos.y = 0;
-
-	player = (j1Player*) App->entity->CreateEntity(Entity::EntityType::player, pos);
+	
 
 	return true;
 }
@@ -89,10 +92,10 @@ bool j1Scene::Update(float dt)
 	if(App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
 		App->LoadGame("save_game.xml");
 
-	if(App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
+	if(App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
 		App->SaveGame("save_game.xml");
 
-	// TODO 6: Make the camera movement independent of framerate
+	//  6: Make the camera movement independent of framerate
 	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 		App->render->camera.y += (CAMERA_SPEED * dt);
 
@@ -104,6 +107,15 @@ bool j1Scene::Update(float dt)
 
 	if(App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 		App->render->camera.x -= (CAMERA_SPEED * dt);
+
+
+	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN) {
+		App->scene_change->ChangeMap(2.0f, 1);
+	}
+	if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN) {
+		App->scene_change->ChangeMap(2.0f, 2);
+	}
+
 
 	App->map->Draw();
 

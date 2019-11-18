@@ -155,13 +155,13 @@ void j1Collisions::DebugDraw() {
 			App->render->DrawQuad(colliders[i]->rect, 255, 0, 0, alpha);
 			break;
 		case COLLIDER_FLOOR: // blue
-			App->render->DrawQuad(colliders[i]->rect, 255, 255, 0, alpha);
-			break;
-		case COLLIDER_WALL:
 			App->render->DrawQuad(colliders[i]->rect, 0, 0, 255, alpha);
 			break;
+		case COLLIDER_WALL:
+			App->render->DrawQuad(colliders[i]->rect, 255, 255, 0, alpha);
+			break;
 		case COLLIDER_END:
-			App->render->DrawQuad(colliders[i]->rect, 0, 255, 255, alpha);
+			App->render->DrawQuad(colliders[i]->rect, 60, 55, 255, alpha);
 			break;
 		case COLLIDER_DEAD:
 			App->render->DrawQuad(colliders[i]->rect, 255, 0, 0, alpha);
@@ -239,7 +239,11 @@ bool j1Collisions::LoadFromObjectLayer(ObjectLayer* layer) {
 				callback = App->map;
 			}
 			else if (obj->data->name == "End") {
-				col_type == COLLIDER_END;
+				col_type = COLLIDER_END;
+				callback = App->map;
+			}
+			else if (obj->data->name == "Wall") {
+				col_type = COLLIDER_WALL;
 				callback = App->map;
 			}
 			SDL_Rect rect;

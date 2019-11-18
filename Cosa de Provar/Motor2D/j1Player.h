@@ -9,10 +9,7 @@
 #include "j1Entities.h"
 
 #define INPUTSOUTS 7
-#define JUMP 80
 #define SPEED 300
-#define JUMP_SPEED 2.5
-#define JUMP_Y_SPEED 5
 
 enum state {
 	A_NONE = 0,
@@ -20,25 +17,11 @@ enum state {
 	A_WALK_FORWARD,
 	A_WALK_BACKWARDS,
 	A_JUMP_NEUTRAL,
-	A_JUMP_FORWARD,
-	A_JUMP_BACKWARDS,
-	A_HOOK,
+	A_FALLING,
+	A_CROUCH,
+	A_SPECIAL,
+	A_DEAD,
 };
-
-enum input {
-	//add inputs
-	IN_NONE = 0,
-	IN_JUMP,
-	IN_FALLING,
-	IN_JUMP_LEFT,
-	IN_JUMP_RIGHT,
-	IN_LEFT,
-	IN_RIGHT,
-	IN_CROUCH,
-	IN_SPECIAL,
-
-};
-
 
 struct Collider;
 
@@ -55,9 +38,7 @@ public:
 
 private:
 
-
 	iPoint vel;
-
 
 	Animation* Current_Animation;
 	Animation idle;
@@ -69,16 +50,10 @@ private:
 	Animation special_anim;
 
 	//------------------	
-	Collider* col;
 
 	SDL_RendererFlip flip = SDL_FLIP_NONE;
 	
 	bool godmode = false;
-	bool jump = false;
-	bool left = false;
-	bool right = false;
-	bool crouch = false;
-	bool special = false;
 	bool died = false;
 
 	bool has_jump = false;
@@ -92,7 +67,6 @@ private:
 
 	//--------------------
 	state states;
-	input inputs;
 	
 	//position and limitators
 };
