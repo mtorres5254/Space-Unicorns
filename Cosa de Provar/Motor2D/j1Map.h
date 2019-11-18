@@ -10,8 +10,6 @@
 
 // ----------------------------------------------------
 
-struct Collider;
-
 struct Properties
 {
 	struct Property
@@ -76,6 +74,20 @@ struct ImageLayer {
 };
 
 // ----------------------------------------------------
+
+struct ObjectData {
+	p2SString name;
+	int x;
+	int y;
+	int w;
+	int h;
+};
+
+struct ObjectLayer {
+	p2SString name;
+	p2List<ObjectData*> list;
+};
+
 struct TileSet
 {
 	SDL_Rect GetTileRect(int id) const;
@@ -105,16 +117,16 @@ enum MapTypes
 // ----------------------------------------------------
 struct MapData
 {
-	int					width;
-	int					height;
-	int					tile_width;
-	int					tile_height;
-	SDL_Color			background_color;
-	MapTypes			type;
-	p2List<TileSet*>	tilesets;
-	p2List<MapLayer*>	layers;
-	p2List<ImageLayer*> img_layers;
-	p2List<Collider*>   colliders;
+	int					 width;
+	int					 height;
+	int					 tile_width;
+	int					 tile_height;
+	SDL_Color			 background_color;
+	MapTypes			 type;
+	p2List<TileSet*>	 tilesets;
+	p2List<MapLayer*>	 layers;
+	p2List<ImageLayer*>  img_layers;
+	p2List<ObjectLayer*> obj_layers;
 };
 
 // ----------------------------------------------------
@@ -151,7 +163,7 @@ private:
 	bool LoadLayer(pugi::xml_node& node, MapLayer* layer);
 	bool LoadProperties(pugi::xml_node& node, Properties& properties);
 	bool LoadImgLayer(pugi::xml_node& node, ImageLayer* layer);
-	bool LoadColliders(pugi::xml_node& node);
+	bool LoadObjLayer(pugi::xml_node& node, ObjectLayer* layer);
 
 	TileSet* GetTilesetFromTileId(int id) const;
 

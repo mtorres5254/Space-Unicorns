@@ -57,7 +57,9 @@ public:
 	// Called before render is available
 	bool Awake(pugi::xml_node& conf);
 
-	bool PreUpdate();
+	bool Start();
+
+	bool PreUpdate(float dt);
 
 	bool Update(float dt);
 
@@ -75,6 +77,9 @@ private:
 	Collider* colliders[MAX_COLLIDERS];
 	bool matrix[COLLIDER_MAX][COLLIDER_MAX];
 	bool debug = false;
+
+
+	bool LoadFromObjectLayer(ObjectLayer* layer);
 };
 
 #endif // __j1COLLISIONS_H__

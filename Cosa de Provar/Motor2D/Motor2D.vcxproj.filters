@@ -149,5 +149,13 @@
     <Filter Include="Desenvolupament  ========\Modules\Entities Manager">
       <UniqueIdentifier>{580e01f2-1364-4679-8b10-1d11c1c1ecf1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Desenvolupament  ========\Files">
+      <UniqueIdentifier>{b789f32b-ca09-4d77-b3af-0bb2b1d1a72b}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Game\maps\mapa2.tmx">
+      <Filter>Desenvolupament  ========\Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

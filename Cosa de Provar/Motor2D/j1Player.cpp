@@ -80,7 +80,7 @@ j1Player::j1Player(iPoint pos) : Entity(EntityType::player) {
 	bool has_col = true;
 	bool falling = true;
 
-	col = App->col->AddCollider({ position.x, position.y, 50, 50 }, COLLIDER_PLAYER, App->entity);
+	col = App->col->AddCollider({ position.x, position.y, 25, 75 }, COLLIDER_PLAYER, App->entity);
 }
 
 j1Player::~j1Player()
@@ -92,19 +92,44 @@ j1Player::~j1Player()
 }
 
 void j1Player::Update(float dt) { 
+	HandeInput();
+
+	position.x += (vel.x * dt);
+	position.y += (vel.y * dt);
+
+	col->SetPos(position.x, position.y);
+
+	Draw();
+}
+
+void j1Player::Draw() {
 	Current_Animation = &idle;
 
 	App->render->Blit(sprite, position.x, position.y, &Current_Animation->GetCurrentFrame(), 1.0f, NULL, NULL, NULL, SDL_FLIP_NONE);
 }
 
-void j1Player::Draw() {
-
-}
-
 void j1Player::HandeInput() {
+	//reset velocity x
+	vel.x = 0;
 
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
+		vel.x = SPEED;
+	}
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
+		vel.x = (-1)*SPEED;
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN) {
+		vel.y = -500;
+	}
+	vel.y += (float)9.8f;
 }
 
 void j1Player::OnCollision(Collider* c1, Collider* c2) {
-
+	if (c2->type == COLLIDER_FLOOR) {
+		if (vel.y > 0) {
+			vel.y = 0;
+		}
+		position.y = c2->rect.y - c1->rect.h + 1;
+	}
 }

@@ -269,9 +269,17 @@ bool j1Map::Load(const char* file_name)
 			data.img_layers.add(img_lay);
 	}
 
-	//Load Colliders info ------------------------------------------
-	if (ret == true) {
-		ret = LoadColliders(map_file.child("map"));
+	//Load object layer info --------------------------------------
+	pugi::xml_node obj_layer;
+	for (obj_layer = map_file.child("map").child("objectgroup"); obj_layer && ret; obj_layer = obj_layer.next_sibling("objectgroup")) {
+
+		ObjectLayer* obj_lay = new ObjectLayer();
+
+		ret = LoadObjLayer(obj_layer, obj_lay);
+
+		if (ret == true) {
+			data.obj_layers.add(obj_lay);
+		}
 	}
 
 	if(ret == true)
@@ -523,58 +531,25 @@ bool j1Map::LoadProperties(pugi::xml_node& node, Properties& properties)
 	return ret;
 }
 
-bool j1Map::LoadColliders(pugi::xml_node& node) {
+bool j1Map::LoadObjLayer(pugi::xml_node& node, ObjectLayer* layer) {
 	bool ret = true;
-	COLLIDER_TYPE coltype;
-	p2SString type;
-	j1Module* call = nullptr;
 
-	pugi::xml_node objectgroup;
-	for (objectgroup = node.child("objectgroup"); objectgroup && ret; objectgroup = objectgroup.next_sibling("objectgroup"))
-	{
-		p2SString clas = objectgroup.attribute("name").as_string();
-		if (clas == "colliders") {
-			pugi::xml_node object;
-			for (object = objectgroup.child("object"); object && ret; object = object.next_sibling("object")) {
+	layer->name = node.attribute("name").as_string();
 
-				SDL_Rect rect;
-				type = object.attribute("name").as_string();
-				if (type == "Floor")
-				{
-					coltype = COLLIDER_FLOOR;
-					LOG("Collider floor");
-					call = App->map;
-				}
-				else if (type == "Wall") {
-					coltype = COLLIDER_WALL;
-					LOG("Collider wall");
-					call = App->map;
-				}
-				else if (type == "Dead") {
-					coltype = COLLIDER_DEAD;
-					LOG("Collider dead");
-				}
-				else if (type == "End") {
-					coltype = COLLIDER_END;
-					LOG("Collider end");
-				}
-				else
-				{
-					LOG("Collider type undefined");
-					continue;
-				}
+	pugi::xml_node object;
+	for (object = node.child("object"); object; object = object.next_sibling("object")) {
+		ObjectData* obj_data = new ObjectData();
 
-				rect.x = object.attribute("x").as_int();
-				rect.y = object.attribute("y").as_int();
-				rect.w = object.attribute("width").as_int();
-				rect.h = object.attribute("heigth").as_int();
+		obj_data->name = object.attribute("name").as_string();
+		obj_data->x = object.attribute("x").as_int();
+		obj_data->y = object.attribute("y").as_int();
+		obj_data->w = object.attribute("width").as_int();
+		obj_data->h = object.attribute("height").as_int();
 
-				data.colliders.add(App->col->AddCollider(rect, coltype, call));
-				LOG("%i x %i", rect.x, rect.y);
-			}
-		}
+		layer->list.add(obj_data);
 	}
-	return true;
+
+	return ret;
 }
 
 bool j1Map::CreateWalkabilityMap(int& width, int& height, uchar** buffer) const

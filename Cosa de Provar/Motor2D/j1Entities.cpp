@@ -1,6 +1,7 @@
 #include "j1App.h"
 #include "j1Entities.h"
 #include "j1Player.h"
+#include "j1Scene.h"
 #include "j1Collisions.h"
 
 j1Entities::j1Entities() {
@@ -72,6 +73,6 @@ void j1Entities::DestroyEntity(Entity* entity) {
 
 void j1Entities::OnCollision(Collider* c1, Collider* c2) {
 	if (c1->type == COLLIDER_PLAYER) {
-		
+		App->scene->player->OnCollision( c1, c2);
 	}
 }

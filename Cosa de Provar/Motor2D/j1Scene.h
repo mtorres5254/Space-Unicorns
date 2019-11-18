@@ -33,7 +33,7 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-private:
+public:
 	j1Player* player;
 };
 

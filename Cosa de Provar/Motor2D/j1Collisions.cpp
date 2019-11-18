@@ -53,16 +53,28 @@ j1Collisions::j1Collisions()
 	matrix[COLLIDER_END][COLLIDER_END] = false;
 
 	name.create("map");
+
+	
 }
 
 j1Collisions::~j1Collisions()
 {}
 
+bool j1Collisions::Start() {
+
+	p2List_item<ObjectLayer*>* obj_lay;
+	for (obj_lay = App->map->data.obj_layers.start; obj_lay; obj_lay = obj_lay->next) {
+		LoadFromObjectLayer(obj_lay->data);
+	}
+
+	return true;
+}
+
 bool j1Collisions::Awake(pugi::xml_node& config) {
 	return true;
 }
 
-bool j1Collisions::PreUpdate() {
+bool j1Collisions::PreUpdate(float dt) {
 	//Remove all colliders scheduled for deletion
 	for (uint i = 0; i < MAX_COLLIDERS; ++i) {
 		if (colliders[i] != nullptr && colliders[i]->to_delete == true) {
@@ -204,8 +216,40 @@ void Collider::SetPos(int x, int y) {
 	rect.x = x;
 	rect.y = y;
 }
+
 void j1Collisions::DeleteCollider(Collider* collider) {
 	if (collider != nullptr) {
 		collider->to_delete = true;
 	}
+}
+
+bool j1Collisions::LoadFromObjectLayer(ObjectLayer* layer) {
+	if (layer->name == "Colliders") {
+		
+		p2List_item<ObjectData*>* obj;
+		for (obj = layer->list.start; obj; obj = obj->next) {
+			COLLIDER_TYPE col_type = COLLIDER_NONE;
+			j1Module* callback = nullptr;
+			if (obj->data->name == "Floor") {
+				col_type = COLLIDER_FLOOR;
+				callback = App->map;
+			}
+			else if (obj->data->name == "Dead") {
+				col_type = COLLIDER_DEAD;
+				callback = App->map;
+			}
+			else if (obj->data->name == "End") {
+				col_type == COLLIDER_END;
+				callback = App->map;
+			}
+			SDL_Rect rect;
+			rect.x = obj->data->x;
+			rect.y = obj->data->y;
+			rect.w = obj->data->w;
+			rect.h = obj->data->h;
+
+			AddCollider(rect, col_type, callback);
+		}
+	}
+	return true;
 }

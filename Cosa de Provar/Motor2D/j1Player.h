@@ -10,7 +10,7 @@
 
 #define INPUTSOUTS 7
 #define JUMP 80
-#define SPEED 3
+#define SPEED 300
 #define JUMP_SPEED 2.5
 #define JUMP_Y_SPEED 5
 
@@ -39,12 +39,6 @@ enum input {
 
 };
 
-enum inputout {
-	//add inputsout
-	OUT_NONE = 0,
-	OUT_JUMP,
-
-};
 
 struct Collider;
 
@@ -59,7 +53,11 @@ public:
 	void HandeInput();
 	void OnCollision(Collider* c1, Collider* c2);
 
-public:
+private:
+
+
+	iPoint vel;
+
 
 	Animation* Current_Animation;
 	Animation idle;
