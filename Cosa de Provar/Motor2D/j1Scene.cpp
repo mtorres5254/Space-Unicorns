@@ -69,6 +69,7 @@ bool j1Scene::PreUpdate(float dt)
 	iPoint p = App->render->ScreenToWorld(x, y);	// we convert the pixel info to world pixels info
 	p = App->map->WorldToMap(p.x, p.y);				//we convert the world position to tiles info
 
+	/*
 	if(App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
 	{
 		if(origin_selected == true)
@@ -82,6 +83,7 @@ bool j1Scene::PreUpdate(float dt)
 			origin_selected = true;
 		}
 	}
+	*/
 
 	return true;
 }
