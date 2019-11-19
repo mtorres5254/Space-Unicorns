@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.5" orientation="orthogonal" renderorder="right-down" width="202" height="116" tilewidth="32" tileheight="32" infinite="0" nextlayerid="43" nextobjectid="408">
+<map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="202" height="116" tilewidth="32" tileheight="32" infinite="0" nextlayerid="43" nextobjectid="410">
  <tileset firstgid="1" name="TilesetMap2" tilewidth="32" tileheight="32" tilecount="60" columns="15">
   <image source="tilesetguay.png" trans="ff00ff" width="480" height="128"/>
  </tileset>
@@ -23598,6 +23598,8 @@
   <object id="404" name="Dead" x="1604.5" y="509.5" width="29" height="19"/>
   <object id="405" name="Dead" x="1471.5" y="505.5" width="32" height="19"/>
   <object id="406" name="Dead" x="930.5" y="975.5" width="893" height="19"/>
-  <object id="407" name="Wall" x="3614.5" y="720.5" width="31" height="163"/>
+  <object id="407" name="Wall" x="3614.5" y="738.5" width="31" height="145"/>
+  <object id="408" name="Dead" x="3615" y="716" width="30" height="20"/>
+  <object id="409" name="Floor" x="3649" y="904" width="32" height="12"/>
  </objectgroup>
 </map>

@@ -65,6 +65,11 @@ j1Player::j1Player(iPoint pos) : Entity(EntityType::player) {
 	if (sprite == NULL) {
 		LOG("Error loading graphics");
 	}
+	weapon_pointer = App->tex->Load("textures/mira.png");
+	if (weapon_pointer == NULL) {
+		LOG("Error loading graphics");
+	}
+
 	//load sounds and collisions
 	jumpingsound = App->audio->LoadFx("audio/fx/jump.wav");
 
@@ -102,6 +107,8 @@ void j1Player::Update(float dt) {
 	position.y += (vel.y * dt);
 
 	col->SetPos(position.x, position.y);
+
+
 
 	Draw();
 }
@@ -141,6 +148,18 @@ void j1Player::Draw() {
 
 
 	App->render->Blit(sprite, position.x, position.y, &Current_Animation->GetCurrentFrame(), 1.0f, NULL, NULL, NULL, flip);
+
+	DrawPointer();
+}
+
+void j1Player::DrawPointer() {
+	int x;
+	int y;
+
+	App->input->GetMousePosition(x, y);
+	iPoint p = App->render->ScreenToWorld(x, y);
+
+	App->render->Blit(weapon_pointer, p.x - 16, p.y - 16);
 }
 
 void j1Player::HandeInput() {

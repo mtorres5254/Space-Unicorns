@@ -35,10 +35,13 @@ public:
 	void Draw();
 	void HandeInput();
 	void OnCollision(Collider* c1, Collider* c2);
+	void DrawPointer();
 
 private:
 
 	iPoint vel;
+
+	SDL_Texture* weapon_pointer;
 
 	Animation* Current_Animation;
 	Animation idle;
