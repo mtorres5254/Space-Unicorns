@@ -33,7 +33,7 @@ j1Player::j1Player(iPoint pos) : Entity(EntityType::player) {
 	walking.PushBack({ 435,82,47,67 });
 	walking.PushBack({ 495,84,55,61 });
 	walking.PushBack({ 560,86,41,65 });
-	walking.speed = 0.12f;
+	walking.speed = 0.24f;
 
 	//CROUCH
 	crouching.PushBack({ 208, 32, 43, 44 });
@@ -43,7 +43,7 @@ j1Player::j1Player(iPoint pos) : Entity(EntityType::player) {
 	jumping.PushBack({ 7,154,51,71 });
 	jumping.PushBack({ 60,169,53,39 });
 	jumping.PushBack({ 117,175,52,30 });
-	jumping.speed = 0.1f;
+	jumping.speed = 0.2f;
 	jumping.loop = false;
 
 	//fall
@@ -52,7 +52,7 @@ j1Player::j1Player(iPoint pos) : Entity(EntityType::player) {
 	fall.PushBack({ 234,156,52,29 });
 	fall.PushBack({ 307,156,30,52 });
 	fall.PushBack({ 361,165,53,39 });
-	fall.speed = 0.12f;
+	fall.speed = 0.22f;
 	//dead;
 	death.PushBack({});
 	death.speed = 0.1f;
@@ -195,7 +195,7 @@ void j1Player::HandeInput() {
 		}
 		if (has_jump == false) {
 			if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN) {
-				vel.y = -425;
+				vel.y = -325;
 				has_jump = true;
 			}
 		}
@@ -224,7 +224,7 @@ void j1Player::HandeInput() {
 	if (falling == true) {
 		states = A_FALLING;
 	}
-	vel.y += (float)9.8f;
+	vel.y += (float)(9.8f * 2);
 }
 
 void j1Player::OnCollision(Collider* c1, Collider* c2) {

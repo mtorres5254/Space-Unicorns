@@ -12,7 +12,7 @@
 #include "j1SceneChange.h"
 #include "j1Scene.h"
 
-#define CAMERA_SPEED 500
+#define CAMERA_SPEED 300
 
 j1Scene::j1Scene() : j1Module()
 {

@@ -9,7 +9,6 @@
 #include "j1Animations.h"
 #include "j1Entities.h"
 
-#define INPUTSOUTS 7
 #define SPEED 300
 
 enum state {
