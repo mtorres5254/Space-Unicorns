@@ -29,6 +29,7 @@ public:
 	Entity::Entity(EntityType type) : type(type)
 	{}
 
+	virtual void PreUpdate(float dt) {}
 	virtual void Update(float dt) {}
 	virtual void Draw() {}
 	virtual void HandeInput() {}
@@ -41,6 +42,7 @@ public:
 	j1Entities();
 	~j1Entities() {}
 
+	bool PreUpdate(float dt);
 	bool Update(float dt);
 	bool Awake(pugi::xml_node& config);
 	void OnCollision(Collider* c1, Collider* c2);

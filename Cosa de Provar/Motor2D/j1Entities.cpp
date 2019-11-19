@@ -20,6 +20,16 @@ bool j1Entities::Awake(pugi::xml_node& config) {
 	return ret;
 }
 
+bool j1Entities::PreUpdate(float dt) {
+	p2List_item<Entity*>* AuxEntity = entities.start;
+
+	for (; AuxEntity != NULL; AuxEntity = AuxEntity->next) {
+		AuxEntity->data->PreUpdate(dt);
+	}
+
+	return true;
+}
+
 bool j1Entities::Update(float dt) {
 	accumulated_time += dt;
 

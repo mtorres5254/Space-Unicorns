@@ -168,7 +168,6 @@ int PathNode::CalculateF(const iPoint& destination)
 // ----------------------------------------------------------------------------------
 int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 {
-	if (App->map->data.type == MAPTYPE_ISOMETRIC) {
 		//clear last path
 		last_path.Clear();
 
@@ -249,10 +248,5 @@ int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 			}
 		}
 		return -1;
-	}
-	else if (App->map->data.type == MAPTYPE_ORTHOGONAL) {
-
-		return -1;
-	}
 }
 

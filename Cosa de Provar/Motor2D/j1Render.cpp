@@ -2,6 +2,7 @@
 #include "p2Log.h"
 #include "j1App.h"
 #include "j1Window.h"
+#include "j1Map.h"
 #include "j1Render.h"
 
 #define VSYNC true
@@ -63,12 +64,23 @@ bool j1Render::Start()
 // Called each loop iteration
 bool j1Render::PreUpdate(float dt)
 {
-	if (camera.x >= 0) {
-		camera.x = -1;
+	uint x, y;
+	App->win->GetWindowSize(x, y);
+
+	if (camera.x >= -1) {
+		camera.x = -2;
 	}
-	if (camera.y >= 0) {
+	if (camera.y > 0) {
 		camera.y = -1;
 	}
+	if (camera.x < ((App->map->data.width * App->map->data.tile_width) * -1 ) + x) {
+		camera.x = ((App->map->data.width * App->map->data.tile_width) * -1) + x;
+	}
+	if (camera.y < ((App->map->data.height * App->map->data.tile_height) * -1) + y) {
+		camera.y = ((App->map->data.height * App->map->data.tile_height) * -1) + y;
+	}
+
+	LOG("Camera: %i x %i", camera.x, camera.y);
 
 	SDL_RenderClear(renderer);
 	return true;

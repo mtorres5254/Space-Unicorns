@@ -4,6 +4,7 @@
 #include "p2Point.h"
 #include "p2Defs.h"
 #include "j1Module.h"
+#include "j1Timer.h"
 #include "SDL/include/SDL.h"
 #include "j1Animations.h"
 #include "j1Entities.h"
@@ -30,7 +31,7 @@ public:
 	j1Player(iPoint pos);
 	~j1Player();
 
-
+	void PreUpdate(float dt);
 	void Update(float dt);
 	void Draw();
 	void HandeInput();
@@ -53,17 +54,16 @@ private:
 	Animation special_anim;
 
 	//------------------	
+	j1Timer death_timer;
+
+	//------------------
 
 	SDL_RendererFlip flip = SDL_FLIP_NONE;
 	
 	bool godmode = false;
-	bool died = false;
-
+	bool falling = true;
 	bool has_jump = false;
 	bool has_col = true;
-	bool falling = true;
-
-	int maxjump;
 
 	unsigned int walkingsound;
 	unsigned int jumpingsound;
@@ -71,6 +71,5 @@ private:
 	//--------------------
 	state states;
 	
-	//position and limitators
 };
 #endif

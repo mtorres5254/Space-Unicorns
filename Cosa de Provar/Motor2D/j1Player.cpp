@@ -52,7 +52,7 @@ j1Player::j1Player(iPoint pos) : Entity(EntityType::player) {
 	fall.PushBack({ 234,156,52,29 });
 	fall.PushBack({ 307,156,30,52 });
 	fall.PushBack({ 361,165,53,39 });
-	fall.speed = 0.1f;
+	fall.speed = 0.12f;
 	//dead;
 	death.PushBack({});
 	death.speed = 0.1f;
@@ -73,18 +73,10 @@ j1Player::j1Player(iPoint pos) : Entity(EntityType::player) {
 	//load sounds and collisions
 	jumpingsound = App->audio->LoadFx("audio/fx/jump.wav");
 
-	bool godmode = false;
-	bool jump = false;
-	bool left = false;
-	bool right = false;
-	bool crouch = false;
-	bool special = false;
-	bool died = false;
+	//set player info - future xml
+	lives = 1;
 
-	bool has_jump = false;
-	bool has_col = true;
-	bool falling = true;
-
+	//loading collider
 	col = App->col->AddCollider({ position.x, position.y, 40, 80 }, COLLIDER_PLAYER, App->entity);
 }
 
@@ -96,19 +88,39 @@ j1Player::~j1Player()
 	App->col->DeleteCollider(col);
 }
 
+void j1Player::PreUpdate(float dt) {
+	falling = true;
+}
+
 void j1Player::Update(float dt) { 
 	if (lives == 0) {
+		states = A_DEAD;
+		vel.x = vel.y = 0;
+		//dead sound & effects 
 
+		death_timer.Start();
 	}
 
-	HandeInput();
+	if (states != A_DEAD) {
+		HandeInput();
 
-	position.x += (vel.x * dt);
-	position.y += (vel.y * dt);
+		position.x += (vel.x * dt);
+		position.y += (vel.y * dt);
 
-	col->SetPos(position.x, position.y);
+		col->SetPos(position.x, position.y);
+	}
+	else {
+		if ((int)death_timer.ReadSec() == 2) {
+			lives = 1;
+			position.x = 0;
+			position.y = 0;
+			col->SetPos(position.x, position.y);
 
+			App->render->camera.x = App->render->camera.y = 0;
 
+			states = A_IDLE;
+		}
+	}
 
 	Draw();
 }
@@ -135,7 +147,11 @@ void j1Player::Draw() {
 			Current_Animation = &jumping;
 		}
 		else {
-			Current_Animation = &fall;
+			states = A_FALLING;
+		}
+
+		if (vel.x < 0) {
+			flip = SDL_FLIP_HORIZONTAL;
 		}
 		break;
 	case A_CROUCH:
@@ -143,6 +159,9 @@ void j1Player::Draw() {
 		break;
 	case A_FALLING:
 		Current_Animation = &fall;
+		break;
+	case A_DEAD:
+		Current_Animation = &death;
 		break;
 	}
 
@@ -166,20 +185,20 @@ void j1Player::HandeInput() {
 	//reset velocity x
 	vel.x = 0;
 
-	if (states == A_JUMP_NEUTRAL) {
-			states = A_JUMP_NEUTRAL;
-			if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
-				vel.x = (SPEED * 0.8);
-			}
-			if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
+	if (states == A_JUMP_NEUTRAL || states == A_FALLING ) {
+		states = A_JUMP_NEUTRAL;
+		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
+			vel.x = (SPEED * 0.8);
+		}
+		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
 				vel.x = (-1)*(SPEED * 0.8);
+		}
+		if (has_jump == false) {
+			if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN) {
+				vel.y = -425;
+				has_jump = true;
 			}
-			if (has_jump == false) {
-				if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN) {
-					vel.y = -425;
-					has_jump = true;
-				}
-			}
+		}
 	}
 	else {
 		states = A_IDLE;
@@ -201,15 +220,20 @@ void j1Player::HandeInput() {
 			states = A_CROUCH;
 		}
 	}
+
+	if (falling == true) {
+		states = A_FALLING;
+	}
 	vel.y += (float)9.8f;
 }
 
 void j1Player::OnCollision(Collider* c1, Collider* c2) {
 	if (c2->type == COLLIDER_FLOOR) {
-		//reset things
+		//reset jumping conditions
 		states = A_IDLE;
 		jumping.Reset();
 		has_jump = false;
+		falling = false;
 
 		if (vel.y > 0) {
 			vel.y = 0;
