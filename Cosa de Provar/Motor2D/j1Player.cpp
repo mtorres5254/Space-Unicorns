@@ -52,7 +52,7 @@ j1Player::j1Player(iPoint pos) : Entity(EntityType::player) {
 	fall.PushBack({ 234,156,52,29 });
 	fall.PushBack({ 307,156,30,52 });
 	fall.PushBack({ 361,165,53,39 });
-	fall.speed = 0.22f;
+	fall.speed = 0.24f;
 
 	//dead;
 	death.PushBack({2,286,46,45});
@@ -92,10 +92,14 @@ j1Player::~j1Player()
 }
 
 void j1Player::PreUpdate(float dt) {
+	BROFILER_CATEGORY("Player_PreUpdate", Profiler::Color::LightSkyBlue)
+
 	falling = true;
 }
 
 void j1Player::Update(float dt) { 
+	BROFILER_CATEGORY("Player_Update", Profiler::Color::DarkOrange )
+
 	if (lives == 0) {
 		states = A_DEAD;
 		vel.x = vel.y = 0;
@@ -107,8 +111,8 @@ void j1Player::Update(float dt) {
 	if (states != A_DEAD) {
 		HandeInput();
 
-		position.x += (vel.x * dt);
-		position.y += (vel.y * dt);
+		position.x += vel.x * dt;
+		position.y += vel.y * dt;
 
 		col->SetPos(position.x, position.y);
 	}
@@ -191,14 +195,14 @@ void j1Player::HandeInput() {
 	if (states == A_JUMP_NEUTRAL || states == A_FALLING ) {
 		states = A_JUMP_NEUTRAL;
 		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
-			vel.x = (SPEED * 0.8);
+			vel.x = (SPEED * 0.6);
 		}
 		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
-				vel.x = (-1)*(SPEED * 0.8);
+				vel.x = (-1)*(SPEED * 0.6);
 		}
 		if (has_jump == false) {
 			if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN) {
-				vel.y = -325;
+				vel.y = -250;
 				has_jump = true;
 			}
 		}
@@ -216,7 +220,7 @@ void j1Player::HandeInput() {
 		}
 
 		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN) {
-			vel.y = -425;
+			vel.y = -300;
 			states = A_JUMP_NEUTRAL;
 		}
 		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
@@ -229,7 +233,7 @@ void j1Player::HandeInput() {
 	}
 
 	if (vel.y < maxFallVel) {
-		vel.y += (float)(9.8f * 2);
+		vel.y += (float)(10);
 	}
 }
 
@@ -240,6 +244,8 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 		jumping.Reset();
 		has_jump = false;
 		falling = false;
+
+		LOG("%i", vel.y);
 
 		if (vel.y > 0) {
 			vel.y = 0;

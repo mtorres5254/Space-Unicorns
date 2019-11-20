@@ -75,6 +75,8 @@ bool j1Collisions::Awake(pugi::xml_node& config) {
 }
 
 bool j1Collisions::PreUpdate(float dt) {
+	BROFILER_CATEGORY("Collisions_PreUpdate", Profiler::Color::LawnGreen )
+
 	//Remove all colliders scheduled for deletion
 	for (uint i = 0; i < MAX_COLLIDERS; ++i) {
 		if (colliders[i] != nullptr && colliders[i]->to_delete == true) {
@@ -124,6 +126,7 @@ bool j1Collisions::PreUpdate(float dt) {
 
 bool j1Collisions::Update(float dt)
 {
+	BROFILER_CATEGORY("Collisions_Update", Profiler::Color::Lime )
 	DebugDraw();
 
 	return true;

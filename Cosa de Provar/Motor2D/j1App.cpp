@@ -191,6 +191,8 @@ void j1App::PrepareUpdate()
 // ---------------------------------------------
 void j1App::FinishUpdate()
 {
+	BROFILER_CATEGORY("GoingToSleep_App_FinishUpdate", Profiler::Color::AntiqueWhite )
+
 	if(want_to_save == true)
 		SavegameNow();
 

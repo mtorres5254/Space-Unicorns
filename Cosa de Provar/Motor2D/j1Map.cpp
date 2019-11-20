@@ -6,6 +6,8 @@
 #include "j1Map.h"
 #include "j1Collisions.h"
 #include "j1Entities.h"
+#include "j1Render.h"
+#include "j1Window.h"
 #include <math.h>
 
 j1Map::j1Map() : j1Module(), map_loaded(false)
@@ -30,6 +32,8 @@ bool j1Map::Awake(pugi::xml_node& config)
 
 void j1Map::Draw()
 {
+	BROFILER_CATEGORY("MapDraw", Profiler::Color::MediumTurquoise )
+
 	if(map_loaded == false)
 		return;
 
@@ -52,6 +56,7 @@ void j1Map::Draw()
 			for(int x = 0; x < data.width; ++x)
 			{
 				int tile_id = layer->Get(x, y);
+
 				if(tile_id > 0)
 				{
 					TileSet* tileset = GetTilesetFromTileId(tile_id);
@@ -59,11 +64,37 @@ void j1Map::Draw()
 					SDL_Rect r = tileset->GetTileRect(tile_id);
 					iPoint pos = MapToWorld(x, y);
 
+					if (Culling(pos.x, pos.y) == false) {
+						continue;
+					}
+
 					App->render->Blit(tileset->texture, pos.x, pos.y, &r);
 				}
 			}
 		}
 	}
+}
+
+bool j1Map::Culling(int x, int y) {
+	bool ret = true;
+
+	uint size_x, size_y;
+	App->win->GetWindowSize(size_x, size_y);
+
+	if (x < (-1 * App->render->camera.x) - 32) {
+		ret = false;
+	}
+	if (y < (-1 * App->render->camera.y) - 32) {
+		ret = false;
+	}
+	if (x > (-1 * App->render->camera.x) + size_x ) {
+		ret = false;
+	}
+	if (y > (-1 * App->render->camera.y) + size_y) {
+		ret = false;
+	}
+
+	return ret;
 }
 
 int Properties::Get(const char* value, int default_value) const

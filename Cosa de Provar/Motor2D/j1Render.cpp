@@ -64,6 +64,8 @@ bool j1Render::Start()
 // Called each loop iteration
 bool j1Render::PreUpdate(float dt)
 {
+	BROFILER_CATEGORY("Render_PreUpdate", Profiler::Color::Moccasin )
+
 	uint x, y;
 	App->win->GetWindowSize(x, y);
 
@@ -88,6 +90,8 @@ bool j1Render::PreUpdate(float dt)
 
 bool j1Render::PostUpdate(float dt)
 {
+	BROFILER_CATEGORY("Render_PostUpdate", Profiler::Color::PapayaWhip )
+
 	SDL_SetRenderDrawColor(renderer, background.r, background.g, background.g, background.a);
 	SDL_RenderPresent(renderer);
 

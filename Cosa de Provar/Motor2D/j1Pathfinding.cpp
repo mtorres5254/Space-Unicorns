@@ -168,6 +168,8 @@ int PathNode::CalculateF(const iPoint& destination)
 // ----------------------------------------------------------------------------------
 int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 {
+	BROFILER_CATEGORY("Pathfinding_Algorithm", Profiler::Color::Gold )
+
 		//clear last path
 		last_path.Clear();
 

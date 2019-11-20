@@ -51,6 +51,8 @@ bool j1MapChange::Start()
 
 bool j1MapChange::Update(float dt)
 {
+	BROFILER_CATEGORY("SceneChange_Update", Profiler::Color::DarkSlateBlue )
+
 	if (current_step == fade_step::none)
 	{
 		return true;

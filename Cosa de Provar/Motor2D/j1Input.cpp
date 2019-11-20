@@ -48,6 +48,8 @@ bool j1Input::Start()
 // Called each loop iteration
 bool j1Input::PreUpdate(float dt)
 {
+	BROFILER_CATEGORY("Input_PreUpdate", Profiler::Color::HotPink )
+
 	static SDL_Event event;
 	
 	const Uint8* keys = SDL_GetKeyboardState(NULL);
