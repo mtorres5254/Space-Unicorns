@@ -164,4 +164,9 @@
       <Filter>Desenvolupament  ========\Files</Filter>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <Xml Include="..\Game\config.xml">
+      <Filter>Desenvolupament  ========\Files</Filter>
+    </Xml>
+  </ItemGroup>
 </Project>
