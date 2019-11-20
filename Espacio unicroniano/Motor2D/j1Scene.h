@@ -34,7 +34,8 @@ public:
 	bool CleanUp();
 
 public:
-	j1Player* player;
+	j1Player* player  = nullptr;
+
 };
 
 #endif // __j1SCENE_H__

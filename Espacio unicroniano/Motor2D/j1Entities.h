@@ -7,6 +7,7 @@
 #include "j1Render.h"
 
 struct Collider;
+struct ObjectLayer;
 
 class Entity
 {
@@ -47,6 +48,7 @@ public:
 	bool Awake(pugi::xml_node& config);
 	void OnCollision(Collider* c1, Collider* c2);
 
+	void LoadFromObjectLayer(ObjectLayer* layer);
 	Entity* CreateEntity(Entity::EntityType type, iPoint pos);
 	void DestroyEntity(Entity* entity);
 

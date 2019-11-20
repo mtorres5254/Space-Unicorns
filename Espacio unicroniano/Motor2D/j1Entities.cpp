@@ -2,6 +2,7 @@
 #include "j1Entities.h"
 #include "j1Player.h"
 #include "j1Scene.h"
+#include "j1Map.h"
 #include "j1Collisions.h"
 
 j1Entities::j1Entities() {
@@ -84,5 +85,21 @@ void j1Entities::DestroyEntity(Entity* entity) {
 void j1Entities::OnCollision(Collider* c1, Collider* c2) {
 	if (c1->type == COLLIDER_PLAYER) {
 		App->scene->player->OnCollision( c1, c2);
+	}
+}
+
+void j1Entities::LoadFromObjectLayer(ObjectLayer* layer) {
+	p2List_item<ObjectData*>* obj;
+	for (obj = layer->list.start; obj; obj = obj->next) {
+		if (obj->data->name == "Player" && App->scene->player == nullptr) {
+			iPoint pos;
+			pos.x = obj->data->x;
+			pos.y = obj->data->y;
+
+			App->scene->player = (j1Player*) CreateEntity(Entity::EntityType::player, pos);
+		}
+		if (obj->data->name == "GroundEnemy") {
+
+		}
 	}
 }

@@ -44,11 +44,12 @@ bool j1Scene::Start()
 
 		RELEASE_ARRAY(data);
 
-		iPoint pos;
-		pos.x = 0;
-		pos.y = 0;
-
-		player = (j1Player*)App->entity->CreateEntity(Entity::EntityType::player, pos);
+		p2List_item<ObjectLayer*>* ob_lay;
+		for (ob_lay = App->map->data.obj_layers.start; ob_lay; ob_lay = ob_lay->next) {
+			if (ob_lay->data->name == "Entities") {
+				App->entity->LoadFromObjectLayer(ob_lay->data);
+			}
+		}
 	}
 
 	

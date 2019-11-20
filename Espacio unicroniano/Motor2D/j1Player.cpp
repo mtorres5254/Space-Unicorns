@@ -76,7 +76,9 @@ j1Player::j1Player(iPoint pos) : Entity(EntityType::player) {
 	//load sounds and collisions
 	jumpingsound = App->audio->LoadFx("audio/fx/jump.wav");
 
-	//set player info - future xml
+	//set player info 
+	initial_position.x = position.x = pos.x;
+	initial_position.y = position.y = pos.y;
 	lives = 1;
 
 	//loading collider
@@ -119,8 +121,8 @@ void j1Player::Update(float dt) {
 	else {
 		if ((int)death_timer.ReadSec() == 2) {
 			lives = 1;
-			position.x = 0;
-			position.y = 0;
+			position.x = initial_position.x;
+			position.y = initial_position.y;
 			col->SetPos(position.x, position.y);
 
 			App->render->camera.x = App->render->camera.y = 0;
