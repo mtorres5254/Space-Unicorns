@@ -40,6 +40,7 @@ public:
 private:
 
 	iPoint vel;
+	int maxFallVel = 1000;
 
 	SDL_Texture* weapon_pointer;
 

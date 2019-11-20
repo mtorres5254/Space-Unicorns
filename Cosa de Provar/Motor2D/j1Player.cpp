@@ -53,9 +53,12 @@ j1Player::j1Player(iPoint pos) : Entity(EntityType::player) {
 	fall.PushBack({ 307,156,30,52 });
 	fall.PushBack({ 361,165,53,39 });
 	fall.speed = 0.22f;
+
 	//dead;
-	death.PushBack({});
-	death.speed = 0.1f;
+	death.PushBack({2,286,46,45});
+	death.PushBack({ 60,281,37,63 });
+	death.speed = 0.05f;
+	death.loop = false;
 
 	//load conditions
 	Current_Animation = &idle;
@@ -224,7 +227,10 @@ void j1Player::HandeInput() {
 	if (falling == true) {
 		states = A_FALLING;
 	}
-	vel.y += (float)(9.8f * 2);
+
+	if (vel.y < maxFallVel) {
+		vel.y += (float)(9.8f * 2);
+	}
 }
 
 void j1Player::OnCollision(Collider* c1, Collider* c2) {
@@ -238,16 +244,18 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 		if (vel.y > 0) {
 			vel.y = 0;
 		}
-		if (c2->rect.y > c1->rect.y) {
-			if (c1->rect.y > c2->rect.y + c2->rect.h - 3) {
-				if (c1->rect.x > c2->rect.x + c2->rect.w && c1->rect.x + c1->rect.w / 2 < c2->rect.x) {
-					position.x = c1->rect.x - c2->rect.w;
-				}
-				if (c1->rect.x + c1->rect.w < c2->rect.x && c1->rect.x + c1->rect.w / 2 > c2->rect.x) {
-					position.x = c1->rect.x + c1->rect.w;
+		if (c1->rect.y + c1->rect.h / 2 < c2->rect.y) {
+			if (c2->rect.y > c1->rect.y) {
+				if (c1->rect.y > c2->rect.y + c2->rect.h - 3) {
+					if (c1->rect.x > c2->rect.x + c2->rect.w && c1->rect.x + c1->rect.w / 2 < c2->rect.x) {
+						position.x = c1->rect.x - c2->rect.w;
+					}
+					if (c1->rect.x + c1->rect.w < c2->rect.x && c1->rect.x + c1->rect.w / 2 > c2->rect.x) {
+						position.x = c1->rect.x + c1->rect.w;
+					}
 				}
 			}
-		}	
+		}
 	}
 
 	if (c2->type == COLLIDER_WALL) {
