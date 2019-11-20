@@ -265,11 +265,20 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 	}
 
 	if (c2->type == COLLIDER_WALL) {
-		if (c1->rect.x + c1->rect.w < c2->rect.x + c2->rect.w / 2) {
-			position.x = c2->rect.x - c1->rect.w;
+
+		if (c1->rect.y > c2->rect.y + c2->rect.h - 10) {
+			if (vel.y < 0) {
+				vel.y = 0;
+			}
 		}
-		if (c1->rect.x > c2->rect.x + c2->rect.w / 2) {
-			position.x = c2->rect.x + c2->rect.w;
+		else
+		{
+			if (c1->rect.x + c1->rect.w < c2->rect.x + c2->rect.w / 2) {
+				position.x = c2->rect.x - c1->rect.w;
+			}
+			if (c1->rect.x > c2->rect.x + c2->rect.w / 2) {
+				position.x = c2->rect.x + c2->rect.w;
+			}
 		}
 	}
 
