@@ -96,9 +96,7 @@ j1Player::~j1Player()
 void j1Player::PreUpdate(float dt) {
 	BROFILER_CATEGORY("Player_PreUpdate", Profiler::Color::LightSkyBlue)
 
-	if (vel.y >= 0) {
-		falling = true;
-	}
+	falling = true;
 }
 
 void j1Player::Update(float dt) { 
@@ -212,31 +210,23 @@ void j1Player::HandeInput() {
 		}
 	}
 	else {
-		if (states == A_JUMPING) {
-			if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && jump_timer.ReadSec() <= 0.75f) {
-				vel.y = -350 * jump_timer.ReadSec();
-			}
+		states = A_IDLE;
+
+		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
+			vel.x = SPEED;
+			states = A_WALK_FORWARD;
 		}
-		else {
-			states = A_IDLE;
+		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
+			vel.x = (-1)*SPEED;
+			states = A_WALK_BACKWARDS;
+		}
 
-			if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
-				vel.x = SPEED;
-				states = A_WALK_FORWARD;
-			}
-			if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
-				vel.x = (-1)*SPEED;
-				states = A_WALK_BACKWARDS;
-			}
-
-			if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN) {
-				jump_timer.Start();
-				vel.y = -350;
-				states = A_JUMPING;
-			}
-			if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
-				states = A_CROUCH;
-			}
+		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN) {
+			vel.y = -300;
+			states = A_JUMP_NEUTRAL;
+		}
+		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
+			states = A_CROUCH;
 		}
 	}
 

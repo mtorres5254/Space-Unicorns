@@ -17,7 +17,6 @@ enum state {
 	A_WALK_FORWARD,
 	A_WALK_BACKWARDS,
 	A_JUMP_NEUTRAL,
-	A_JUMPING,
 	A_FALLING,
 	A_CROUCH,
 	A_SPECIAL,
@@ -58,7 +57,6 @@ private:
 
 	//------------------	
 	j1Timer death_timer;
-	j1Timer jump_timer;
 
 	//------------------
 
