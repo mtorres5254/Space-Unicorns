@@ -224,6 +224,14 @@ void j1Collisions::DeleteCollider(Collider* collider) {
 	}
 }
 
+void j1Collisions::DeleteAll() {
+	for (int i = 0; i < MAX_COLLIDERS; i++) {
+		if (colliders[i] != nullptr) {
+			colliders[i]->to_delete = true;
+		}
+	}
+}
+
 bool j1Collisions::LoadFromObjectLayer(ObjectLayer* layer) {
 	if (layer->name == "Colliders") {
 		

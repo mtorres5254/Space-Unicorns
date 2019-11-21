@@ -44,7 +44,8 @@ private:
 		fade_from_black
 	} current_step = fade_step::none;
 
-	p2List<p2SString*>maps;
+	p2SString map1;
+	p2SString map2;
 
 	int map_to_change = 0;
 	

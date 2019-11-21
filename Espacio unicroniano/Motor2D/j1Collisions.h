@@ -72,6 +72,7 @@ public:
 	Collider* AddCollider(SDL_Rect rectC, COLLIDER_TYPE typeC, j1Module* callbackC = nullptr);
 	void DebugDraw();
 	void DeleteCollider(Collider*);
+	void DeleteAll();
 
 private:
 	//bool LoadColliders();

@@ -231,6 +231,28 @@ bool j1Map::CleanUp()
 	}
 	data.layers.clear();
 
+	//Remove all image layers
+	p2List_item<ImageLayer*>* item3;
+	item3 = data.img_layers.start;
+
+	while (item3 != NULL)
+	{
+		RELEASE(item3->data);
+		item3 = item3->next;
+	}
+	data.img_layers.clear();
+
+	//Remove all object layers
+	p2List_item<ObjectLayer*>* item4;
+	item4 = data.obj_layers.start;
+
+	while (item4 != NULL)
+	{
+		RELEASE(item4->data);
+		item4 = item4->next;
+	}
+	data.obj_layers.clear();
+
 	// Clean up the pugui tree
 	map_file.reset();
 

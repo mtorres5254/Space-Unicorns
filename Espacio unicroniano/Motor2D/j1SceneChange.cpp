@@ -7,6 +7,7 @@
 #include "j1Window.h"
 #include "j1Player.h"
 #include "j1Audio.h"
+#include "j1Collisions.h"
 #include "j1Map.h"
 
 #include "SDL\include\SDL_render.h"
@@ -32,10 +33,12 @@ bool j1MapChange::Awake(pugi::xml_node& node)
 	//charge diferents maps
 	pugi::xml_node scene;
 	for (scene = node.child("scene"); scene; scene = scene.next_sibling("scene")) {
-		p2SString aux_scene;
-		aux_scene = scene.attribute("name").as_string();
-
-		maps.add(&aux_scene);
+		if (map1.Length() == 0) {
+			map1 = scene.attribute("name").as_string();
+		}
+		else {
+			map2 = scene.attribute("name").as_string();
+		}
 	}
 
 
@@ -70,8 +73,14 @@ bool j1MapChange::Update(float dt)
 			{
 				//map change logic
 				App->map->CleanUp();
+				App->col->DeleteAll();
 				App->entity->DestroyEntity(App->scene->player);
-				App->map->Load(maps.At(map_to_change - 1)->data->GetString());
+				if (map_to_change == 1) {
+					App->map->Load(map1.GetString());
+				}
+				else if (map_to_change == 2) {
+					App->map->Load(map2.GetString());
+				}
 
 				//pom pom
 				total_time += total_time;
