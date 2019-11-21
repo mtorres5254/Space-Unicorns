@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="400" height="100" tilewidth="32" tileheight="32" infinite="0" nextlayerid="10" nextobjectid="1">
- <tileset firstgid="1" source="yy.tsx"/>
+<map version="1.2" tiledversion="1.2.5" orientation="orthogonal" renderorder="right-down" width="400" height="100" tilewidth="32" tileheight="32" infinite="0" nextlayerid="10" nextobjectid="1">
+ <tileset firstgid="1" name="Tileset" tilewidth="32" tileheight="32" tilecount="88" columns="8">
+  <image source="TilesetMap1.png" trans="ff00ff" width="256" height="359"/>
+ </tileset>
  <imagelayer id="2" name="Background" offsetx="-8" offsety="352">
   <image source="Background_Map1.png" width="8363" height="1889"/>
  </imagelayer>
