@@ -13,44 +13,36 @@ j1Collisions::j1Collisions()
 	//colliders matrix
 	matrix[COLLIDER_PLAYER][COLLIDER_ENEMY] = true;
 	matrix[COLLIDER_PLAYER][COLLIDER_FLOOR] = true;
-	matrix[COLLIDER_PLAYER][COLLIDER_PLAYER] = false;
 	matrix[COLLIDER_PLAYER][COLLIDER_WALL] = true;
 	matrix[COLLIDER_PLAYER][COLLIDER_DEAD] = true;
 	matrix[COLLIDER_PLAYER][COLLIDER_END] = true;
+	matrix[COLLIDER_PLAYER][COLLIDER_CAM_UP] = true;
+	matrix[COLLIDER_PLAYER][COLLIDER_CAM_DOWN] = true;
+	matrix[COLLIDER_PLAYER][COLLIDER_CAM_LEFT] = true;
+	matrix[COLLIDER_PLAYER][COLLIDER_CAM_RIGHT] = true;
 
 	matrix[COLLIDER_ENEMY][COLLIDER_PLAYER] = true;
 	matrix[COLLIDER_ENEMY][COLLIDER_FLOOR] = true;
 	matrix[COLLIDER_ENEMY][COLLIDER_ENEMY] = true;
 	matrix[COLLIDER_ENEMY][COLLIDER_WALL] = true;
 	matrix[COLLIDER_ENEMY][COLLIDER_DEAD] = true;
-	matrix[COLLIDER_ENEMY][COLLIDER_END] = false;
 
 	matrix[COLLIDER_FLOOR][COLLIDER_PLAYER] = true;
 	matrix[COLLIDER_FLOOR][COLLIDER_ENEMY] = true;
-	matrix[COLLIDER_FLOOR][COLLIDER_FLOOR] = false;
-	matrix[COLLIDER_FLOOR][COLLIDER_WALL] = false;
-	matrix[COLLIDER_FLOOR][COLLIDER_DEAD] = false;
 
 	matrix[COLLIDER_WALL][COLLIDER_PLAYER] = true;
 	matrix[COLLIDER_WALL][COLLIDER_ENEMY] = true;
-	matrix[COLLIDER_WALL][COLLIDER_FLOOR] = false;
-	matrix[COLLIDER_WALL][COLLIDER_WALL] = false;
-	matrix[COLLIDER_WALL][COLLIDER_DEAD] = false;
-	matrix[COLLIDER_WALL][COLLIDER_END] = false;
 
 	matrix[COLLIDER_DEAD][COLLIDER_PLAYER] = true;
 	matrix[COLLIDER_DEAD][COLLIDER_ENEMY] = true;
-	matrix[COLLIDER_DEAD][COLLIDER_FLOOR] = false;
-	matrix[COLLIDER_DEAD][COLLIDER_WALL] = false;
-	matrix[COLLIDER_DEAD][COLLIDER_DEAD] = false;
-	matrix[COLLIDER_DEAD][COLLIDER_END] = false;
 
 	matrix[COLLIDER_END][COLLIDER_PLAYER] = true;
-	matrix[COLLIDER_END][COLLIDER_ENEMY] = false;
-	matrix[COLLIDER_END][COLLIDER_FLOOR] = false;
-	matrix[COLLIDER_END][COLLIDER_WALL] = false;
-	matrix[COLLIDER_END][COLLIDER_DEAD] = false;
-	matrix[COLLIDER_END][COLLIDER_END] = false;
+
+	matrix[COLLIDER_CAM_UP][COLLIDER_PLAYER] = true;
+	matrix[COLLIDER_CAM_DOWN][COLLIDER_PLAYER] = true;
+	matrix[COLLIDER_CAM_LEFT][COLLIDER_PLAYER] = true;
+	matrix[COLLIDER_CAM_RIGHT][COLLIDER_PLAYER] = true;
+
 
 	name.create("map");
 
@@ -168,6 +160,12 @@ void j1Collisions::DebugDraw() {
 			break;
 		case COLLIDER_DEAD:
 			App->render->DrawQuad(colliders[i]->rect, 255, 0, 0, alpha);
+			break;
+		case COLLIDER_CAM_DOWN:
+		case COLLIDER_CAM_LEFT:
+		case COLLIDER_CAM_RIGHT:
+		case COLLIDER_CAM_UP:
+			App->render->DrawQuad(colliders[i]->rect, 167, 175, 216, alpha);
 			break;
 		}
 	}

@@ -79,7 +79,7 @@ j1Player::j1Player(iPoint pos) : Entity(EntityType::player) {
 	//set player info 
 	initial_position.x = position.x = pos.x;
 	initial_position.y = position.y = pos.y;
-	lives = 1;
+	lives = maxLives = 1;
 
 	//loading collider
 	col = App->col->AddCollider({ position.x, position.y, 40, 80 }, COLLIDER_PLAYER, App->entity);
@@ -120,7 +120,7 @@ void j1Player::Update(float dt) {
 	}
 	else {
 		if ((int)death_timer.ReadSec() == 2) {
-			lives = 1;
+			lives = maxLives;
 			position.x = initial_position.x;
 			position.y = initial_position.y;
 			col->SetPos(position.x, position.y);

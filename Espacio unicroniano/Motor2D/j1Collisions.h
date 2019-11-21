@@ -19,7 +19,10 @@ enum COLLIDER_TYPE
 	COLLIDER_WALL,
 	COLLIDER_DEAD,
 	COLLIDER_END,
-	COLLIDER_WIN,
+	COLLIDER_CAM_UP,
+	COLLIDER_CAM_DOWN,
+	COLLIDER_CAM_LEFT,
+	COLLIDER_CAM_RIGHT,
 	COLLIDER_MAX
 };
 //------------------------------------------------------------------------

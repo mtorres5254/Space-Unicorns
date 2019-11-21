@@ -11,8 +11,9 @@
 #include "j1Player.h"
 #include "j1SceneChange.h"
 #include "j1Scene.h"
+#include "j1Collisions.h"
 
-#define CAMERA_SPEED 300
+#define CAMERA_SPEED 190
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -52,7 +53,13 @@ bool j1Scene::Start()
 		}
 	}
 
-	
+	uint winx, winy;
+	App->win->GetWindowSize(winx, winy);
+
+	col_camera_up = App->col->AddCollider({ 0,0, (int)winx, (int)winy / 4 }, COLLIDER_CAM_UP, this);
+	col_camera_down = App->col->AddCollider({ 0, ((int)winy / 3) * 2, (int)winx, (int)winy / 3 }, COLLIDER_CAM_DOWN, this);
+	col_camera_left = App->col->AddCollider({ 0,0, (int)winx / 4, (int)winy }, COLLIDER_CAM_LEFT, this);
+	col_camera_right = App->col->AddCollider({ ((int)winx / 4) * 3, 0, (int)winx / 4, (int)winy }, COLLIDER_CAM_RIGHT, this);
 
 	return true;
 }
@@ -62,30 +69,7 @@ bool j1Scene::PreUpdate(float dt)
 {
 	BROFILER_CATEGORY("Scene_PreUpdate", Profiler::Color::Azure )
 
-	// debug pathfing ------------------
-	static iPoint origin;
-	static bool origin_selected = false;
-
-	int x, y;
-	App->input->GetMousePosition(x, y);				//here we get mouse pixel position
-	iPoint p = App->render->ScreenToWorld(x, y);	// we convert the pixel info to world pixels info
-	p = App->map->WorldToMap(p.x, p.y);				//we convert the world position to tiles info
-
-	/*
-	if(App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
-	{
-		if(origin_selected == true)
-		{
-			App->pathfinding->CreatePath(origin, p);
-			origin_selected = false;
-		}
-		else
-		{
-			origin = p;
-			origin_selected = true;
-		}
-	}
-	*/
+	
 
 	return true;
 }
@@ -93,8 +77,11 @@ bool j1Scene::PreUpdate(float dt)
 // Called each loop iteration
 bool j1Scene::Update(float dt)
 {
-	BROFILER_CATEGORY("Scene_Update", Profiler::Color::Red )
+	BROFILER_CATEGORY("Scene_Update", Profiler::Color::Red)
 
+
+	dt_scene = dt;
+		
 	if(App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
 		App->LoadGame("save_game.xml");
 
@@ -125,27 +112,7 @@ bool j1Scene::Update(float dt)
 
 	App->map->Draw();
 
-	int x, y;
-	App->input->GetMousePosition(x, y);
-	iPoint map_coordinates = App->map->WorldToMap(x - App->render->camera.x, y - App->render->camera.y);
-	p2SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d Tile:%d,%d",
-					App->map->data.width, App->map->data.height,
-					App->map->data.tile_width, App->map->data.tile_height,
-					App->map->data.tilesets.count(),
-					map_coordinates.x, map_coordinates.y);
-
-	//App->win->SetTitle(title.GetString());
-
-	// Debug pathfinding ------------------------------
-	//int x, y;
-
-	App->input->GetMousePosition(x, y);
-	iPoint p = App->render->ScreenToWorld(x, y);
-	p = App->map->WorldToMap(p.x, p.y);
-	p = App->map->MapToWorld(p.x, p.y);
-
-	//App->render->Blit(debug_tex, p.x, p.y);
-
+	//Show Pathfinding result path
 	const p2DynArray<iPoint>* path = App->pathfinding->GetLastPath();
 
 	for(uint i = 0; i < path->Count(); ++i)
@@ -162,6 +129,14 @@ bool j1Scene::PostUpdate(float dt)
 {
 	bool ret = true;
 
+	uint winx, winy;
+	App->win->GetWindowSize(winx, winy);
+
+	col_camera_up->SetPos(-1 * App->render->camera.x, -1 * App->render->camera.y);
+	col_camera_down->SetPos(-1 * App->render->camera.x, -1 * App->render->camera.y + ((int)winy / 3) * 2);
+	col_camera_left->SetPos(-1 * App->render->camera.x, -1 * App->render->camera.y);
+	col_camera_right->SetPos(-1 * App->render->camera.x + ((int)winx / 4) * 3, -1 * App->render->camera.y);
+
 	if(App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;
 
@@ -174,4 +149,19 @@ bool j1Scene::CleanUp()
 	LOG("Freeing scene");
 
 	return true;
+}
+
+void j1Scene::OnCollision(Collider*c1, Collider* c2) {
+	if (c1->type == COLLIDER_CAM_UP) {
+		App->render->camera.y += (CAMERA_SPEED * dt_scene);
+	}
+	if (c1->type == COLLIDER_CAM_DOWN) {
+		App->render->camera.y -= (CAMERA_SPEED * dt_scene);
+	}
+	if (c1->type == COLLIDER_CAM_LEFT) {
+		App->render->camera.x += (CAMERA_SPEED * dt_scene);
+	}
+	if (c1->type == COLLIDER_CAM_RIGHT) {
+		App->render->camera.x -= (CAMERA_SPEED * dt_scene);
+	}
 }

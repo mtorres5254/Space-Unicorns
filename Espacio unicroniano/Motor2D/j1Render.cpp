@@ -73,7 +73,7 @@ bool j1Render::PreUpdate(float dt)
 		camera.x = -2;
 	}
 	if (camera.y > 0) {
-		camera.y = -1;
+		camera.y = -2;
 	}
 	if (camera.x < ((App->map->data.width * App->map->data.tile_width) * -1 ) + x) {
 		camera.x = ((App->map->data.width * App->map->data.tile_width) * -1) + x;

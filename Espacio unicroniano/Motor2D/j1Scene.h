@@ -3,7 +3,7 @@
 
 #include "j1Module.h"
 
-struct SDL_Texture;
+struct Collider;
 struct j1Player;
 
 class j1Scene : public j1Module
@@ -33,9 +33,18 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	void OnCollision(Collider* c1, Collider* c2);
+
 public:
 	j1Player* player  = nullptr;
 
+	Collider* col_camera_up;
+	Collider* col_camera_down;
+	Collider* col_camera_left;
+	Collider* col_camera_right;
+
+private:
+	float dt_scene;
 };
 
 #endif // __j1SCENE_H__
