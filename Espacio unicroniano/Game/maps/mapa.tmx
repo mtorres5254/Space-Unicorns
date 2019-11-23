@@ -3,13 +3,13 @@
  <tileset firstgid="1" name="Tileset" tilewidth="32" tileheight="32" tilecount="88" columns="8">
   <image source="TilesetMap1.png" trans="ff00ff" width="256" height="359"/>
  </tileset>
- <imagelayer id="2" name="Background" offsetx="-8" offsety="352">
+ <imagelayer id="2" name="Background" offsetx="-16" offsety="-488">
   <image source="Background_Map1.png" width="8363" height="1889"/>
  </imagelayer>
- <imagelayer id="3" name="Front" offsetx="16" offsety="1064">
+ <imagelayer id="3" name="Front" offsetx="8" offsety="224">
   <image source="Front_Map1.png" width="8263" height="1184"/>
  </imagelayer>
- <layer id="9" name="Capa de patrones Back" width="400" height="100">
+ <layer id="9" name="Capa de patrones Back" width="400" height="100" offsetx="-8" offsety="-840">
   <data>
    <tile/>
    <tile/>
@@ -40013,7 +40013,7 @@
    <tile/>
   </data>
  </layer>
- <layer id="8" name="Capa de patrones 1" width="400" height="100">
+ <layer id="8" name="Capa de patrones 1" width="400" height="100" offsetx="-8" offsety="-840">
   <data>
    <tile/>
    <tile/>
@@ -80017,7 +80017,7 @@
    <tile/>
   </data>
  </layer>
- <objectgroup id="5" name="Colliders" offsetx="90.9091" offsety="45.4545">
+ <objectgroup id="5" name="Colliders" offsetx="82.9091" offsety="-794.545">
   <object id="5" x="-88.9091" y="1620.55" width="477" height="36"/>
   <object id="6" name="Floor" x="390.091" y="1553.55" width="1019" height="18"/>
   <object id="7" name="Floor" x="1413.09" y="1649.55" width="349" height="15"/>
@@ -80105,5 +80105,5 @@
   <object id="103" name="Dead" x="6409.09" y="2166.67" width="218.182" height="24.2424"/>
   <object id="104" name="Wall" x="-93.9394" y="709.091" width="21.2121" height="927.273"/>
  </objectgroup>
- <objectgroup id="7" name="Entities"/>
+ <objectgroup id="7" name="Entities" offsetx="-8" offsety="-840"/>
 </map>
