@@ -20,7 +20,7 @@ j1Player::j1Player(iPoint pos) : Entity(EntityType::player) {
 	idle.PushBack({ 82 , 4 , 33 , 72});
 	idle.PushBack({123 , 6 , 29 , 70});
 	idle.PushBack({162 , 2 , 37 , 74});
-	idle.speed = 0.05f;
+	idle.speed = 1.5f;
 
 	//WALKING
 	walking.PushBack({ 13,87,39,64 });
@@ -33,7 +33,7 @@ j1Player::j1Player(iPoint pos) : Entity(EntityType::player) {
 	walking.PushBack({ 435,82,47,67 });
 	walking.PushBack({ 495,84,55,61 });
 	walking.PushBack({ 560,86,41,65 });
-	walking.speed = 0.24f;
+	walking.speed = 7.0f;
 
 	//CROUCH
 	crouching.PushBack({ 208, 32, 43, 44 });
@@ -102,6 +102,19 @@ void j1Player::PreUpdate(float dt) {
 void j1Player::Update(float dt) { 
 	BROFILER_CATEGORY("Player_Update", Profiler::Color::DarkOrange )
 
+	if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) {
+		if (godmode == true) {
+			godmode = false;
+			col = App->col->AddCollider({ position.x, position.y, 40, 80 }, COLLIDER_PLAYER, App->entity);
+		}
+		else if (godmode == false) {
+			godmode = true;
+			App->col->DeleteCollider(col);
+		}
+	}
+	
+
+
 	if (lives == 0) {
 		states = A_DEAD;
 		vel.x = vel.y = 0;
@@ -111,10 +124,15 @@ void j1Player::Update(float dt) {
 	}
 
 	if (states != A_DEAD) {
-		HandeInput();
+		if (godmode == false) {
+			HandeInput();
+		}
+
 
 		position.x += vel.x * dt;
 		position.y += vel.y * dt;
+
+		LOG("Player velocity: %.2f x %.2f", vel.x * dt, vel.y * dt);
 
 		col->SetPos(position.x, position.y);
 	}
@@ -246,8 +264,6 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 		jumping.Reset();
 		has_jump = false;
 		falling = false;
-
-		LOG("%i", vel.y);
 
 		if (vel.y > 0) {
 			vel.y = 0;

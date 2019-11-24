@@ -43,7 +43,7 @@ private:
 	iPoint vel;
 
 	int maxLives;
-	int maxFallVel = 1000;
+	int maxFallVel = 900;
 
 	SDL_Texture* weapon_pointer;
 
@@ -66,7 +66,6 @@ private:
 	bool godmode = false;
 	bool falling = true;
 	bool has_jump = false;
-	bool has_col = true;
 
 	unsigned int walkingsound;
 	unsigned int jumpingsound;

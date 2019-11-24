@@ -100,6 +100,7 @@ bool j1App::Awake()
 
 		if (max_framerate != 0) {
 			max_frame_ms = 1000.0f * (1 / (float)max_framerate);
+			fps_capped = true;
 		}
 	}
 
@@ -118,6 +119,20 @@ bool j1App::Awake()
 	PERF_PEEK(ptimer);
 
 	return ret;
+}
+
+void j1App::ChangeFrameCap(int cap) {
+	max_framerate = cap;
+	fps_capped = true;
+
+	if (max_framerate != 0) {
+		max_frame_ms = 1000.0f * (1 / (float)max_framerate);
+		
+	}
+	else if (max_framerate == 0) {
+		max_frame_ms = NULL;
+		fps_capped = false;
+	}
 }
 
 // Called before the first frame
@@ -213,9 +228,18 @@ void j1App::FinishUpdate()
 	uint32 last_frame_ms = frame_time.Read();
 	uint32 frames_on_last_update = prev_last_sec_frame_count;
 
+	p2SString frame_cap_title;
+	if (fps_capped == true) {
+		frame_cap_title = "ON";
+	}
+	else if (fps_capped == false) {
+		frame_cap_title = "OFF";
+	}
+
+
 	static char title[256];
-	sprintf_s(title, 256, "Av.FPS: %.2f Last Frame Ms: %02u Last sec frames: %i  Time since startup: %.3f Frame Count: %lu ",
-			  avg_fps, last_frame_ms, frames_on_last_update, seconds_since_startup, frame_count);
+	sprintf_s(title, 256, "FPS: %i / Av.FPS: %.2f / Last Frame Ms: %02u (Frame Cap: %s) ",
+			  frames_on_last_update, avg_fps, last_frame_ms, frame_cap_title.GetString());
 	App->win->SetTitle(title);
 
 	// 2: Use SDL_Delay to make sure you get your capped framerate

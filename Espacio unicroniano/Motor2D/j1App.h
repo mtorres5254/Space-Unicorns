@@ -51,6 +51,8 @@ public:
 	const char* GetTitle() const;
 	const char* GetOrganization() const;
 
+	void ChangeFrameCap(int cap);
+
 	void LoadGame(const char* file);
 	void SaveGame(const char* file) const;
 	void GetSaveGames(p2List<p2SString>& list_to_fill) const;
@@ -95,6 +97,7 @@ public:
 	j1MapChange*        scene_change = NULL;
 
 	float				dt;
+	int					max_framerate = 0;
 
 private:
 
@@ -117,8 +120,9 @@ private:
 	j1Timer				last_sec_frame_time;
 	uint32				last_sec_frame_count = 0;
 	uint32				prev_last_sec_frame_count = 0;
-	int					max_framerate = 0;
+
 	float				max_frame_ms;
+	bool				fps_capped;
 };
 
 extern j1App* App; // No student is asking me about that ... odd :-S

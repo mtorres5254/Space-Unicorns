@@ -72,8 +72,8 @@ bool j1Render::PreUpdate(float dt)
 	if (camera.x >= -1) {
 		camera.x = -2;
 	}
-	if (camera.y > 0) {
-		camera.y = -2;
+	if (camera.y > -2) {
+		camera.y = -4;
 	}
 	if (camera.x < ((App->map->data.width * App->map->data.tile_width) * -1 ) + x) {
 		camera.x = ((App->map->data.width * App->map->data.tile_width) * -1) + x;
@@ -81,8 +81,6 @@ bool j1Render::PreUpdate(float dt)
 	if (camera.y < ((App->map->data.height * App->map->data.tile_height) * -1) + y) {
 		camera.y = ((App->map->data.height * App->map->data.tile_height) * -1) + y;
 	}
-
-	LOG("Camera: %i x %i", camera.x, camera.y);
 
 	SDL_RenderClear(renderer);
 	return true;
@@ -94,8 +92,6 @@ bool j1Render::PostUpdate(float dt)
 
 	SDL_SetRenderDrawColor(renderer, background.r, background.g, background.g, background.a);
 	SDL_RenderPresent(renderer);
-
-	
 
 	return true;
 }

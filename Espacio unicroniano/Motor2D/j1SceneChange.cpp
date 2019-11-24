@@ -99,6 +99,8 @@ bool j1MapChange::Update(float dt)
 				iPoint pos;
 				pos.x = pos.y = 0;
 				App->scene->player = (j1Player*)App->entity->CreateEntity(Entity::EntityType::player, pos);
+				//reload things
+
 				current_step = fade_step::none;
 			}
 

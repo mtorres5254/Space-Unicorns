@@ -59,7 +59,7 @@ bool j1Scene::Start()
 	col_camera_up = App->col->AddCollider({ 0,0, (int)winx, (int)winy / 4 }, COLLIDER_CAM_UP, this);
 	col_camera_down = App->col->AddCollider({ 0, ((int)winy / 3) * 2, (int)winx, (int)winy / 3 }, COLLIDER_CAM_DOWN, this);
 	col_camera_left = App->col->AddCollider({ 0,0, (int)winx / 4, (int)winy }, COLLIDER_CAM_LEFT, this);
-	col_camera_right = App->col->AddCollider({ ((int)winx / 4) * 3, 0, (int)winx / 4, (int)winy }, COLLIDER_CAM_RIGHT, this);
+	col_camera_right = App->col->AddCollider({ ((int)winx / 3) * 2, 0, (int)winx / 3, (int)winy }, COLLIDER_CAM_RIGHT, this);
 
 	return true;
 }
@@ -102,12 +102,30 @@ bool j1Scene::Update(float dt)
 		App->render->camera.x -= (CAMERA_SPEED * dt);
 
 
-	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN) {
+	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) { //Change first level
 		App->scene_change->ChangeMap(2.0f, 1);
 	}
-	if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN) {
+	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN) { //Change second level
 		App->scene_change->ChangeMap(2.0f, 2);
 	}
+	if (App->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN) { //Enable/Disable FPS cap to 30
+		if (App->max_framerate == 0) {
+			App->ChangeFrameCap(30);
+		}
+		else if (App->max_framerate == 30) {
+			App->ChangeFrameCap(0);
+		}
+	}
+	
+
+
+	uint winx, winy;
+	App->win->GetWindowSize(winx, winy);
+
+	col_camera_up->SetPos(-1 * App->render->camera.x, -1 * App->render->camera.y);
+	col_camera_down->SetPos(-1 * App->render->camera.x, -1 * App->render->camera.y + ((int)winy / 3) * 2);
+	col_camera_left->SetPos(-1 * App->render->camera.x, -1 * App->render->camera.y);
+	col_camera_right->SetPos(-1 * App->render->camera.x + ((int)winx / 3) * 2, -1 * App->render->camera.y);
 
 
 	App->map->Draw();
@@ -129,13 +147,6 @@ bool j1Scene::PostUpdate(float dt)
 {
 	bool ret = true;
 
-	uint winx, winy;
-	App->win->GetWindowSize(winx, winy);
-
-	col_camera_up->SetPos(-1 * App->render->camera.x, -1 * App->render->camera.y);
-	col_camera_down->SetPos(-1 * App->render->camera.x, -1 * App->render->camera.y + ((int)winy / 3) * 2);
-	col_camera_left->SetPos(-1 * App->render->camera.x, -1 * App->render->camera.y);
-	col_camera_right->SetPos(-1 * App->render->camera.x + ((int)winx / 4) * 3, -1 * App->render->camera.y);
 
 	if(App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;
@@ -153,7 +164,7 @@ bool j1Scene::CleanUp()
 
 void j1Scene::OnCollision(Collider*c1, Collider* c2) {
 	if (c1->type == COLLIDER_CAM_UP) {
-		App->render->camera.y += (CAMERA_SPEED * dt_scene);
+		App->render->camera.y += (0.8 * CAMERA_SPEED * dt_scene);
 	}
 	if (c1->type == COLLIDER_CAM_DOWN) {
 		App->render->camera.y -= (CAMERA_SPEED * dt_scene);
@@ -162,6 +173,6 @@ void j1Scene::OnCollision(Collider*c1, Collider* c2) {
 		App->render->camera.x += (CAMERA_SPEED * dt_scene);
 	}
 	if (c1->type == COLLIDER_CAM_RIGHT) {
-		App->render->camera.x -= (CAMERA_SPEED * dt_scene);
+		App->render->camera.x -= (0.8 * CAMERA_SPEED * dt_scene);
 	}
 }
