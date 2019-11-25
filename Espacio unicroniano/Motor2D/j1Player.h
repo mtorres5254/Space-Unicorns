@@ -40,6 +40,7 @@ public:
 private:
 
 	iPoint initial_position;
+	iPoint initial_camera;
 	iPoint vel;
 
 	int maxLives;

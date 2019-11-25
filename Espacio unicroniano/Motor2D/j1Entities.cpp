@@ -1,6 +1,7 @@
 #include "j1App.h"
 #include "j1Entities.h"
 #include "j1Player.h"
+#include "j1FloorEnemy.h"
 #include "j1Scene.h"
 #include "j1Map.h"
 #include "j1Collisions.h"
@@ -32,18 +33,19 @@ bool j1Entities::PreUpdate(float dt) {
 }
 
 bool j1Entities::Update(float dt) {
+	/*
 	accumulated_time += dt;
 
 	if (accumulated_time >= update_ms_cycle) {
 		do_logic = true;
-	}
+	}*/
 
 	UpdateEntities(dt, do_logic);
-
+/*
 	if (do_logic == true) {
 		accumulated_time = 0.0f;
 		do_logic = false;
-	}
+	}*/
 
 	return true;
 }
@@ -60,7 +62,7 @@ Entity* j1Entities::CreateEntity(Entity::EntityType type, iPoint pos) {
 	Entity* ret = nullptr;
 	switch (type) {
 	case Entity::EntityType::player:				ret = new j1Player(pos);			break;
-		case Entity::EntityType::floor_enemy:	/*ret = new floor eney()*/ break;
+	case Entity::EntityType::floor_enemy:			ret = new j1FloorEnemy(pos);		break;
 		case Entity::EntityType::fly_enemy:		/*ret = new fly enemy()*/ break;
 	}
 
@@ -82,6 +84,10 @@ void j1Entities::DestroyEntity(Entity* entity) {
 	}
 }
 
+void j1Entities::DestroyAll() {
+	entities.clear();
+}
+
 void j1Entities::OnCollision(Collider* c1, Collider* c2) {
 	if (c1->type == COLLIDER_PLAYER) {
 		App->scene->player->OnCollision( c1, c2);
@@ -98,8 +104,13 @@ void j1Entities::LoadFromObjectLayer(ObjectLayer* layer) {
 
 			App->scene->player = (j1Player*) CreateEntity(Entity::EntityType::player, pos);
 		}
-		if (obj->data->name == "GroundEnemy") {
+		if (obj->data->name == "FloorEnemy") {
+			iPoint pos;
+			pos.x = obj->data->x;
+			pos.y = obj->data->y;
 
+			j1FloorEnemy* ret = (j1FloorEnemy*) CreateEntity(Entity::EntityType::floor_enemy, pos);
+			App->scene->FloorEnemies.add(ret);
 		}
 	}
 }

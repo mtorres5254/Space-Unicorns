@@ -51,6 +51,7 @@ public:
 	void LoadFromObjectLayer(ObjectLayer* layer);
 	Entity* CreateEntity(Entity::EntityType type, iPoint pos);
 	void DestroyEntity(Entity* entity);
+	void DestroyAll();
 
 private:
 

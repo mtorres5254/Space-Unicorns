@@ -69,6 +69,8 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	bool LoadFromObjectLayer(ObjectLayer* layer);
+
 	Collider* AddCollider(SDL_Rect rectC, COLLIDER_TYPE typeC, j1Module* callbackC = nullptr);
 	void DebugDraw();
 	void DeleteCollider(Collider*);
@@ -81,9 +83,6 @@ private:
 	Collider* colliders[MAX_COLLIDERS];
 	bool matrix[COLLIDER_MAX][COLLIDER_MAX];
 	bool debug = false;
-
-
-	bool LoadFromObjectLayer(ObjectLayer* layer);
 };
 
 #endif // __j1COLLISIONS_H__

@@ -3,6 +3,7 @@
 
 #define MAX_FRAMES 50000
 
+#include "j1App.h"
 #include "SDL/include/SDL_timer.h"
 #include "SDL/include/SDL_rect.h"
 

@@ -5,6 +5,7 @@
 
 struct Collider;
 struct j1Player;
+struct j1FloorEnemy;
 
 class j1Scene : public j1Module
 {
@@ -37,6 +38,7 @@ public:
 
 public:
 	j1Player* player  = nullptr;
+	p2List<j1FloorEnemy*> FloorEnemies;
 
 	Collider* col_camera_up;
 	Collider* col_camera_down;

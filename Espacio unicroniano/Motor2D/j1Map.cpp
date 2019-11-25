@@ -335,6 +335,20 @@ bool j1Map::Load(const char* file_name)
 		}
 	}
 
+	//Load Camera info from the object Layer -------------------------
+	p2List_item<ObjectLayer*>* layer_cam;
+	for (layer_cam = data.obj_layers.start; layer_cam; layer_cam = layer_cam->next) {
+		if (layer_cam->data->name == "Camera") {
+			p2List_item<ObjectData*>* cam_info = layer_cam->data->list.start;
+			for (cam_info; cam_info; cam_info = cam_info->next) {
+				if (cam_info->data->name == "Camera") {
+					App->render->camera.x = cam_info->data->x;
+					App->render->camera.y = cam_info->data->y;
+				}
+			}
+		}
+	}
+
 	if(ret == true)
 	{
 		LOG("Successfully parsed map XML file: %s", file_name);

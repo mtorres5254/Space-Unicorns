@@ -74,7 +74,8 @@ bool j1MapChange::Update(float dt)
 				//map change logic
 				App->map->CleanUp();
 				App->col->DeleteAll();
-				App->entity->DestroyEntity(App->scene->player);
+				App->entity->DestroyAll();
+
 				if (map_to_change == 1) {
 					App->map->Load(map1.GetString());
 				}
@@ -97,9 +98,23 @@ bool j1MapChange::Update(float dt)
 			if (now >= total_time)
 			{
 				iPoint pos;
-				pos.x = pos.y = 0;
+				pos.x = 0;
+				pos.y = 300;
+
 				App->scene->player = (j1Player*)App->entity->CreateEntity(Entity::EntityType::player, pos);
+
 				//reload things
+				p2List_item<ObjectLayer*>* obj;
+				for (obj = App->map->data.obj_layers.start; obj; obj = obj->next) {
+					App->col->LoadFromObjectLayer(obj->data);
+				}
+				uint winx, winy;
+				App->win->GetWindowSize(winx, winy);
+
+				App->scene->col_camera_up = App->col->AddCollider({ 0,0, (int)winx, (int)winy / 4 }, COLLIDER_CAM_UP, App->scene);
+				App->scene->col_camera_down = App->col->AddCollider({ 0, ((int)winy / 3) * 2, (int)winx, (int)winy / 3 }, COLLIDER_CAM_DOWN, App->scene);
+				App->scene->col_camera_left = App->col->AddCollider({ 0,0, (int)winx / 4, (int)winy }, COLLIDER_CAM_LEFT, App->scene);
+				App->scene->col_camera_right = App->col->AddCollider({ ((int)winx / 3) * 2, 0, (int)winx / 3, (int)winy }, COLLIDER_CAM_RIGHT, App->scene );
 
 				current_step = fade_step::none;
 			}

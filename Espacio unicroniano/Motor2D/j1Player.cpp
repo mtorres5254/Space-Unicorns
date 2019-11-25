@@ -7,6 +7,7 @@
 #include "j1Scene.h"
 #include "j1Map.h"
 #include "j1Audio.h"
+#include "j1SceneChange.h"
 #include "p2Log.h"
 #include "SDL/include/SDL_timer.h"
 
@@ -20,7 +21,7 @@ j1Player::j1Player(iPoint pos) : Entity(EntityType::player) {
 	idle.PushBack({ 82 , 4 , 33 , 72});
 	idle.PushBack({123 , 6 , 29 , 70});
 	idle.PushBack({162 , 2 , 37 , 74});
-	idle.speed = 1.5f;
+	idle.speed = 3.4f;
 
 	//WALKING
 	walking.PushBack({ 13,87,39,64 });
@@ -79,6 +80,9 @@ j1Player::j1Player(iPoint pos) : Entity(EntityType::player) {
 	//set player info 
 	initial_position.x = position.x = pos.x;
 	initial_position.y = position.y = pos.y;
+	initial_camera.x = App->render->camera.x;
+	initial_camera.y = App->render->camera.y;
+
 	lives = maxLives = 1;
 
 	//loading collider
@@ -112,6 +116,12 @@ void j1Player::Update(float dt) {
 			App->col->DeleteCollider(col);
 		}
 	}
+	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) {
+		position = initial_position;
+		App->render->camera.x = initial_camera.x;
+		App->render->camera.y = initial_camera.y;
+
+	}
 	
 
 
@@ -143,7 +153,8 @@ void j1Player::Update(float dt) {
 			position.y = initial_position.y;
 			col->SetPos(position.x, position.y);
 
-			App->render->camera.x = App->render->camera.y = 0;
+			App->render->camera.x = initial_camera.x;
+			App->render->camera.y = initial_camera.y;
 
 			states = A_IDLE;
 		}
@@ -303,5 +314,9 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 	if (c2->type == COLLIDER_DEAD) {
 		lives -= 1;
 		//add effects and other things
+	}
+
+	if (c2->type == COLLIDER_END) {
+		App->scene_change->ChangeMap(2.0f, 2);
 	}
 }
