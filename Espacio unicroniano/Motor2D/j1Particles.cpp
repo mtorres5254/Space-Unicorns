@@ -46,26 +46,47 @@ void j1Particle::Update(float dt) {
 		position.x += SPEED * dt;
 		if (diferential_y > 0) {
 			float s = (float)diferential_y / diferential_x;
-			position.y = (s * position.x) + player_y;
+			if (App->fps_capped == true) {
+				position.y += s * SPEED * dt;
+			}
+			else {
+				position.y = (s * position.x) + player_y;
+			}
 		}
 		else if (diferential_y < 0) {
 			int aux1_bis;
 			aux1_bis = diferential_y * -1;
 			float s = (float)aux1_bis / diferential_x;
-			position.y = (-s * position.x) + player_y;
+			if (App->fps_capped == true) {
+				position.y += -s * SPEED * dt;
+			}
+			else {
+				position.y = (-s * position.x) + player_y;
+			}
 		}
 	}
 	else if (diferential_x < 0) {
 		position.x -= SPEED * dt;
 		if (diferential_y > 0) {
 			float s = (float)diferential_y / diferential_x;
-			position.y = (s * position.x) + player_y;
+			if (App->fps_capped == true) {
+				position.y += s * SPEED * dt;
+			}
+			else {
+				position.y = (s * position.x) + player_y;
+			}
+			
 		}
 		else if (diferential_y < 0) {
 			int aux1_bis;
 			aux1_bis = diferential_y * -1;
 			float s = (float)aux1_bis / diferential_x;
-			position.y = (-s * position.x) + player_y;
+			if (App->fps_capped == true) {
+				position.y += -s * SPEED * dt;
+			}
+			else {
+				position.y = (-s * position.x) + player_y;
+			}
 		}
 	}
 	

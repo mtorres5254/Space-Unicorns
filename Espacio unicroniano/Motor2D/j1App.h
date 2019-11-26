@@ -98,6 +98,7 @@ public:
 
 	float				dt;
 	int					max_framerate = 0;
+	bool				fps_capped;
 
 private:
 
@@ -122,7 +123,6 @@ private:
 	uint32				prev_last_sec_frame_count = 0;
 
 	float				max_frame_ms;
-	bool				fps_capped;
 };
 
 extern j1App* App; // No student is asking me about that ... odd :-S

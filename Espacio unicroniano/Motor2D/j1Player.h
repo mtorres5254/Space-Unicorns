@@ -10,7 +10,7 @@
 #include "j1Animations.h"
 #include "j1Entities.h"
 
-#define SPEED 300
+#define SPEED 400
 
 enum state {
 	A_NONE = 0,
@@ -74,6 +74,8 @@ private:
 
 	unsigned int walkingsound;
 	unsigned int jumpingsound;
+
+	float player_dt;
 
 	//--------------------
 	state states;

@@ -131,6 +131,7 @@ void j1Player::Update(float dt) {
 
 	if (states != A_DEAD) {
 		if (godmode == false) {
+			player_dt = dt;
 			HandeInput();
 		}
 		else if (godmode == true) {
@@ -152,7 +153,7 @@ void j1Player::Update(float dt) {
 		position.x += vel.x * dt;
 		position.y += vel.y * dt;
 
-		//LOG("Player velocity: %.2f x %.2f", vel.x * dt, vel.y * dt);
+		LOG("Player velocity: %.2f x %.2f", vel.x * dt, vel.y * dt);
 
 		col->SetPos(position.x, position.y);
 	}
@@ -252,10 +253,10 @@ void j1Player::HandeInput() {
 	if (states == A_JUMP_NEUTRAL || states == A_FALLING ) {
 		states = A_JUMP_NEUTRAL;
 		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
-			vel.x = (SPEED * 0.6);
+			vel.x = (SPEED * 0.4);
 		}
 		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
-				vel.x = (-1)*(SPEED * 0.6);
+				vel.x = (-1)*(SPEED * 0.4);
 		}
 		if (has_jump == false) {
 			if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN) {
@@ -291,7 +292,7 @@ void j1Player::HandeInput() {
 	}
 
 	if (vel.y < maxFallVel) {
-		vel.y += (float)(10);
+		vel.y += (250) * player_dt;
 	}
 }
 
