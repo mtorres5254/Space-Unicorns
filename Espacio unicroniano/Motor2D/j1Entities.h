@@ -16,6 +16,7 @@ public:
 		player = 0,
 		floor_enemy,
 		fly_enemy,
+		particle,
 		unknown
 	};
 
@@ -49,7 +50,7 @@ public:
 	void OnCollision(Collider* c1, Collider* c2);
 
 	void LoadFromObjectLayer(ObjectLayer* layer);
-	Entity* CreateEntity(Entity::EntityType type, iPoint pos);
+	Entity* CreateEntity(Entity::EntityType type, iPoint pos, int dest_X = NULL, int dest_Y = NULL);
 	void DestroyEntity(Entity* entity);
 	void DestroyAll();
 

@@ -1,7 +1,9 @@
 #include "j1App.h"
 #include "j1Input.h"
 #include "j1Render.h"
+#include "j1Player.h"
 #include "j1Window.h"
+#include "j1Scene.h"
 #include "j1Collisions.h"
 #include "p2Log.h"
 
@@ -26,6 +28,7 @@ j1Collisions::j1Collisions()
 	matrix[COLLIDER_ENEMY][COLLIDER_ENEMY] = true;
 	matrix[COLLIDER_ENEMY][COLLIDER_WALL] = true;
 	matrix[COLLIDER_ENEMY][COLLIDER_DEAD] = true;
+	matrix[COLLIDER_ENEMY][COLLIDER_SHOT] = true;
 
 	matrix[COLLIDER_FLOOR][COLLIDER_PLAYER] = true;
 	matrix[COLLIDER_FLOOR][COLLIDER_ENEMY] = true;
@@ -42,6 +45,10 @@ j1Collisions::j1Collisions()
 	matrix[COLLIDER_CAM_DOWN][COLLIDER_PLAYER] = true;
 	matrix[COLLIDER_CAM_LEFT][COLLIDER_PLAYER] = true;
 	matrix[COLLIDER_CAM_RIGHT][COLLIDER_PLAYER] = true;
+
+	matrix[COLLIDER_SHOT][COLLIDER_ENEMY] = true;
+	matrix[COLLIDER_SHOT][COLLIDER_FLOOR] = true;
+	matrix[COLLIDER_SHOT][COLLIDER_WALL] = true;
 
 
 	name.create("map");
@@ -132,6 +139,13 @@ void j1Collisions::DebugDraw() {
 	if (debug == false) {
 		return;
 	}
+	int x;
+	int y;
+
+	App->input->GetMousePosition(x, y);
+	iPoint p = App->render->ScreenToWorld(x, y);
+
+	App->render->DrawLine(App->scene->player->position.x, App->scene->player->position.y, p.x, p.y, 255, 255, 255, 100);
 
 	LOG("showing colliders");
 
@@ -166,6 +180,9 @@ void j1Collisions::DebugDraw() {
 		case COLLIDER_CAM_RIGHT:
 		case COLLIDER_CAM_UP:
 			App->render->DrawQuad(colliders[i]->rect, 167, 175, 216, alpha);
+			break;
+		case COLLIDER_SHOT:
+			App->render->DrawQuad(colliders[i]->rect, 255, 0, 255, alpha);
 			break;
 		}
 	}

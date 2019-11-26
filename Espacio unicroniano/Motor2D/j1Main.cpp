@@ -31,8 +31,7 @@ int main(int argc, char* args[])
 {
 	LOG("Engine starting ... %d");
 
-	//disable cursor
-	SDL_ShowCursor(SDL_DISABLE);
+	
 
 	MainState state = MainState::CREATE;
 	int result = EXIT_FAILURE;

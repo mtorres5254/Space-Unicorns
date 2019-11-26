@@ -2,6 +2,7 @@
 #include "j1Entities.h"
 #include "j1Player.h"
 #include "j1FloorEnemy.h"
+#include "j1Particles.h"
 #include "j1Scene.h"
 #include "j1Map.h"
 #include "j1Collisions.h"
@@ -58,12 +59,13 @@ void j1Entities::UpdateEntities(float dt, bool do_logic) {
 	}
 }
 
-Entity* j1Entities::CreateEntity(Entity::EntityType type, iPoint pos) {
+Entity* j1Entities::CreateEntity(Entity::EntityType type, iPoint pos, int dest_X, int dest_Y) {
 	Entity* ret = nullptr;
 	switch (type) {
 	case Entity::EntityType::player:				ret = new j1Player(pos);			break;
 	case Entity::EntityType::floor_enemy:			ret = new j1FloorEnemy(pos);		break;
 		case Entity::EntityType::fly_enemy:		/*ret = new fly enemy()*/ break;
+	case Entity::EntityType::particle:				ret = new j1Particle(pos, dest_X, dest_Y); break;
 	}
 
 	if (ret != nullptr) {
@@ -91,6 +93,25 @@ void j1Entities::DestroyAll() {
 void j1Entities::OnCollision(Collider* c1, Collider* c2) {
 	if (c1->type == COLLIDER_PLAYER) {
 		App->scene->player->OnCollision( c1, c2);
+	}
+
+	if (c1->type == COLLIDER_SHOT) {
+		p2List_item<j1Particle*>* particle;
+		for (particle = App->scene->player->bullets.start; particle; particle = particle->next) {
+			if (particle->data->col->rect.x == c1->rect.x && particle->data->col->rect.y == c1->rect.y && particle->data->col->rect.w == c1->rect.w && particle->data->col->rect.h == c1->rect.h) {
+				particle->data->OnCollision(c1, c2);
+			}
+		}
+		
+	}
+
+	if (c1->type == COLLIDER_ENEMY) {
+		p2List_item<j1FloorEnemy*>* floor_enemy;
+		for (floor_enemy = App->scene->FloorEnemies.start; floor_enemy; floor_enemy = floor_enemy->next) {
+			if (floor_enemy->data->col->rect.x == c1->rect.x && floor_enemy->data->col->rect.y == c1->rect.y && floor_enemy->data->col->rect.w == c1->rect.w && floor_enemy->data->col->rect.h == c1->rect.h) {
+				floor_enemy->data->OnCollision(c1, c2);
+			}
+		}
 	}
 }
 

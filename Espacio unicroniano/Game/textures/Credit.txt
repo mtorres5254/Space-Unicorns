@@ -1,0 +1,5 @@
+player.png :
+flying_enemy.png:
+ground_enemy.png:
+mira.png: cracio propia.
+player.png:

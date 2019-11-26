@@ -18,10 +18,14 @@ public:
 private:
 	iPoint initialPosition;
 
+	bool dead = false;
+
+	SDL_RendererFlip flip = SDL_FLIP_NONE;
+
 	//---------------------------------
 	Animation* Current_animation;
 	Animation idle;
-	Animation walk;
+	Animation death;
 
 };
 

@@ -5,6 +5,7 @@
 #include "p2Defs.h"
 #include "j1Module.h"
 #include "j1Timer.h"
+#include "j1Particles.h"
 #include "SDL/include/SDL.h"
 #include "j1Animations.h"
 #include "j1Entities.h"
@@ -37,8 +38,10 @@ public:
 	void OnCollision(Collider* c1, Collider* c2);
 	void DrawPointer();
 
-private:
 
+	p2List<j1Particle*> bullets;
+private:
+	iPoint pos_before_jump;
 	iPoint initial_position;
 	iPoint initial_camera;
 	iPoint vel;
@@ -59,6 +62,7 @@ private:
 
 	//------------------	
 	j1Timer death_timer;
+	j1Timer hit_timer;
 
 	//------------------
 

@@ -44,7 +44,7 @@ j1Player::j1Player(iPoint pos) : Entity(EntityType::player) {
 	jumping.PushBack({ 7,154,51,71 });
 	jumping.PushBack({ 60,169,53,39 });
 	jumping.PushBack({ 117,175,52,30 });
-	jumping.speed = 0.2f;
+	jumping.speed = 4.0f;
 	jumping.loop = false;
 
 	//fall
@@ -53,12 +53,12 @@ j1Player::j1Player(iPoint pos) : Entity(EntityType::player) {
 	fall.PushBack({ 234,156,52,29 });
 	fall.PushBack({ 307,156,30,52 });
 	fall.PushBack({ 361,165,53,39 });
-	fall.speed = 0.24f;
+	fall.speed = 5.0f;
 
 	//dead;
 	death.PushBack({2,286,46,45});
 	death.PushBack({ 60,281,37,63 });
-	death.speed = 0.05f;
+	death.speed = 3.5f;
 	death.loop = false;
 
 	//load conditions
@@ -83,7 +83,7 @@ j1Player::j1Player(iPoint pos) : Entity(EntityType::player) {
 	initial_camera.x = App->render->camera.x;
 	initial_camera.y = App->render->camera.y;
 
-	lives = maxLives = 1;
+	lives = maxLives = 3;
 
 	//loading collider
 	col = App->col->AddCollider({ position.x, position.y, 40, 80 }, COLLIDER_PLAYER, App->entity);
@@ -120,10 +120,8 @@ void j1Player::Update(float dt) {
 		position = initial_position;
 		App->render->camera.x = initial_camera.x;
 		App->render->camera.y = initial_camera.y;
-
+		lives = 3;
 	}
-	
-
 
 	if (lives == 0) {
 		states = A_DEAD;
@@ -137,17 +135,31 @@ void j1Player::Update(float dt) {
 		if (godmode == false) {
 			HandeInput();
 		}
-
+		else if (godmode == true) {
+			vel.x = vel.y = 0;
+			if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
+				vel.y = -SPEED;
+			}
+			if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
+				vel.x = -SPEED;
+			}
+			if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
+				vel.y = SPEED;
+			}
+			if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
+				vel.x = SPEED;
+			}
+		}
 
 		position.x += vel.x * dt;
 		position.y += vel.y * dt;
 
-		LOG("Player velocity: %.2f x %.2f", vel.x * dt, vel.y * dt);
+		//LOG("Player velocity: %.2f x %.2f", vel.x * dt, vel.y * dt);
 
 		col->SetPos(position.x, position.y);
 	}
 	else {
-		if ((int)death_timer.ReadSec() == 2) {
+		if ((int)death_timer.ReadSec() == 1) {
 			lives = maxLives;
 			position.x = initial_position.x;
 			position.y = initial_position.y;
@@ -206,6 +218,21 @@ void j1Player::Draw() {
 
 	App->render->Blit(sprite, position.x, position.y, &Current_Animation->GetCurrentFrame(), 1.0f, NULL, NULL, NULL, flip);
 
+	SDL_Rect rect = { 180,290,46,42 };
+	//draw lives
+	if (lives == 3) {
+		App->render->Blit(sprite, -1 * App->render->camera.x, -1 * App->render->camera.y, &rect);
+		App->render->Blit(sprite, -1 * App->render->camera.x + 50, -1 * App->render->camera.y, &rect);
+		App->render->Blit(sprite, -1 * App->render->camera.x + 100, -1 * App->render->camera.y, &rect);
+	}
+	else if (lives == 2) {
+		App->render->Blit(sprite, -1 * App->render->camera.x, -1 * App->render->camera.y, &rect);
+		App->render->Blit(sprite, -1 * App->render->camera.x + 50, -1 * App->render->camera.y, &rect);
+	}
+	else if (lives == 1) {
+		App->render->Blit(sprite, -1 * App->render->camera.x, -1 * App->render->camera.y, &rect);
+	}
+
 	DrawPointer();
 }
 
@@ -217,6 +244,12 @@ void j1Player::DrawPointer() {
 	iPoint p = App->render->ScreenToWorld(x, y);
 
 	App->render->Blit(weapon_pointer, p.x - 16, p.y - 16);
+
+	if (App->input->GetMouseButtonDown(1) == KEY_DOWN) {
+		j1Particle* shoot;
+		shoot = (j1Particle*) App->entity->CreateEntity(Entity::EntityType::particle, position, p.x, p.y);
+		bullets.add(shoot);
+	}
 }
 
 void j1Player::HandeInput() {
@@ -253,6 +286,7 @@ void j1Player::HandeInput() {
 		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN) {
 			vel.y = -300;
 			states = A_JUMP_NEUTRAL;
+			pos_before_jump = position;
 		}
 		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
 			states = A_CROUCH;
@@ -314,9 +348,27 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 	if (c2->type == COLLIDER_DEAD) {
 		lives -= 1;
 		//add effects and other things
+		hit_timer.Start();
+		while ((int)hit_timer.ReadSec() < 1) {
+
+		}
+		if (lives != 0) {
+			position = pos_before_jump;
+		}
 	}
 
 	if (c2->type == COLLIDER_END) {
 		App->scene_change->ChangeMap(2.0f, 2);
+	}
+
+	if (c2->type == COLLIDER_ENEMY) {
+		lives -= 1;
+		hit_timer.Start();
+		while (hit_timer.ReadSec() < 0.5f) {
+			if (lives != 0) {
+				position.x = c2->rect.x - c1->rect.w - 10;
+				position.y = c2->rect.y - c1->rect.h - 5;
+			}
+		}
 	}
 }
