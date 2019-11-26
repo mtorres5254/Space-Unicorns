@@ -36,7 +36,7 @@ bool j1Scene::Awake()
 // Called before the first frame
 bool j1Scene::Start()
 {
-	if(App->map->Load("mapa2.tmx") == true)
+	if(App->map->Load("mapa.tmx") == true)
 	{
 		int w, h;
 		uchar* data = NULL;
