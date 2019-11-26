@@ -11,13 +11,15 @@ public:
 
 	void Update(float dt);
 	void Draw();
+	void Reset();
 	void OnCollision(Collider* c1, Collider* c2);
 
 private:
 	iPoint destination;
+	int player_y;
 
-	int aux1;
-	int aux2;
+	int diferential_y;
+	int diferential_x;
 
 	Animation idle;
 

@@ -1,5 +1,7 @@
 #include "j1Particles.h"
 #include "j1Textures.h"
+#include "j1Scene.h"
+#include "j1Player.h"
 #include "j1Collisions.h"
 #include "j1App.h"
 
@@ -12,20 +14,26 @@ j1Particle::j1Particle(iPoint pos, int x, int y) : Entity(EntityType::particle) 
 	idle.PushBack({ 82,0,68,30 });
 	idle.speed = 7.0f;
 
-	aux1 = y - pos.y;
-	aux2 = x - pos.x;
+	diferential_y = y - pos.y;
+	diferential_x = x - pos.x;
 
-
+	
 	destination.x = x + 33;
 	destination.y = y + 15;
 	position = pos;
 
 	col = App->col->AddCollider({ position.x,position.x,67,30 }, COLLIDER_SHOT, App->entity);
+	player_y = App->scene->player->position.y;
 
 	lives = 1;
 }
 
+void j1Particle::Reset() {
+	App->entity->DestroyEntity(this);
+}
+
 void j1Particle::Update(float dt) {
+
 	if (position == destination) {
 		lives = 0;
 	}
@@ -34,30 +42,30 @@ void j1Particle::Update(float dt) {
 		App->col->DeleteCollider(col);
 	}
 
-	if (aux2 > 0) {
+	if (diferential_x > 0) {
 		position.x += SPEED * dt;
-		if (aux1 > 0) {
-			float s = (float)aux1 / aux2;
-			position.y += s * SPEED * dt;
+		if (diferential_y > 0) {
+			float s = (float)diferential_y / diferential_x;
+			position.y = (s * position.x) + player_y;
 		}
-		else if (aux1 < 0) {
+		else if (diferential_y < 0) {
 			int aux1_bis;
-			aux1_bis = aux1 * -1;
-			float s = (float)aux1_bis / aux2;
-			position.y -= s * SPEED * dt;
+			aux1_bis = diferential_y * -1;
+			float s = (float)aux1_bis / diferential_x;
+			position.y = (-s * position.x) + player_y;
 		}
 	}
-	else if (aux2 < 0) {
+	else if (diferential_x < 0) {
 		position.x -= SPEED * dt;
-		if (aux1 > 0) {
-			float s = (float)aux1 / aux2;
-			position.y -= s * SPEED * dt;
+		if (diferential_y > 0) {
+			float s = (float)diferential_y / diferential_x;
+			position.y = (s * position.x) + player_y;
 		}
-		else if (aux1 < 0) {
+		else if (diferential_y < 0) {
 			int aux1_bis;
-			aux1_bis = aux1 * -1;
-			float s = (float)aux1_bis / aux2;
-			position.y += s * SPEED * dt;
+			aux1_bis = diferential_y * -1;
+			float s = (float)aux1_bis / diferential_x;
+			position.y = (-s * position.x) + player_y;
 		}
 	}
 	
@@ -67,28 +75,28 @@ void j1Particle::Update(float dt) {
 
 void j1Particle::Draw() {
 	float angle = 0.0f;
-	if (aux2 > 0) {
-		if (aux1 > 0) {
-			float s = (float)aux1 / aux2;
-			angle = s * 33;
+	if (diferential_x > 0) {
+		if (diferential_y > 0) {
+			float s = (float)diferential_y / diferential_x;
+			angle = s * 40;
 		}
-		else if (aux1 < 0) {
+		else if (diferential_y < 0) {
 			int aux1_bis;
-			aux1_bis = aux1 * -1;
-			float s = (float)aux1_bis / aux2;
-			angle = s * -33;
+			aux1_bis = diferential_y * -1;
+			float s = (float)aux1_bis / diferential_x;
+			angle = s * -40;
 		}
 	}
-	else if (aux2 < 0) {
-		if (aux1 > 0) {
-			float s = (float)aux1 / aux2;
-			angle = (s * 33) + 180;
+	else if (diferential_x < 0) {
+		if (diferential_y > 0) {
+			float s = (float)diferential_y / diferential_x;
+			angle = (s * 40) + 180;
 		}
-		else if (aux1 < 0) {
+		else if (diferential_y < 0) {
 			int aux1_bis;
-			aux1_bis = aux1 * -1;
-			float s = (float)aux1_bis / aux2;
-			angle = (s * -33) + 180;
+			aux1_bis = diferential_y * -1;
+			float s = (float)aux1_bis / diferential_x;
+			angle = (s * -40) + 180;
 		}
 	}
 

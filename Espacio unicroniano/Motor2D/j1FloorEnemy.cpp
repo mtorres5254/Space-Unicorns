@@ -28,7 +28,7 @@ j1FloorEnemy::j1FloorEnemy(iPoint pos) : Entity(EntityType::floor_enemy) {
 	death.speed = 3.0f;
 	death.loop = false;
 
-	col = App->col->AddCollider({position.x,position.y,32,32}, COLLIDER_ENEMY, App->entity);
+	col = App->col->AddCollider({ position.x,position.y,32,32 }, COLLIDER_ENEMY, App->entity);
 
 	//Load position and save it
 	initialPosition = position = pos;
@@ -43,9 +43,13 @@ void j1FloorEnemy::PreUpdate(float dt) {
 }
 
 void j1FloorEnemy::Reset() {
-	position = initialPosition;
+	position.x = initialPosition.x;
+	position.y = initialPosition.y - 5;
 	lives = 5;
-	col->SetPos(position.x, position.y);
+	if (col != nullptr) {
+		App->col->DeleteCollider(col);
+	}
+	col = App->col->AddCollider({ position.x,position.y,32,32 }, COLLIDER_ENEMY, App->entity);
 	dead = false;
 }
 
