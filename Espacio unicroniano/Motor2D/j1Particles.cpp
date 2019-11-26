@@ -70,10 +70,10 @@ void j1Particle::Update(float dt) {
 		if (diferential_y > 0) {
 			float s = (float)diferential_y / diferential_x;
 			if (App->fps_capped == true) {
-				position.y += s * SPEED * dt;
+				position.y += -s * SPEED * dt;
 			}
 			else {
-				position.y = (s * position.x) + player_y;
+				position.y = (-s * position.x) + player_y;
 			}
 			
 		}
@@ -82,10 +82,10 @@ void j1Particle::Update(float dt) {
 			aux1_bis = diferential_y * -1;
 			float s = (float)aux1_bis / diferential_x;
 			if (App->fps_capped == true) {
-				position.y += -s * SPEED * dt;
+				position.y += s * SPEED * dt;
 			}
 			else {
-				position.y = (-s * position.x) + player_y;
+				position.y = (s * position.x) + player_y;
 			}
 		}
 	}
