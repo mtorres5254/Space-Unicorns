@@ -63,7 +63,7 @@ private:
 	//------------------	
 	j1Timer death_timer;
 	j1Timer hit_timer;
-
+	j1Timer start_timer;
 	//------------------
 
 	SDL_RendererFlip flip = SDL_FLIP_NONE;
@@ -71,6 +71,7 @@ private:
 	bool godmode = false;
 	bool falling = true;
 	bool has_jump = false;
+	bool reset = false;
 
 	unsigned int walkingsound;
 	unsigned int jumpingsound;

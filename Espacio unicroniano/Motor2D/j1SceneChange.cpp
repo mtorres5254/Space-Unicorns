@@ -97,12 +97,6 @@ bool j1MapChange::Update(float dt)
 
 			if (now >= total_time)
 			{
-				iPoint pos;
-				pos.x = 0;
-				pos.y = 300;
-
-				App->scene->player = (j1Player*)App->entity->CreateEntity(Entity::EntityType::player, pos);
-
 				//reload things
 				p2List_item<ObjectLayer*>* obj;
 				for (obj = App->map->data.obj_layers.start; obj; obj = obj->next) {

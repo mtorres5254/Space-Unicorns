@@ -85,6 +85,8 @@ j1Player::j1Player(iPoint pos) : Entity(EntityType::player) {
 
 	//loading collider
 	col = App->col->AddCollider({ position.x, position.y, 40, 80 }, COLLIDER_PLAYER, App->entity);
+
+	start_timer.Start();
 }
 
 j1Player::~j1Player()
@@ -109,6 +111,11 @@ void j1Player::Reset() {
 
 void j1Player::Update(float dt) { 
 	BROFILER_CATEGORY("Player_Update", Profiler::Color::DarkOrange )
+
+	if (start_timer.ReadSec() > 1.0f && reset == false) {
+		Reset();
+		reset = true;
+	}
 
 	if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) {
 		if (godmode == true) {
@@ -150,8 +157,23 @@ void j1Player::Update(float dt) {
 			}
 		}
 
-		position.x += vel.x * dt;
-		position.y += vel.y * dt;
+		if (App->fps_capped == true) {
+			position.x += vel.x * dt;
+			position.y += vel.y * dt;
+		}
+		else {
+			float auxx = vel.x * dt;
+			float auxy = vel.y * dt;
+			if (auxx > 0.3f) {
+				auxx = 1.0f;
+			}
+			if (auxy > 0.0f) {
+				auxy = 1.0f;
+			}
+			position.x += auxx;
+			position.y += auxy;
+		}
+		
 
 		LOG("Player velocity: %.2f x %.2f", vel.x * dt, vel.y * dt);
 
@@ -292,7 +314,7 @@ void j1Player::HandeInput() {
 	}
 
 	if (vel.y < maxFallVel) {
-		vel.y += (250) * player_dt;
+		vel.y += 300 * player_dt;
 	}
 }
 
