@@ -80,8 +80,6 @@ j1Player::j1Player(iPoint pos) : Entity(EntityType::player) {
 	//set player info 
 	initial_position.x = position.x = pos.x;
 	initial_position.y = position.y = pos.y;
-	initial_camera.x = App->render->camera.x;
-	initial_camera.y = App->render->camera.y;
 
 	lives = maxLives = 3;
 
@@ -103,6 +101,12 @@ void j1Player::PreUpdate(float dt) {
 	falling = true;
 }
 
+void j1Player::Reset() {
+	position = initial_position;
+	col->SetPos(position.x, position.y);
+	lives = maxLives;
+}
+
 void j1Player::Update(float dt) { 
 	BROFILER_CATEGORY("Player_Update", Profiler::Color::DarkOrange )
 
@@ -115,12 +119,6 @@ void j1Player::Update(float dt) {
 			godmode = true;
 			App->col->DeleteCollider(col);
 		}
-	}
-	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) {
-		position = initial_position;
-		App->render->camera.x = initial_camera.x;
-		App->render->camera.y = initial_camera.y;
-		lives = 3;
 	}
 
 	if (lives == 0) {
@@ -160,14 +158,9 @@ void j1Player::Update(float dt) {
 	}
 	else {
 		if ((int)death_timer.ReadSec() == 1) {
-			lives = maxLives;
-			position.x = initial_position.x;
-			position.y = initial_position.y;
-			col->SetPos(position.x, position.y);
-
-			App->render->camera.x = initial_camera.x;
-			App->render->camera.y = initial_camera.y;
-
+			Reset();
+			App->render->camera.x = App->scene->initial_camera.x;
+			App->render->camera.y = App->scene->initial_camera.y;
 			states = A_IDLE;
 		}
 	}

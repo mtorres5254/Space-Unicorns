@@ -75,6 +75,14 @@ Entity* j1Entities::CreateEntity(Entity::EntityType type, iPoint pos, int dest_X
 	return ret;
 }
 
+void j1Entities::ResetEntities() {
+	p2List_item<Entity*>* AuxEntity = entities.start;
+
+	for (; AuxEntity != NULL; AuxEntity = AuxEntity->next) {
+		AuxEntity->data->Reset();
+	}
+}
+
 void j1Entities::DestroyEntity(Entity* entity) {
 	int entity_pos;
 	p2List_item<Entity*>* AuxEntity;

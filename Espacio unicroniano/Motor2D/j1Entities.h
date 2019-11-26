@@ -35,6 +35,7 @@ public:
 	virtual void Update(float dt) {}
 	virtual void Draw() {}
 	virtual void HandeInput() {}
+	virtual void Reset() {}
 	virtual void OnCollision(Collider* c1, Collider* c2) {}
 };
 
@@ -47,6 +48,7 @@ public:
 	bool PreUpdate(float dt);
 	bool Update(float dt);
 	bool Awake(pugi::xml_node& config);
+	void ResetEntities();
 	void OnCollision(Collider* c1, Collider* c2);
 
 	void LoadFromObjectLayer(ObjectLayer* layer);

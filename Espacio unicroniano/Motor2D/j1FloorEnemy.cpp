@@ -42,12 +42,21 @@ void j1FloorEnemy::PreUpdate(float dt) {
 
 }
 
+void j1FloorEnemy::Reset() {
+	position = initialPosition;
+	lives = 5;
+	col->SetPos(position.x, position.y);
+	dead = false;
+}
+
 void j1FloorEnemy::Update(float dt) {
 	if (dead == false) {
 		if (lives == 0) {
 			dead = true;
 			App->col->DeleteCollider(col);
 		}
+
+		HandeInput();
 
 		if (position.x > App->scene->player->position.x) {
 			flip = SDL_FLIP_HORIZONTAL;
@@ -56,8 +65,12 @@ void j1FloorEnemy::Update(float dt) {
 			flip = SDL_FLIP_NONE;
 		}
 
+		position.x += vel.x * dt;
+		position.y += vel.y * dt;
+
 		Draw();
 		col->SetPos(position.x, position.y);
+		falling = true;
 	}
 	else if (dead == true) {
 		Current_animation = &death;
@@ -66,7 +79,11 @@ void j1FloorEnemy::Update(float dt) {
 }
 
 void j1FloorEnemy::HandeInput() {
+	vel.x = 0;
 
+	if (falling == true) {
+		vel.y += 10;
+	}
 }
 
 void j1FloorEnemy::Draw() {
@@ -78,5 +95,11 @@ void j1FloorEnemy::Draw() {
 void j1FloorEnemy::OnCollision(Collider* c1, Collider *c2) {
 	if (c2->type == COLLIDER_SHOT) {
 		lives -= 1;
+	}
+	if (c2->type == COLLIDER_FLOOR) {
+		if (vel.y > 0) {
+			vel.y = 0;
+		}
+		falling = false;
 	}
 }

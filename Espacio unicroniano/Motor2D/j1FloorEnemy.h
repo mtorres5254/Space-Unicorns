@@ -13,12 +13,15 @@ public:
 	void Update(float dt);
 	void Draw();
 	void HandeInput();
+	void Reset();
 	void OnCollision(Collider* c1, Collider* c2);
 
 private:
 	iPoint initialPosition;
+	iPoint vel;
 
 	bool dead = false;
+	bool falling = true;
 
 	SDL_RendererFlip flip = SDL_FLIP_NONE;
 

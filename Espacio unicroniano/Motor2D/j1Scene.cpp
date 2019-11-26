@@ -61,6 +61,9 @@ bool j1Scene::Start()
 	col_camera_left = App->col->AddCollider({ 0,0, (int)winx / 4, (int)winy }, COLLIDER_CAM_LEFT, this);
 	col_camera_right = App->col->AddCollider({ ((int)winx / 3) * 2, 0, (int)winx / 3, (int)winy }, COLLIDER_CAM_RIGHT, this);
 
+	initial_camera.x = App->render->camera.x;
+	initial_camera.y = App->render->camera.y;
+
 	return true;
 }
 
@@ -107,6 +110,12 @@ bool j1Scene::Update(float dt)
 	}
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN) { //Change second level
 		App->scene_change->ChangeMap(2.0f, 2);
+	}
+	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) { //Reset all the level
+		App->render->camera.x = initial_camera.x;
+		App->render->camera.y = initial_camera.y;
+
+		App->entity->ResetEntities();
 	}
 	if (App->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN) { //Enable/Disable FPS cap to 30
 		if (App->max_framerate == 0) {

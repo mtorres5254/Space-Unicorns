@@ -146,6 +146,7 @@ void j1Collisions::DebugDraw() {
 	iPoint p = App->render->ScreenToWorld(x, y);
 
 	App->render->DrawLine(App->scene->player->position.x, App->scene->player->position.y, p.x, p.y, 255, 255, 255, 100);
+	App->render->DrawLine(App->scene->player->position.x, App->scene->player->position.y + App->scene->player->col->rect.h, p.x, p.y, 255, 255, 255, 100);
 
 	LOG("showing colliders");
 

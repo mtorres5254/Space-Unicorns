@@ -40,6 +40,8 @@ public:
 	j1Player* player  = nullptr;
 	p2List<j1FloorEnemy*> FloorEnemies;
 
+	iPoint initial_camera;
+
 	Collider* col_camera_up;
 	Collider* col_camera_down;
 	Collider* col_camera_left;

@@ -35,6 +35,7 @@ public:
 	void Update(float dt);
 	void Draw();
 	void HandeInput();
+	void Reset();
 	void OnCollision(Collider* c1, Collider* c2);
 	void DrawPointer();
 
@@ -43,7 +44,6 @@ public:
 private:
 	iPoint pos_before_jump;
 	iPoint initial_position;
-	iPoint initial_camera;
 	iPoint vel;
 
 	int maxLives;

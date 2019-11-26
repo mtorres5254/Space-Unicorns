@@ -66,7 +66,7 @@ void j1Particle::Update(float dt) {
 }
 
 void j1Particle::Draw() {
-	float angle;
+	float angle = 0.0f;
 	if (aux2 > 0) {
 		if (aux1 > 0) {
 			float s = (float)aux1 / aux2;
