@@ -167,7 +167,7 @@ void j1Player::Update(float dt) {
 			if (auxx > 0.3f) {
 				auxx = 1.0f;
 			}
-			if (auxy > 0.0f) {
+			if (auxy > 0.0f && falling == true) {
 				auxy = 1.0f;
 			}
 			position.x += auxx;

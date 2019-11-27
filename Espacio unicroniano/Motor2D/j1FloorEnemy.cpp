@@ -99,6 +99,7 @@ void j1FloorEnemy::Draw() {
 void j1FloorEnemy::OnCollision(Collider* c1, Collider *c2) {
 	if (c2->type == COLLIDER_SHOT) {
 		lives -= 1;
+
 	}
 	if (c2->type == COLLIDER_FLOOR) {
 		if (vel.y > 0) {

@@ -36,7 +36,7 @@ bool j1Scene::Awake()
 // Called before the first frame
 bool j1Scene::Start()
 {
-	if(App->map->Load("mapa2.tmx") == true)
+	if(App->map->Load("mapa.tmx") == true)
 	{
 		int w, h;
 		uchar* data = NULL;
@@ -51,6 +51,9 @@ bool j1Scene::Start()
 				App->entity->LoadFromObjectLayer(ob_lay->data);
 			}
 		}
+		App->render->camera.x = 0;
+		App->render->camera.y = -900;
+	
 	}
 
 	uint winx, winy;
@@ -70,9 +73,9 @@ bool j1Scene::Start()
 // Called each loop iteration
 bool j1Scene::PreUpdate(float dt)
 {
-	BROFILER_CATEGORY("Scene_PreUpdate", Profiler::Color::Azure )
+	BROFILER_CATEGORY("Scene_PreUpdate", Profiler::Color::Azure)
 
-	
+		LOG("%i x %i", App->render->camera.x, App->render->camera.y);
 
 	return true;
 }
