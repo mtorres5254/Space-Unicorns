@@ -176,7 +176,7 @@ void j1Player::Update(float dt) {
 		}
 		
 
-		LOG("Player velocity: %.2f x %.2f", vel.x * dt, vel.y * dt);
+		//LOG("Player velocity: %.2f x %.2f", vel.x * dt, vel.y * dt);
 
 		col->SetPos(position.x, position.y);
 	}

@@ -75,7 +75,7 @@ bool j1Scene::PreUpdate(float dt)
 {
 	BROFILER_CATEGORY("Scene_PreUpdate", Profiler::Color::Azure)
 
-		LOG("%i x %i", App->render->camera.x, App->render->camera.y);
+		//LOG("%i x %i", App->render->camera.x, App->render->camera.y);
 
 	return true;
 }
@@ -119,6 +119,12 @@ bool j1Scene::Update(float dt)
 		App->render->camera.y = initial_camera.y;
 
 		App->entity->ResetEntities();
+	}
+	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN) {
+		App->LoadGame("save_game.xml");
+	}
+	if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN) {
+		App->SaveGame("save_game.xml");
 	}
 	if (App->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN) { //Enable/Disable FPS cap to 30
 		if (App->max_framerate == 0) {
