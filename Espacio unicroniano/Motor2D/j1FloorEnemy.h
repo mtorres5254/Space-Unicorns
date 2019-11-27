@@ -21,6 +21,7 @@ private:
 	iPoint vel;
 
 	bool dead = false;
+	bool hitted = false;
 	bool falling = true;
 
 	SDL_RendererFlip flip = SDL_FLIP_NONE;
@@ -29,6 +30,7 @@ private:
 	//---------------------------------
 	Animation* Current_animation;
 	Animation idle;
+	Animation hit;
 	Animation death;
 
 };

@@ -2,6 +2,7 @@
 #include "j1Entities.h"
 #include "j1Player.h"
 #include "j1FloorEnemy.h"
+#include "FlyEnemy.h"
 #include "j1Particles.h"
 #include "j1Scene.h"
 #include "j1Map.h"
@@ -64,7 +65,7 @@ Entity* j1Entities::CreateEntity(Entity::EntityType type, iPoint pos, int dest_X
 	switch (type) {
 	case Entity::EntityType::player:				ret = new j1Player(pos);			break;
 	case Entity::EntityType::floor_enemy:			ret = new j1FloorEnemy(pos);		break;
-		case Entity::EntityType::fly_enemy:		/*ret = new fly enemy()*/ break;
+	case Entity::EntityType::fly_enemy:				ret = new j1FlyEnemy(pos);			break;
 	case Entity::EntityType::particle:				ret = new j1Particle(pos, dest_X, dest_Y); break;
 	}
 
@@ -120,6 +121,13 @@ void j1Entities::OnCollision(Collider* c1, Collider* c2) {
 				floor_enemy->data->OnCollision(c1, c2);
 			}
 		}
+
+		p2List_item<j1FlyEnemy*>* fly_enemy;
+		for (fly_enemy = App->scene->FlyEnemies.start; fly_enemy; fly_enemy = fly_enemy->next) {
+			if (fly_enemy->data->col->rect.x == c1->rect.x && fly_enemy->data->col->rect.y == c1->rect.y && fly_enemy->data->col->rect.w == c1->rect.w && fly_enemy->data->col->rect.h == c1->rect.h) {
+				fly_enemy->data->OnCollision(c1, c2);
+			}
+		}
 	}
 }
 
@@ -140,6 +148,14 @@ void j1Entities::LoadFromObjectLayer(ObjectLayer* layer) {
 
 			j1FloorEnemy* ret = (j1FloorEnemy*) CreateEntity(Entity::EntityType::floor_enemy, pos);
 			App->scene->FloorEnemies.add(ret);
+		}
+		if (obj->data->name == "FlyEnemy") {
+			iPoint pos;
+			pos.x = obj->data->x;
+			pos.y = obj->data->y;
+
+			j1FlyEnemy* ret = (j1FlyEnemy*)CreateEntity(Entity::EntityType::fly_enemy, pos);
+			App->scene->FlyEnemies.add(ret);
 		}
 	}
 }

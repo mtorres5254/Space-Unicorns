@@ -33,6 +33,7 @@ void j1Particle::Reset() {
 }
 
 void j1Particle::Update(float dt) {
+	BROFILER_CATEGORY("Particles_Update", Profiler::Color::DarkBlue)
 
 	if (position == destination) {
 		lives = 0;

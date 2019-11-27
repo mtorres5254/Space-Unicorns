@@ -25,8 +25,13 @@ j1FloorEnemy::j1FloorEnemy(iPoint pos) : Entity(EntityType::floor_enemy) {
 	death.PushBack({ 9 , 68 , 49, 29 });
 	death.PushBack({ 5 , 97 , 51 , 31 });
 	death.PushBack({ 73,97,52,31 });
-	death.speed = 3.0f;
+	death.speed = 8.0f;
 	death.loop = false;
+
+	hit.PushBack({83,5,31,27});
+	hit.PushBack({ 82,37,33,27 });
+	hit.speed = 4.0f;
+	hit.loop = false;
 
 	col = App->col->AddCollider({ position.x,position.y,32,32 }, COLLIDER_ENEMY, App->entity);
 
@@ -45,6 +50,8 @@ void j1FloorEnemy::PreUpdate(float dt) {
 void j1FloorEnemy::Reset() {
 	position.x = initialPosition.x;
 	position.y = initialPosition.y - 5;
+	vel.x = 0;
+	vel.y = 0;
 	lives = 5;
 	if (col != nullptr) {
 		App->col->DeleteCollider(col);
@@ -54,6 +61,8 @@ void j1FloorEnemy::Reset() {
 }
 
 void j1FloorEnemy::Update(float dt) {
+	BROFILER_CATEGORY("FloorEnemy_Update", Profiler::Color::FloralWhite)
+
 	if (dead == false) {
 		if (lives == 0) {
 			dead = true;
@@ -91,14 +100,26 @@ void j1FloorEnemy::HandeInput() {
 }
 
 void j1FloorEnemy::Draw() {
+
 	Current_animation = &idle;
+	if (hitted == true) {
+		Current_animation = &hit;
+		if (hit.Finished() == true) {
+			hitted = false;
+			hit.Reset();
+		}
+	}
 
 	App->render->Blit(sprite, position.x, position.y, &Current_animation->GetCurrentFrame(), 1.0f, NULL, NULL, NULL, flip);
 }
 
 void j1FloorEnemy::OnCollision(Collider* c1, Collider *c2) {
 	if (c2->type == COLLIDER_SHOT) {
-		lives -= 1;
+		if (lives != 0) {
+			lives -= 1;
+		}
+		
+		hitted = true;
 		if (c2->rect.x + c2->rect.w < c1->rect.x + c1->rect.w / 2) {
 			vel.x = 200;
 			position.x += vel.x * private_dt;

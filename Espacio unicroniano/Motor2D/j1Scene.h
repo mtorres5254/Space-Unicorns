@@ -6,6 +6,7 @@
 struct Collider;
 struct j1Player;
 struct j1FloorEnemy;
+struct j1FlyEnemy;
 
 class j1Scene : public j1Module
 {
@@ -39,6 +40,7 @@ public:
 public:
 	j1Player* player  = nullptr;
 	p2List<j1FloorEnemy*> FloorEnemies;
+	p2List<j1FlyEnemy*> FlyEnemies;
 
 	iPoint initial_camera;
 	
