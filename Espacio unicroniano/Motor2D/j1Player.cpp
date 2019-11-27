@@ -77,7 +77,7 @@ j1Player::j1Player(iPoint pos) : Entity(EntityType::player) {
 	//load sounds and collisions
 	jumpingsound = App->audio->LoadFx("audio/fx/jump.wav");
 	walkingsound = App->audio->LoadFx("audio/fx/walk.wav");
-	diedsound = App->audio->LoadFx("audio/fx/dead");
+	diedsound = App->audio->LoadFx("audio/fx/dead.wav");
 
 	//set player info 
 	initial_position.x = position.x = pos.x;
@@ -136,7 +136,7 @@ void j1Player::Update(float dt) {
 		states = A_DEAD;
 		vel.x = vel.y = 0;
 		//dead sound & effects 
-
+		App->audio->PlayFx(diedsound, 0);
 		death_timer.Start();
 	}
 
