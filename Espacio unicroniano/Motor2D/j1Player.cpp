@@ -76,6 +76,8 @@ j1Player::j1Player(iPoint pos) : Entity(EntityType::player) {
 
 	//load sounds and collisions
 	jumpingsound = App->audio->LoadFx("audio/fx/jump.wav");
+	walkingsound = App->audio->LoadFx("audio/fx/walk.wav");
+	diedsound = App->audio->LoadFx("audio/fx/dead");
 
 	//set player info 
 	initial_position.x = position.x = pos.x;
@@ -87,6 +89,7 @@ j1Player::j1Player(iPoint pos) : Entity(EntityType::player) {
 	col = App->col->AddCollider({ position.x, position.y, 40, 80 }, COLLIDER_PLAYER, App->entity);
 
 	start_timer.Start();
+	
 }
 
 j1Player::~j1Player()
@@ -146,15 +149,20 @@ void j1Player::Update(float dt) {
 			vel.x = vel.y = 0;
 			if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
 				vel.y = -SPEED;
+				if (App->audio->PlayFx(walkingsound, 0) == true || App->audio->PlayFx(walkingsound, 0) == false) {
+					App->audio->PlayFx(jumpingsound, 0);
+				}
 			}
 			if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
 				vel.x = -SPEED;
+				App->audio->PlayFx(walkingsound, 0);
 			}
 			if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
 				vel.y = SPEED;
 			}
 			if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
 				vel.x = SPEED;
+				App->audio->PlayFx(walkingsound, 0);
 			}
 		}
 
@@ -275,6 +283,7 @@ void j1Player::HandeInput() {
 
 	if (states == A_JUMP_NEUTRAL || states == A_FALLING ) {
 		states = A_JUMP_NEUTRAL;
+		//App->audio->PlayFx(jumpingsound, 0);
 		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
 			vel.x = (SPEED * 0.4);
 		}
@@ -285,6 +294,9 @@ void j1Player::HandeInput() {
 			if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN) {
 				vel.y = -250;
 				has_jump = true;
+				if (App->audio->PlayFx(walkingsound, 0) == true || App->audio->PlayFx(walkingsound, 0) == false) {
+					App->audio->PlayFx(jumpingsound, 0);
+				}
 			}
 		}
 	}
@@ -294,16 +306,19 @@ void j1Player::HandeInput() {
 		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
 			vel.x = SPEED;
 			states = A_WALK_FORWARD;
+			App->audio->PlayFx(walkingsound, 0);
 		}
 		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
 			vel.x = (-1)*SPEED;
 			states = A_WALK_BACKWARDS;
+			App->audio->PlayFx(walkingsound, 0);
 		}
 
 		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN) {
 			vel.y = -300;
 			states = A_JUMP_NEUTRAL;
 			pos_before_jump = position;
+			App->audio->PlayFx(jumpingsound, 0);
 		}
 		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
 			states = A_CROUCH;
