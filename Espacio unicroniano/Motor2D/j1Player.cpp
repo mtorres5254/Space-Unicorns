@@ -182,7 +182,7 @@ void j1Player::Update(float dt) {
 	}
 	else {
 		if ((int)death_timer.ReadSec() == 1) {
-			Reset();
+			App->entity->ResetEntities();
 			App->render->camera.x = App->scene->initial_camera.x;
 			App->render->camera.y = App->scene->initial_camera.y;
 			states = A_IDLE;
