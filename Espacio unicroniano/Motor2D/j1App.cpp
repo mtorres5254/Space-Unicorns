@@ -200,7 +200,6 @@ void j1App::PrepareUpdate()
 
 	// 4: Calculate the dt: differential time since last frame
 	dt = frame_time.ReadSec();
-	LOG("%f", dt);
 	frame_time.Start();
 }
 
@@ -248,7 +247,7 @@ void j1App::FinishUpdate()
 		j1PerfTimer Delay_ms;
 		Delay_ms.Start();
 		SDL_Delay(max_frame_ms - last_frame_ms);
-		LOG("We waited for %i miliseconds and got back in %f", (int)max_frame_ms, Delay_ms.ReadMs());
+		//LOG("We waited for %i miliseconds and got back in %f", (int)max_frame_ms, Delay_ms.ReadMs());
 	}
 	// 3: Measure accurately the amount of time it SDL_Delay actually waits compared to what was expected
 }
@@ -450,8 +449,7 @@ bool j1App::SavegameNow() const
 
 	if(ret == true)
 	{
-		std::stringstream stream;
-		data.save(stream);
+		data.save_file(save_game.GetString());
 
 		// we are done, so write data to disk
 		//fs->Save(save_game.GetString(), stream.str().c_str(), stream.str().length());

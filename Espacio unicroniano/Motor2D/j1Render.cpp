@@ -105,6 +105,8 @@ bool j1Render::CleanUp()
 // Load Game State
 bool j1Render::Load(pugi::xml_node& data)
 {
+	LOG("Loadding Render parameters");
+
 	camera.x = data.child("camera").attribute("x").as_int();
 	camera.y = data.child("camera").attribute("y").as_int();
 
@@ -114,6 +116,8 @@ bool j1Render::Load(pugi::xml_node& data)
 // Save Game State
 bool j1Render::Save(pugi::xml_node& data) const
 {
+	LOG("Saving Render parameters");
+
 	pugi::xml_node cam = data.append_child("camera");
 
 	cam.append_attribute("x") = camera.x;

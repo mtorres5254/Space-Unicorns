@@ -120129,8 +120129,8 @@
   <object id="122" name="Floor" x="7269.33" y="1684.33" width="57.3333" height="15.3333"/>
   <object id="123" name="Floor" x="7265.33" y="1496.33" width="57.3333" height="15.3333"/>
   <object id="124" name="Floor" x="7234.33" y="1204.33" width="57.3333" height="15.3333"/>
-  <object id="141" name="Floor" x="5956.67" y="1746.67" width="126.667" height="10.6667"/>
-  <object id="142" name="Wall" x="5952" y="1787.83" width="24" height="442.333"/>
+  <object id="141" name="Floor" x="5956.67" y="1760.67" width="126.667" height="24.6667"/>
+  <object id="142" name="Wall" x="5953" y="1787.83" width="24" height="442.333"/>
  </objectgroup>
  <objectgroup id="7" name="Entities">
   <object id="119" name="Player" x="62" y="1542" width="48" height="84"/>
