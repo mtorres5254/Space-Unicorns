@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.5" orientation="orthogonal" renderorder="right-down" width="261" height="75" tilewidth="32" tileheight="32" infinite="0" nextlayerid="11" nextobjectid="122">
+<map version="1.2" tiledversion="1.2.5" orientation="orthogonal" renderorder="right-down" width="261" height="70" tilewidth="32" tileheight="32" infinite="0" nextlayerid="11" nextobjectid="125">
  <tileset firstgid="1" name="Tileset" tilewidth="32" tileheight="32" tilecount="88" columns="8">
   <image source="TilesetMap1.png" trans="ff00ff" width="256" height="359"/>
  </tileset>
@@ -55050,8 +55050,8 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="36"/>
+   <tile gid="37"/>
    <tile/>
    <tile/>
    <tile/>
@@ -55450,8 +55450,8 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="44"/>
+   <tile gid="45"/>
    <tile/>
    <tile/>
    <tile/>
@@ -58651,8 +58651,8 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="36"/>
+   <tile gid="37"/>
    <tile/>
    <tile/>
    <tile gid="25"/>
@@ -59051,8 +59051,8 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="44"/>
+   <tile gid="45"/>
    <tile/>
    <tile/>
    <tile gid="25"/>
@@ -62646,8 +62646,8 @@
    <tile gid="27"/>
    <tile gid="27"/>
    <tile gid="27"/>
-   <tile/>
-   <tile/>
+   <tile gid="36"/>
+   <tile gid="37"/>
    <tile/>
    <tile/>
    <tile/>
@@ -63046,8 +63046,8 @@
    <tile gid="27"/>
    <tile gid="27"/>
    <tile gid="27"/>
-   <tile/>
-   <tile/>
+   <tile gid="44"/>
+   <tile gid="45"/>
    <tile/>
    <tile/>
    <tile/>
@@ -63070,18 +63070,18 @@
    <tile gid="41"/>
    <tile gid="25"/>
    <tile gid="29"/>
+   <tile gid="49"/>
+   <tile gid="50"/>
+   <tile gid="51"/>
+   <tile gid="52"/>
    <tile/>
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="49"/>
+   <tile gid="50"/>
+   <tile gid="51"/>
+   <tile gid="52"/>
    <tile/>
    <tile gid="25"/>
    <tile gid="25"/>
@@ -63470,18 +63470,18 @@
    <tile gid="41"/>
    <tile gid="33"/>
    <tile gid="29"/>
+   <tile gid="57"/>
+   <tile gid="58"/>
+   <tile gid="59"/>
+   <tile gid="60"/>
    <tile/>
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="57"/>
+   <tile gid="58"/>
+   <tile gid="59"/>
+   <tile gid="60"/>
    <tile/>
    <tile gid="25"/>
    <tile gid="25"/>
@@ -63870,18 +63870,18 @@
    <tile gid="41"/>
    <tile gid="41"/>
    <tile gid="29"/>
+   <tile gid="65"/>
+   <tile gid="66"/>
+   <tile gid="67"/>
+   <tile gid="68"/>
    <tile/>
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="65"/>
+   <tile gid="66"/>
+   <tile gid="67"/>
+   <tile gid="68"/>
    <tile/>
    <tile gid="33"/>
    <tile gid="33"/>
@@ -64270,18 +64270,18 @@
    <tile gid="41"/>
    <tile gid="41"/>
    <tile/>
-   <tile/>
+   <tile gid="73"/>
+   <tile gid="74"/>
+   <tile gid="75"/>
    <tile gid="21"/>
    <tile gid="22"/>
    <tile gid="22"/>
    <tile gid="22"/>
    <tile gid="22"/>
-   <tile gid="22"/>
-   <tile gid="22"/>
-   <tile gid="22"/>
-   <tile gid="22"/>
-   <tile gid="22"/>
    <tile gid="23"/>
+   <tile gid="74"/>
+   <tile gid="75"/>
+   <tile gid="76"/>
    <tile/>
    <tile gid="41"/>
    <tile gid="41"/>
@@ -120120,13 +120120,15 @@
   <object id="107" name="Floor" x="5410.67" y="1422.67" width="50.6667" height="12"/>
   <object id="108" name="Floor" x="5797.33" y="1168" width="50.6667" height="9.33333"/>
   <object id="111" name="Floor" x="7234" y="921" width="51" height="15"/>
-  <object id="112" name="Floor" x="7324" y="1696" height="8"/>
-  <object id="114" name="Floor" x="7263.33" y="1690" width="57.3333" height="15.3333"/>
+  <object id="114" name="Floor" x="7103.33" y="1822" width="57.3333" height="15.3333"/>
   <object id="115" name="Floor" x="5219" y="664" width="51" height="17"/>
   <object id="116" name="Floor" x="5282" y="921" width="50" height="16"/>
   <object id="117" name="Floor" x="5349.33" y="1240" width="46.6667" height="16"/>
   <object id="118" name="Floor" x="5600.67" y="1561.33" width="56" height="13.3333"/>
   <object id="121" name="Wall" x="3819.33" y="1703" width="38.6667" height="466"/>
+  <object id="122" name="Floor" x="7269.33" y="1684.33" width="57.3333" height="15.3333"/>
+  <object id="123" name="Floor" x="7265.33" y="1496.33" width="57.3333" height="15.3333"/>
+  <object id="124" name="Floor" x="7234.33" y="1204.33" width="57.3333" height="15.3333"/>
  </objectgroup>
  <objectgroup id="7" name="Entities" offsetx="-8" offsety="-840">
   <object id="119" name="Player" x="76" y="1000" width="140" height="154"/>

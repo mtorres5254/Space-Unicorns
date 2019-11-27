@@ -39,7 +39,7 @@ j1FloorEnemy::j1FloorEnemy(iPoint pos) : Entity(EntityType::floor_enemy) {
 j1FloorEnemy::~j1FloorEnemy(){}
 
 void j1FloorEnemy::PreUpdate(float dt) {
-
+	private_dt = dt;
 }
 
 void j1FloorEnemy::Reset() {
@@ -99,7 +99,14 @@ void j1FloorEnemy::Draw() {
 void j1FloorEnemy::OnCollision(Collider* c1, Collider *c2) {
 	if (c2->type == COLLIDER_SHOT) {
 		lives -= 1;
-
+		if (c2->rect.x + c2->rect.w < c1->rect.x + c1->rect.w / 2) {
+			vel.x = 200;
+			position.x += vel.x * private_dt;
+		}
+		else if (c2->rect.x > c1->rect.x + c1->rect.w / 2) {
+			vel.x = -200;
+			position.x += vel.x * private_dt;
+		}
 	}
 	if (c2->type == COLLIDER_FLOOR) {
 		if (vel.y > 0) {

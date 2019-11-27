@@ -105,6 +105,7 @@ void j1Player::PreUpdate(float dt) {
 
 void j1Player::Reset() {
 	position = initial_position;
+	vel.x = vel.y = 0;
 	col->SetPos(position.x, position.y);
 	lives = maxLives;
 }
@@ -221,7 +222,7 @@ void j1Player::Draw() {
 		}
 		break;
 	case A_CROUCH:
-		Current_Animation = &crouching;
+		Current_Animation = &idle;
 		break;
 	case A_FALLING:
 		Current_Animation = &fall;
@@ -374,7 +375,15 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 	}
 
 	if (c2->type == COLLIDER_END) {
-		App->scene_change->ChangeMap(2.0f, 2);
+		if (App->scene->map == 1) {
+			App->scene_change->ChangeMap(2.0f, 1);
+			App->scene->map = 2;
+		}
+		else if(App->scene->map == 2) {
+			App->scene_change->ChangeMap(2.0f, 2);
+			App->scene->map = 1;
+		}
+		
 	}
 
 	if (c2->type == COLLIDER_ENEMY) {

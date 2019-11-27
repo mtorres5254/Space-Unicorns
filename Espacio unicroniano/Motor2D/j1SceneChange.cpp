@@ -75,12 +75,17 @@ bool j1MapChange::Update(float dt)
 				App->map->CleanUp();
 				App->col->DeleteAll();
 				App->entity->DestroyAll();
+				App->scene->player = nullptr;
 
 				if (map_to_change == 1) {
 					App->map->Load(map1.GetString());
+					App->render->camera.x = 0;
+					App->render->camera.y = -130;
 				}
 				else if (map_to_change == 2) {
 					App->map->Load(map2.GetString());
+					App->render->camera.x = 0;
+					App->render->camera.y = -900;
 				}
 
 				//pom pom
@@ -98,6 +103,7 @@ bool j1MapChange::Update(float dt)
 			if (now >= total_time)
 			{
 				//reload things
+				reset_timer.Start();
 				p2List_item<ObjectLayer*>* obj;
 				for (obj = App->map->data.obj_layers.start; obj; obj = obj->next) {
 					App->col->LoadFromObjectLayer(obj->data);
@@ -132,6 +138,7 @@ bool j1MapChange::Update(float dt)
 bool j1MapChange::ChangeMap(float time, int map_id)
 {
 	bool ret = false;
+	reset = false;
 
 	if (map_id != NULL) {
 		map_to_change = map_id;

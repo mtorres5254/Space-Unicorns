@@ -2,6 +2,7 @@
 #define _MODULE_SCENECHANGE_
 
 #include "j1Module.h"
+#include "j1Timer.h"
 #include "SDL\include\SDL_rect.h"
 
 
@@ -35,6 +36,8 @@ private:
 public:
 
 	bool fading = false;
+	bool reset = false;
+	j1Timer reset_timer;
 
 private:
 	enum fade_step

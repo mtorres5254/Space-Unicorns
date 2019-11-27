@@ -47056,7 +47056,4 @@
   <object id="416" name="Dead" x="4610" y="781.5" width="30" height="19"/>
   <object id="417" name="Floor" x="255.5" y="767" width="158" height="122.667"/>
  </objectgroup>
- <objectgroup id="46" name="Camera">
-  <object id="419" name="Camera" x="379" y="108" width="1024" height="768"/>
- </objectgroup>
 </map>

@@ -13,7 +13,7 @@
 #include "j1Scene.h"
 #include "j1Collisions.h"
 
-#define CAMERA_SPEED 190
+#define CAMERA_SPEED 250
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -109,10 +109,10 @@ bool j1Scene::Update(float dt)
 
 
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) { //Change first level
-		App->scene_change->ChangeMap(2.0f, 1);
+		App->scene_change->ChangeMap(2.0f, 2);
 	}
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN) { //Change second level
-		App->scene_change->ChangeMap(2.0f, 2);
+		App->scene_change->ChangeMap(2.0f, 1);
 	}
 	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) { //Reset all the level
 		App->render->camera.x = initial_camera.x;

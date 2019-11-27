@@ -41,6 +41,8 @@ public:
 	p2List<j1FloorEnemy*> FloorEnemies;
 
 	iPoint initial_camera;
+	
+	int map = 1;
 
 	Collider* col_camera_up;
 	Collider* col_camera_down;
