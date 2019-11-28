@@ -34,12 +34,35 @@ bool j1Entities::Load(pugi::xml_node& load) {
 	App->scene->player = (j1Player*)CreateEntity(Entity::EntityType::player, { 0,0 });
 	App->scene->player->Load(load.child("Player"));
 
+	pugi::xml_node node_floor;
+	for (node_floor = load.child("Floor_Enemies").child("Floor_Enemy"); node_floor; node_floor = node_floor.next_sibling("Floor_Enemy")) {
+		iPoint pos;
+		pos.x = pos.y = 0;
+
+		j1FloorEnemy* ret = (j1FloorEnemy*)CreateEntity(Entity::EntityType::floor_enemy, pos);
+		ret->Load(node_floor);
+		App->scene->FloorEnemies.add(ret);
+	}
+
 	return true;
 }
 
 bool j1Entities::Save(pugi::xml_node& save) const {
 	save.append_child("Player");
 	App->scene->player->Save(save.child("Player"));
+
+	save.append_child("Floor_Enemies");
+	p2List_item<j1FloorEnemy*>* floor;
+	save.child("Floor_Enemies").append_child("Floor_Enemy");
+	pugi::xml_node node_floor;
+	node_floor = save.child("Floor_Enemies").child("Floor_Enemy");
+	for (floor = App->scene->FloorEnemies.start; floor; floor = floor->next) {
+		floor->data->Save(node_floor);
+		if (floor->next != NULL) {
+			save.child("Floor_Enemies").append_child("Floor_Enemy");
+		}
+		node_floor = node_floor.next_sibling("Floor_Enemy");
+	}
 
 	return true;
 }

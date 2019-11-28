@@ -47,6 +47,35 @@ void j1FloorEnemy::PreUpdate(float dt) {
 	private_dt = dt;
 }
 
+void j1FloorEnemy::Load(pugi::xml_node& load) {
+	lives = load.attribute("lives").as_int();
+
+	position.x = load.child("position").attribute("x").as_int();
+	position.y = load.child("position").attribute("y").as_int() - 300;
+
+	initialPosition.x = load.child("initial_position").attribute("x").as_int();
+	initialPosition.y = load.child("initial_position").attribute("y").as_int();
+
+	vel.x = vel.y = 0;
+}
+
+void j1FloorEnemy::Save(pugi::xml_node& save) const {
+	save.append_attribute("lives");
+	save.attribute("lives").set_value(lives);
+
+	save.append_child("position");
+	save.child("position").append_attribute("x");
+	save.child("position").append_attribute("y");
+	save.child("position").attribute("x").set_value(position.x);
+	save.child("position").attribute("y").set_value(position.y);
+
+	save.append_child("initial_position");
+	save.child("initial_position").append_attribute("x");
+	save.child("initial_position").append_attribute("y");
+	save.child("initial_position").attribute("x").set_value(initialPosition.x);
+	save.child("initial_position").attribute("y").set_value(initialPosition.y);
+}
+
 void j1FloorEnemy::Reset() {
 	position.x = initialPosition.x;
 	position.y = initialPosition.y - 5;

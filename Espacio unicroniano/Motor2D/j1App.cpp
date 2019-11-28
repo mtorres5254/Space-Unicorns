@@ -392,6 +392,8 @@ void j1App::GetSaveGames(p2List<p2SString>& list_to_fill) const
 
 bool j1App::LoadGameNow()
 {
+	BROFILER_CATEGORY("Load_Game",Profiler::Color::Green)
+
 	bool ret = false;
 
 	pugi::xml_document data;
@@ -429,6 +431,8 @@ bool j1App::LoadGameNow()
 
 bool j1App::SavegameNow() const
 {
+	BROFILER_CATEGORY("Save_Game",Profiler::Color::Thistle)
+
 	bool ret = true;
 
 	LOG("Saving Game State to %s...", save_game.GetString());

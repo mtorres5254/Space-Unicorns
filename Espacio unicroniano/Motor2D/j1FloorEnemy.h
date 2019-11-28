@@ -14,6 +14,8 @@ public:
 	void Draw();
 	void HandeInput();
 	void Reset();
+	void Load(pugi::xml_node&);
+	void Save(pugi::xml_node&) const;
 	void OnCollision(Collider* c1, Collider* c2);
 
 private:

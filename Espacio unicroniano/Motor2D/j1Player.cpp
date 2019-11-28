@@ -113,9 +113,11 @@ void j1Player::Load(pugi::xml_node& load) {
 	position.y = load.child("position").attribute("y").as_int() - 300;
 
 	initial_position.x = load.child("initial_position").attribute("x").as_int();
-	initial_position.y = load.child("initial_position").attribute("y").as_int();
+	initial_position.y = load.child("initial_position").attribute("y").as_int() - 300;
 
 	vel.x = vel.y = 0;
+
+	Reset();
 }
 
 void j1Player::Save(pugi::xml_node& save) const {
@@ -146,7 +148,6 @@ void j1Player::Reset() {
 void j1Player::Update(float dt) { 
 	BROFILER_CATEGORY("Player_Update", Profiler::Color::DarkOrange)
 
-		LOG("%i x %i", position.x, position.y);
 
 	if (start_timer.ReadSec() > 1.0f && reset == false) {
 		Reset();
