@@ -77,6 +77,8 @@ private:
 	unsigned int walkingsound;
 	unsigned int jumpingsound;
 	unsigned int diedsound;
+	unsigned int changescene_sound;
+	unsigned int hittedsound;
 
 	float player_dt;
 

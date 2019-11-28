@@ -52,6 +52,7 @@ bool j1Scene::Save(pugi::xml_node& save) const {
 // Called before the first frame
 bool j1Scene::Start()
 {
+	App->audio->PlayMusic("audio/music/Brain_Damage.ogg");
 	if(App->map->Load("mapa.tmx") == true)
 	{
 		int w, h;

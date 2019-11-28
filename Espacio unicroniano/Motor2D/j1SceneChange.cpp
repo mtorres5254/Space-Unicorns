@@ -164,5 +164,6 @@ bool j1MapChange::ChangeMap(float time, int map_id)
 
 bool j1MapChange::IsChanging() const
 {
+	//Mix_FadeOutMusic(1000);
 	return current_step != fade_step::none;
 }

@@ -78,6 +78,8 @@ j1Player::j1Player(iPoint pos) : Entity(EntityType::player) {
 	jumpingsound = App->audio->LoadFx("audio/fx/jump.wav");
 	walkingsound = App->audio->LoadFx("audio/fx/walk.wav");
 	diedsound = App->audio->LoadFx("audio/fx/dead.wav");
+	changescene_sound = App->audio->LoadFx("audio/fx/change_scene.wav");
+	hittedsound = App->audio->LoadFx("audio/fx/hit.wav");
 
 	//set player info 
 	initial_position.x = position.x = pos.x;
@@ -423,9 +425,11 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 	}
 
 	if (c2->type == COLLIDER_END) {
+		App->audio->PlayFx(changescene_sound, 0);
 		if (App->scene->map == 1) {
 			App->scene_change->ChangeMap(2.0f, 2);
 			App->scene->map = 2;
+			
 		}
 		else if(App->scene->map == 2) {
 			App->scene_change->ChangeMap(2.0f, 1);
@@ -435,6 +439,7 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 	}
 
 	if (c2->type == COLLIDER_ENEMY) {
+		
 		lives -= 1;
 		hit_timer.Start();
 		while (hit_timer.ReadSec() < 0.5f) {
