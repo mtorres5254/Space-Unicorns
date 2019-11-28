@@ -87,12 +87,7 @@ bool j1Scene::Update(float dt)
 
 
 	dt_scene = dt;
-		
-	if(App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
-		App->LoadGame("save_game.xml");
-
-	if(App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
-		App->SaveGame("save_game.xml");
+	
 
 	//  6: Make the camera movement independent of framerate
 	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
@@ -121,10 +116,10 @@ bool j1Scene::Update(float dt)
 		App->entity->ResetEntities();
 	}
 	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN) {
-		App->LoadGame("save_game.xml");
+		App->SaveGame("save_game.xml");
 	}
 	if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN) {
-		App->SaveGame("save_game.xml");
+		App->LoadGame("save_game.xml");
 	}
 	if (App->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN) { //Enable/Disable FPS cap to 30
 		if (App->max_framerate == 0) {

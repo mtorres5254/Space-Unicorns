@@ -30,6 +30,21 @@ bool j1Map::Awake(pugi::xml_node& config)
 	return ret;
 }
 
+bool j1Map::Load(pugi::xml_node& load) {
+	CleanUp();
+
+	Load(load.attribute("path").as_string());
+
+	return true;
+}
+
+bool j1Map::Save(pugi::xml_node& save) const {
+	save.append_attribute("path");
+	save.attribute("path").set_value(map_loadded_string.GetString());
+
+	return true;
+}
+
 void j1Map::Draw()
 {
 	BROFILER_CATEGORY("MapDraw", Profiler::Color::MediumTurquoise )
@@ -262,6 +277,9 @@ bool j1Map::CleanUp()
 // Load new map
 bool j1Map::Load(const char* file_name)
 {
+	map_loadded_string.create(file_name);
+
+
 	bool ret = true;
 	p2SString tmp("%s%s", folder.GetString(), file_name);
 

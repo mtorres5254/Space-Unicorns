@@ -4,13 +4,13 @@
 	<window />
 	<textures />
 	<audio />
-	<map />
+	<map path="mapa2.tmx" />
 	<scene />
 	<pathfinding />
 	<entities />
 	<map />
 	<scenes />
 	<renderer>
-		<camera x="-2" y="-1124" />
+		<camera x="-2" y="-266" />
 	</renderer>
 </game_state>

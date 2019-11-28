@@ -151,6 +151,9 @@ public:
 	// Load new map
 	bool Load(const char* path);
 
+	bool Load(pugi::xml_node&);
+	bool Save(pugi::xml_node&) const;
+
 	iPoint MapToWorld(int x, int y) const;
 	iPoint WorldToMap(int x, int y) const;
 	bool CreateWalkabilityMap(int& width, int& height, uchar** buffer) const;
@@ -176,6 +179,7 @@ private:
 
 	pugi::xml_document	map_file;
 	p2SString			folder;
+	p2SString			map_loadded_string;
 	bool				map_loaded;
 };
 
