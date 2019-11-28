@@ -35,6 +35,9 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	bool Load(pugi::xml_node&);
+	bool Save(pugi::xml_node&) const;
+
 	void OnCollision(Collider* c1, Collider* c2);
 
 public:

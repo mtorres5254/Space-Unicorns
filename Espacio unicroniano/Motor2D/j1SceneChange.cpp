@@ -76,6 +76,8 @@ bool j1MapChange::Update(float dt)
 				App->col->DeleteAll();
 				App->entity->DestroyAll();
 				App->scene->player = nullptr;
+				App->scene->FloorEnemies.clear();
+				App->scene->FlyEnemies.clear();
 
 				if (map_to_change == 1) {
 					App->map->Load(map1.GetString());
@@ -108,13 +110,14 @@ bool j1MapChange::Update(float dt)
 				for (obj = App->map->data.obj_layers.start; obj; obj = obj->next) {
 					App->col->LoadFromObjectLayer(obj->data);
 				}
-
+				
 				p2List_item<ObjectLayer*>* ob_lay;
 				for (ob_lay = App->map->data.obj_layers.start; ob_lay; ob_lay = ob_lay->next) {
 					if (ob_lay->data->name == "Entities") {
 						App->entity->LoadFromObjectLayer(ob_lay->data);
 					}
 				}
+
 				uint winx, winy;
 				App->win->GetWindowSize(winx, winy);
 

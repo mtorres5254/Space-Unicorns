@@ -33,6 +33,22 @@ bool j1Scene::Awake()
 	return ret;
 }
 
+bool j1Scene::Load(pugi::xml_node& load) {
+
+	return true;
+}
+
+bool j1Scene::Save(pugi::xml_node& save) const {
+	save.append_child("initial_camera");
+
+	save.child("initial_camera").append_attribute("x");
+	save.child("initial_camera").append_attribute("y");
+	save.child("initial_camera").attribute("x").set_value(initial_camera.x);
+	save.child("initial_camera").attribute("y").set_value(initial_camera.y);
+
+	return true;
+}
+
 // Called before the first frame
 bool j1Scene::Start()
 {

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.5" orientation="orthogonal" renderorder="right-down" width="261" height="70" tilewidth="32" tileheight="32" infinite="0" nextlayerid="11" nextobjectid="143">
+<map version="1.2" tiledversion="1.2.5" orientation="orthogonal" renderorder="right-down" width="261" height="70" tilewidth="32" tileheight="32" infinite="0" nextlayerid="11" nextobjectid="154">
  <tileset firstgid="1" name="Tileset" tilewidth="32" tileheight="32" tilecount="88" columns="8">
   <image source="TilesetMap1.png" trans="ff00ff" width="256" height="359"/>
  </tileset>
@@ -61483,8 +61483,8 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="25"/>
-   <tile gid="25"/>
+   <tile gid="81"/>
+   <tile gid="81"/>
    <tile/>
    <tile/>
    <tile/>
@@ -61883,8 +61883,8 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="25"/>
-   <tile gid="25"/>
+   <tile gid="81"/>
+   <tile gid="81"/>
    <tile/>
    <tile/>
    <tile/>
@@ -62283,8 +62283,8 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="25"/>
-   <tile gid="25"/>
+   <tile gid="81"/>
+   <tile gid="81"/>
    <tile/>
    <tile/>
    <tile/>
@@ -62683,8 +62683,8 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="25"/>
-   <tile gid="25"/>
+   <tile gid="81"/>
+   <tile gid="81"/>
    <tile/>
    <tile/>
    <tile/>
@@ -63083,8 +63083,8 @@
    <tile gid="51"/>
    <tile gid="52"/>
    <tile/>
-   <tile gid="25"/>
-   <tile gid="25"/>
+   <tile gid="81"/>
+   <tile gid="81"/>
    <tile/>
    <tile/>
    <tile/>
@@ -63483,8 +63483,8 @@
    <tile gid="59"/>
    <tile gid="60"/>
    <tile/>
-   <tile gid="25"/>
-   <tile gid="25"/>
+   <tile gid="81"/>
+   <tile gid="81"/>
    <tile/>
    <tile/>
    <tile/>
@@ -63883,8 +63883,8 @@
    <tile gid="67"/>
    <tile gid="68"/>
    <tile/>
-   <tile gid="33"/>
-   <tile gid="33"/>
+   <tile gid="81"/>
+   <tile gid="81"/>
    <tile/>
    <tile/>
    <tile/>
@@ -64283,8 +64283,8 @@
    <tile gid="75"/>
    <tile gid="76"/>
    <tile/>
-   <tile gid="41"/>
-   <tile gid="41"/>
+   <tile gid="81"/>
+   <tile gid="81"/>
    <tile/>
    <tile/>
    <tile/>
@@ -120060,7 +120060,7 @@
   <object id="38" name="Floor" x="7171.76" y="1403.21" width="58.6667" height="17.3333"/>
   <object id="39" name="Floor" x="7106.42" y="1115.21" width="58.6667" height="21.3333"/>
   <object id="40" name="Floor" x="7405.09" y="993.88" width="438.667" height="17.3333"/>
-  <object id="41" name="Floor" x="7835.76" y="1960.55" width="518.667" height="9.33333"/>
+  <object id="41" name="Floor" x="7811.76" y="1952.55" width="536.667" height="29.3333"/>
   <object id="43" name="Wall" x="482.758" y="1624.22" width="32" height="64.3333"/>
   <object id="44" name="Wall" x="1481.09" y="1626.55" width="22.3333" height="92"/>
   <object id="45" name="Wall" x="1812.76" y="1730.22" width="39.6667" height="516"/>
@@ -120105,16 +120105,15 @@
   <object id="92" name="Wall" x="6955.76" y="1237.88" width="86.6667" height="458.667"/>
   <object id="93" name="Wall" x="6982.43" y="789.879" width="58.6666" height="446.667"/>
   <object id="94" name="Wall" x="7391.09" y="1014.54" width="40" height="968"/>
-  <object id="95" name="Wall" x="7821.09" y="1016.54" width="18" height="928"/>
-  <object id="96" name="End" x="8293.09" y="486.546" width="26" height="1456"/>
-  <object id="97" name="Wall" x="6217.09" y="451.213" width="1590" height="31.3333"/>
-  <object id="98" name="Wall" x="7805.09" y="460.546" width="538" height="20"/>
+  <object id="95" name="Wall" x="8293.09" y="484.54" width="52" height="1212"/>
+  <object id="96" name="End" x="8315.09" y="1700.55" width="32" height="246"/>
+  <object id="97" name="Wall" x="6217.09" y="409.213" width="2098" height="73.3333"/>
   <object id="99" name="Wall" x="6279.75" y="1367.21" width="24" height="365.333"/>
   <object id="100" name="Wall" x="6726.09" y="2009.55" width="16" height="233"/>
   <object id="101" name="Dead" x="1847.7" y="2216.67" width="1963.45" height="24.2424"/>
   <object id="102" name="Dead" x="5532.64" y="2228.79" width="416.333" height="18.1818"/>
   <object id="103" name="Dead" x="6505.09" y="2216.67" width="218.182" height="24.2424"/>
-  <object id="104" name="Wall" x="-13.9394" y="739.091" width="21.2121" height="927.273"/>
+  <object id="104" name="Wall" x="-77.9394" y="739.091" width="85.2121" height="969.273"/>
   <object id="105" name="Wall" x="3905.67" y="1950" width="95.6667" height="288"/>
   <object id="106" name="Floor" x="3903.5" y="1918.5" width="98" height="30"/>
   <object id="107" name="Floor" x="5410.67" y="1422.67" width="50.6667" height="12"/>
@@ -120131,6 +120130,7 @@
   <object id="124" name="Floor" x="7234.33" y="1204.33" width="57.3333" height="15.3333"/>
   <object id="141" name="Floor" x="5956.67" y="1760.67" width="126.667" height="24.6667"/>
   <object id="142" name="Wall" x="5953" y="1787.83" width="24" height="442.333"/>
+  <object id="153" name="Wall" x="7798" y="1006" width="52" height="928"/>
  </objectgroup>
  <objectgroup id="7" name="Entities">
   <object id="119" name="Player" x="62" y="1542" width="48" height="84"/>
@@ -120149,6 +120149,16 @@
   <object id="137" name="FloorEnemy" x="7268" y="1905" width="104" height="78"/>
   <object id="138" name="FloorEnemy" x="6400" y="689" width="104" height="78"/>
   <object id="139" name="FloorEnemy" x="7708" y="911" width="104" height="78"/>
-  <object id="140" name="FlyEnemy" x="350" y="1350" width="44" height="44"/>
+  <object id="140" name="FlyEnemy" x="1318" y="1372" width="44" height="44"/>
+  <object id="143" name="FlyEnemy" x="352" y="1348" width="44" height="44"/>
+  <object id="144" name="FlyEnemy" x="2150" y="1282" width="44" height="44"/>
+  <object id="145" name="FlyEnemy" x="2760" y="1210" width="44" height="44"/>
+  <object id="146" name="FlyEnemy" x="3286" y="1564" width="44" height="44"/>
+  <object id="147" name="FlyEnemy" x="4582" y="1242" width="44" height="44"/>
+  <object id="148" name="FlyEnemy" x="5772" y="1322" width="44" height="44"/>
+  <object id="149" name="FlyEnemy" x="5388" y="616" width="44" height="44"/>
+  <object id="150" name="FlyEnemy" x="6790" y="1446" width="44" height="44"/>
+  <object id="151" name="FlyEnemy" x="7304" y="550" width="44" height="44"/>
+  <object id="152" name="FlyEnemy" x="7922" y="702" width="44" height="44"/>
  </objectgroup>
 </map>

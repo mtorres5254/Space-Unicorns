@@ -12,10 +12,12 @@ public:
 	~j1FlyEnemy();
 
 	void Update(float dt);
-	virtual void Draw();
-	virtual void HandeInput();
-	virtual void Reset();
-	virtual void OnCollision(Collider* c1, Collider* c2);
+	void Draw();
+	void HandeInput();
+	void Reset();
+	void Load(pugi::xml_node&);
+	void Save(pugi::xml_node&) const;
+	void OnCollision(Collider* c1, Collider* c2);
 
 	Animation* Current_animation;
 	Animation idle;

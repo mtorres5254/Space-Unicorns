@@ -4,209 +4,23 @@
 	<window />
 	<textures />
 	<audio />
-	<map path="mapa2.tmx" />
-	<scene />
+	<map path="mapa.tmx" />
+	<scene>
+		<initial_camera x="0" y="-900" />
+	</scene>
 	<pathfinding />
 	<entities>
 		<Player lives="3">
-			<position x="110" y="692" />
-			<initial_position x="32" y="637" />
+			<position x="62" y="1592" />
+			<initial_position x="62" y="1542" />
 		</Player>
 		<Floor_Enemies>
-			<Floor_Enemy lives="5">
-				<position x="638" y="1574" />
-				<initial_position x="638" y="1520" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="950" y="1574" />
-				<initial_position x="950" y="1515" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="1608" y="1671" />
-				<initial_position x="1608" y="1617" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="2958" y="1545" />
-				<initial_position x="2958" y="1491" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="3890" y="1738" />
-				<initial_position x="3890" y="1679" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="4540" y="1825" />
-				<initial_position x="4540" y="1771" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="4006" y="1478" />
-				<initial_position x="4006" y="1419" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="5150" y="1704" />
-				<initial_position x="5150" y="1645" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="5388" y="1823" />
-				<initial_position x="5388" y="1769" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="4662" y="481" />
-				<initial_position x="4662" y="427" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="6166" y="1321" />
-				<initial_position x="6166" y="1267" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="6374" y="1701" />
-				<initial_position x="6374" y="1647" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="7268" y="1964" />
-				<initial_position x="7268" y="1905" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="6400" y="748" />
-				<initial_position x="6400" y="689" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="7708" y="965" />
-				<initial_position x="7708" y="911" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="638" y="19178" />
-				<initial_position x="638" y="1520" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="950" y="19178" />
-				<initial_position x="950" y="1515" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="1608" y="19275" />
-				<initial_position x="1608" y="1617" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="2958" y="19144" />
-				<initial_position x="2958" y="1491" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="3890" y="19337" />
-				<initial_position x="3890" y="1679" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="4540" y="19424" />
-				<initial_position x="4540" y="1771" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="4006" y="19082" />
-				<initial_position x="4006" y="1419" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="5150" y="19308" />
-				<initial_position x="5150" y="1645" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="5388" y="19427" />
-				<initial_position x="5388" y="1769" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="4662" y="673" />
-				<initial_position x="4662" y="427" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="6166" y="18925" />
-				<initial_position x="6166" y="1267" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="6374" y="19305" />
-				<initial_position x="6374" y="1647" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="7268" y="19568" />
-				<initial_position x="7268" y="1905" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="6400" y="811" />
-				<initial_position x="6400" y="689" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="7708" y="18569" />
-				<initial_position x="7708" y="911" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="852" y="642" />
-				<initial_position x="852" y="630" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="638" y="1573" />
-				<initial_position x="638" y="1520" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="950" y="1574" />
-				<initial_position x="950" y="1515" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="1608" y="1670" />
-				<initial_position x="1608" y="1617" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="2958" y="1544" />
-				<initial_position x="2958" y="1491" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="3890" y="1738" />
-				<initial_position x="3890" y="1679" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="4540" y="1824" />
-				<initial_position x="4540" y="1771" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="4006" y="1478" />
-				<initial_position x="4006" y="1419" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="5150" y="1704" />
-				<initial_position x="5150" y="1645" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="5388" y="1822" />
-				<initial_position x="5388" y="1769" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="4662" y="480" />
-				<initial_position x="4662" y="427" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="6166" y="1320" />
-				<initial_position x="6166" y="1267" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="6374" y="1700" />
-				<initial_position x="6374" y="1647" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="7268" y="1964" />
-				<initial_position x="7268" y="1905" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="6400" y="748" />
-				<initial_position x="6400" y="689" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="7708" y="964" />
-				<initial_position x="7708" y="911" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="852" y="641" />
-				<initial_position x="852" y="630" />
-			</Floor_Enemy>
 			<Floor_Enemy lives="5">
 				<position x="638" y="1575" />
 				<initial_position x="638" y="1520" />
 			</Floor_Enemy>
 			<Floor_Enemy lives="5">
-				<position x="950" y="1576" />
+				<position x="950" y="1575" />
 				<initial_position x="950" y="1515" />
 			</Floor_Enemy>
 			<Floor_Enemy lives="5">
@@ -214,7 +28,7 @@
 				<initial_position x="1608" y="1617" />
 			</Floor_Enemy>
 			<Floor_Enemy lives="5">
-				<position x="2958" y="1546" />
+				<position x="2958" y="1542" />
 				<initial_position x="2958" y="1491" />
 			</Floor_Enemy>
 			<Floor_Enemy lives="5">
@@ -222,15 +36,15 @@
 				<initial_position x="3890" y="1679" />
 			</Floor_Enemy>
 			<Floor_Enemy lives="5">
-				<position x="4540" y="1826" />
+				<position x="4540" y="1822" />
 				<initial_position x="4540" y="1771" />
 			</Floor_Enemy>
 			<Floor_Enemy lives="5">
-				<position x="4006" y="1480" />
+				<position x="4006" y="1479" />
 				<initial_position x="4006" y="1419" />
 			</Floor_Enemy>
 			<Floor_Enemy lives="5">
-				<position x="5150" y="1706" />
+				<position x="5150" y="1705" />
 				<initial_position x="5150" y="1645" />
 			</Floor_Enemy>
 			<Floor_Enemy lives="5">
@@ -238,11 +52,11 @@
 				<initial_position x="5388" y="1769" />
 			</Floor_Enemy>
 			<Floor_Enemy lives="5">
-				<position x="4662" y="482" />
+				<position x="4662" y="478" />
 				<initial_position x="4662" y="427" />
 			</Floor_Enemy>
 			<Floor_Enemy lives="5">
-				<position x="6166" y="1322" />
+				<position x="6166" y="1318" />
 				<initial_position x="6166" y="1267" />
 			</Floor_Enemy>
 			<Floor_Enemy lives="5">
@@ -250,394 +64,68 @@
 				<initial_position x="6374" y="1647" />
 			</Floor_Enemy>
 			<Floor_Enemy lives="5">
-				<position x="7268" y="1966" />
+				<position x="7268" y="1965" />
 				<initial_position x="7268" y="1905" />
 			</Floor_Enemy>
 			<Floor_Enemy lives="5">
-				<position x="6400" y="750" />
+				<position x="6400" y="749" />
 				<initial_position x="6400" y="689" />
 			</Floor_Enemy>
 			<Floor_Enemy lives="5">
-				<position x="7708" y="966" />
+				<position x="7708" y="962" />
 				<initial_position x="7708" y="911" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="638" y="1517" />
-				<initial_position x="638" y="1520" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="950" y="1517" />
-				<initial_position x="950" y="1515" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="1608" y="1506" />
-				<initial_position x="1608" y="1617" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="2958" y="1514" />
-				<initial_position x="2958" y="1491" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="3890" y="1510" />
-				<initial_position x="3890" y="1679" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="4540" y="1768" />
-				<initial_position x="4540" y="1771" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="4006" y="1250" />
-				<initial_position x="4006" y="1419" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="5150" y="1513" />
-				<initial_position x="5150" y="1645" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="5388" y="1533" />
-				<initial_position x="5388" y="1769" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="4662" y="230" />
-				<initial_position x="4662" y="427" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="6166" y="1252" />
-				<initial_position x="6166" y="1267" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="6374" y="1510" />
-				<initial_position x="6374" y="1647" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="7268" y="1765" />
-				<initial_position x="7268" y="1905" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="6400" y="743" />
-				<initial_position x="6400" y="689" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="7708" y="744" />
-				<initial_position x="7708" y="911" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="638" y="21470" />
-				<initial_position x="638" y="1520" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="950" y="21470" />
-				<initial_position x="950" y="1515" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="1608" y="21567" />
-				<initial_position x="1608" y="1617" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="2958" y="21436" />
-				<initial_position x="2958" y="1491" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="3890" y="21629" />
-				<initial_position x="3890" y="1679" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="4540" y="21716" />
-				<initial_position x="4540" y="1771" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="4006" y="21374" />
-				<initial_position x="4006" y="1419" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="5150" y="21600" />
-				<initial_position x="5150" y="1645" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="5388" y="21719" />
-				<initial_position x="5388" y="1769" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="4662" y="1778" />
-				<initial_position x="4662" y="427" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="6166" y="21217" />
-				<initial_position x="6166" y="1267" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="6374" y="21597" />
-				<initial_position x="6374" y="1647" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="7268" y="21860" />
-				<initial_position x="7268" y="1905" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="6400" y="742" />
-				<initial_position x="6400" y="689" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="7708" y="20861" />
-				<initial_position x="7708" y="911" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="852" y="1514" />
-				<initial_position x="852" y="630" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="638" y="1516" />
-				<initial_position x="638" y="1520" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="950" y="1517" />
-				<initial_position x="950" y="1515" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="1608" y="1514" />
-				<initial_position x="1608" y="1617" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="2958" y="1513" />
-				<initial_position x="2958" y="1491" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="3890" y="1510" />
-				<initial_position x="3890" y="1679" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="4540" y="1767" />
-				<initial_position x="4540" y="1771" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="4006" y="1250" />
-				<initial_position x="4006" y="1419" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="5150" y="1513" />
-				<initial_position x="5150" y="1645" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="5388" y="1532" />
-				<initial_position x="5388" y="1769" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="4662" y="229" />
-				<initial_position x="4662" y="427" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="6166" y="1251" />
-				<initial_position x="6166" y="1267" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="6374" y="1509" />
-				<initial_position x="6374" y="1647" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="7268" y="1765" />
-				<initial_position x="7268" y="1905" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="6400" y="743" />
-				<initial_position x="6400" y="689" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="7708" y="743" />
-				<initial_position x="7708" y="911" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="638" y="1581" />
-				<initial_position x="638" y="1520" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="950" y="1581" />
-				<initial_position x="950" y="1515" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="1608" y="1678" />
-				<initial_position x="1608" y="1617" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="2958" y="1552" />
-				<initial_position x="2958" y="1491" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="3890" y="1478" />
-				<initial_position x="3890" y="1679" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="4540" y="1536" />
-				<initial_position x="4540" y="1771" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="4006" y="1485" />
-				<initial_position x="4006" y="1419" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="5150" y="1711" />
-				<initial_position x="5150" y="1645" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="5388" y="1707" />
-				<initial_position x="5388" y="1769" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="4662" y="488" />
-				<initial_position x="4662" y="427" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="6166" y="1328" />
-				<initial_position x="6166" y="1267" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="6374" y="1708" />
-				<initial_position x="6374" y="1647" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="7268" y="1675" />
-				<initial_position x="7268" y="1905" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="6400" y="755" />
-				<initial_position x="6400" y="689" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="7708" y="972" />
-				<initial_position x="7708" y="911" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="638" y="55629" />
-				<initial_position x="638" y="1520" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="950" y="55629" />
-				<initial_position x="950" y="1515" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="1608" y="55726" />
-				<initial_position x="1608" y="1617" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="2958" y="55595" />
-				<initial_position x="2958" y="1491" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="3890" y="55788" />
-				<initial_position x="3890" y="1679" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="4540" y="55875" />
-				<initial_position x="4540" y="1771" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="4006" y="55533" />
-				<initial_position x="4006" y="1419" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="5150" y="55759" />
-				<initial_position x="5150" y="1645" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="5388" y="55878" />
-				<initial_position x="5388" y="1769" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="4662" y="483" />
-				<initial_position x="4662" y="427" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="6166" y="55376" />
-				<initial_position x="6166" y="1267" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="6374" y="55756" />
-				<initial_position x="6374" y="1647" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="7268" y="56019" />
-				<initial_position x="7268" y="1905" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="6400" y="752" />
-				<initial_position x="6400" y="689" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="7708" y="55020" />
-				<initial_position x="7708" y="911" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="852" y="1593" />
-				<initial_position x="852" y="630" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="638" y="1580" />
-				<initial_position x="638" y="1520" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="950" y="1581" />
-				<initial_position x="950" y="1515" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="1608" y="1677" />
-				<initial_position x="1608" y="1617" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="2958" y="1551" />
-				<initial_position x="2958" y="1491" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="3890" y="1478" />
-				<initial_position x="3890" y="1679" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="4540" y="1535" />
-				<initial_position x="4540" y="1771" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="4006" y="1485" />
-				<initial_position x="4006" y="1419" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="5150" y="1711" />
-				<initial_position x="5150" y="1645" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="5388" y="1706" />
-				<initial_position x="5388" y="1769" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="4662" y="487" />
-				<initial_position x="4662" y="427" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="6166" y="1327" />
-				<initial_position x="6166" y="1267" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="6374" y="1707" />
-				<initial_position x="6374" y="1647" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="7268" y="1675" />
-				<initial_position x="7268" y="1905" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="6400" y="755" />
-				<initial_position x="6400" y="689" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="7708" y="971" />
-				<initial_position x="7708" y="911" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="0">
-				<position x="882" y="639" />
-				<initial_position x="852" y="630" />
 			</Floor_Enemy>
 		</Floor_Enemies>
+		<Fly_Enemies>
+			<Fly_Enemy lives="8">
+				<position x="1318" y="1372" />
+				<initial_position x="1318" y="1372" />
+			</Fly_Enemy>
+			<Fly_Enemy lives="2">
+				<position x="352" y="1306" />
+				<initial_position x="352" y="1348" />
+			</Fly_Enemy>
+			<Fly_Enemy lives="8">
+				<position x="2150" y="1282" />
+				<initial_position x="2150" y="1282" />
+			</Fly_Enemy>
+			<Fly_Enemy lives="8">
+				<position x="2760" y="1210" />
+				<initial_position x="2760" y="1210" />
+			</Fly_Enemy>
+			<Fly_Enemy lives="8">
+				<position x="3286" y="1564" />
+				<initial_position x="3286" y="1564" />
+			</Fly_Enemy>
+			<Fly_Enemy lives="8">
+				<position x="4582" y="1242" />
+				<initial_position x="4582" y="1242" />
+			</Fly_Enemy>
+			<Fly_Enemy lives="8">
+				<position x="5772" y="1322" />
+				<initial_position x="5772" y="1322" />
+			</Fly_Enemy>
+			<Fly_Enemy lives="8">
+				<position x="5388" y="616" />
+				<initial_position x="5388" y="616" />
+			</Fly_Enemy>
+			<Fly_Enemy lives="8">
+				<position x="6790" y="1446" />
+				<initial_position x="6790" y="1446" />
+			</Fly_Enemy>
+			<Fly_Enemy lives="8">
+				<position x="7304" y="550" />
+				<initial_position x="7304" y="550" />
+			</Fly_Enemy>
+			<Fly_Enemy lives="8">
+				<position x="7922" y="702" />
+				<initial_position x="7922" y="702" />
+			</Fly_Enemy>
+		</Fly_Enemies>
 	</entities>
 	<map />
 	<scenes />
 	<renderer>
-		<camera x="-2" y="-266" />
+		<camera x="-2" y="-1164" />
 	</renderer>
 </game_state>

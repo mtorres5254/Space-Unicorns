@@ -52,16 +52,29 @@ bool j1Entities::Save(pugi::xml_node& save) const {
 	App->scene->player->Save(save.child("Player"));
 
 	save.append_child("Floor_Enemies");
-	p2List_item<j1FloorEnemy*>* floor;
 	save.child("Floor_Enemies").append_child("Floor_Enemy");
 	pugi::xml_node node_floor;
 	node_floor = save.child("Floor_Enemies").child("Floor_Enemy");
+	p2List_item<j1FloorEnemy*>* floor;
 	for (floor = App->scene->FloorEnemies.start; floor; floor = floor->next) {
 		floor->data->Save(node_floor);
 		if (floor->next != NULL) {
 			save.child("Floor_Enemies").append_child("Floor_Enemy");
 		}
 		node_floor = node_floor.next_sibling("Floor_Enemy");
+	}
+
+	save.append_child("Fly_Enemies");
+	save.child("Fly_Enemies").append_child("Fly_Enemy");
+	pugi::xml_node fly_node;
+	fly_node = save.child("Fly_Enemies").child("Fly_Enemy");
+	p2List_item<j1FlyEnemy*>* fly;
+	for (fly = App->scene->FlyEnemies.start; fly; fly = fly->next) {
+		fly->data->Save(fly_node);
+		if (fly->next != NULL) {
+			save.child("Fly_Enemies").append_child("Fly_Enemy");
+		}
+		fly_node = fly_node.next_sibling("Fly_Enemy");
 	}
 
 	return true;

@@ -424,11 +424,11 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 
 	if (c2->type == COLLIDER_END) {
 		if (App->scene->map == 1) {
-			App->scene_change->ChangeMap(2.0f, 1);
+			App->scene_change->ChangeMap(2.0f, 2);
 			App->scene->map = 2;
 		}
 		else if(App->scene->map == 2) {
-			App->scene_change->ChangeMap(2.0f, 2);
+			App->scene_change->ChangeMap(2.0f, 1);
 			App->scene->map = 1;
 		}
 		
