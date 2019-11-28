@@ -7,6 +7,7 @@
 #include "j1Scene.h"
 #include "j1Map.h"
 #include "j1Collisions.h"
+#include "j1Audio.h"
 
 j1Entities::j1Entities() {
 	name.create("entities");
@@ -43,6 +44,7 @@ bool j1Entities::Load(pugi::xml_node& load) {
 		ret->Load(node_floor);
 		App->scene->FloorEnemies.add(ret);
 	}
+
 
 	return true;
 }
@@ -171,6 +173,7 @@ void j1Entities::OnCollision(Collider* c1, Collider* c2) {
 	}
 
 	if (c1->type == COLLIDER_ENEMY) {
+		
 		p2List_item<j1FloorEnemy*>* floor_enemy;
 		for (floor_enemy = App->scene->FloorEnemies.start; floor_enemy; floor_enemy = floor_enemy->next) {
 			if (floor_enemy->data->col->rect.x == c1->rect.x && floor_enemy->data->col->rect.y == c1->rect.y && floor_enemy->data->col->rect.w == c1->rect.w && floor_enemy->data->col->rect.h == c1->rect.h) {

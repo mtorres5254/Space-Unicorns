@@ -8,6 +8,7 @@
 #include "j1Entities.h"
 #include "j1Render.h"
 #include "j1Window.h"
+#include "j1Audio.h"
 #include <math.h>
 
 j1Map::j1Map() : j1Module(), map_loaded(false)
@@ -394,7 +395,7 @@ bool j1Map::Load(const char* file_name)
 			item_layer = item_layer->next;
 		}
 	}
-
+	//App->audio->PlayMusic(data.BackgroundMusic);
 	map_loaded = ret;
 
 	return ret;

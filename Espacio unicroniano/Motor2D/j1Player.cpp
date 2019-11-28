@@ -79,7 +79,9 @@ j1Player::j1Player(iPoint pos) : Entity(EntityType::player) {
 	walkingsound = App->audio->LoadFx("audio/fx/walk.wav");
 	diedsound = App->audio->LoadFx("audio/fx/dead.wav");
 	changescene_sound = App->audio->LoadFx("audio/fx/change_scene.wav");
-	hittedsound = App->audio->LoadFx("audio/fx/hit.wav");
+	shotsound = App->audio->LoadFx("audio/fx/fire.wav");
+	hitsound = App->audio->LoadFx("audio/fx/hit.wav");
+	
 
 	//set player info 
 	initial_position.x = position.x = pos.x;
@@ -309,6 +311,7 @@ void j1Player::DrawPointer() {
 		j1Particle* shoot;
 		shoot = (j1Particle*) App->entity->CreateEntity(Entity::EntityType::particle, position, p.x, p.y);
 		bullets.add(shoot);
+		App->audio->PlayFx(shotsound, 0);
 	}
 }
 

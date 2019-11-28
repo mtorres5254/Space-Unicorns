@@ -128,6 +128,7 @@ struct MapData
 	p2List<ImageLayer*>  img_layers;
 	p2List<ObjectLayer*> obj_layers;
 	p2List<Collider*>    colliders;
+	//const char*BackgroundMusic;
 };
 
 // ----------------------------------------------------
