@@ -59,6 +59,22 @@ j1Collisions::j1Collisions()
 j1Collisions::~j1Collisions()
 {}
 
+bool j1Collisions::Load(pugi::xml_node&) {
+	DeleteAll();
+
+	p2List_item<ObjectLayer*>* obj_lay;
+	for (obj_lay = App->map->data.obj_layers.start; obj_lay; obj_lay = obj_lay->next) {
+		LoadFromObjectLayer(obj_lay->data);
+	}
+
+	return true;
+}
+
+bool j1Collisions::Save(pugi::xml_node&) const {
+
+	return true;
+}
+
 bool j1Collisions::Start() {
 
 	p2List_item<ObjectLayer*>* obj_lay;
@@ -145,9 +161,11 @@ void j1Collisions::DebugDraw() {
 	App->input->GetMousePosition(x, y);
 	iPoint p = App->render->ScreenToWorld(x, y);
 
-	App->render->DrawLine(App->scene->player->position.x, App->scene->player->position.y, p.x, p.y, 255, 255, 255, 100);
-	App->render->DrawLine(App->scene->player->position.x, App->scene->player->position.y + App->scene->player->col->rect.h, p.x, p.y, 255, 255, 255, 100);
-
+	if (App->scene->player != nullptr) {
+		App->render->DrawLine(App->scene->player->position.x, App->scene->player->position.y, p.x, p.y, 255, 255, 255, 100);
+		App->render->DrawLine(App->scene->player->position.x, App->scene->player->position.y + App->scene->player->col->rect.h, p.x, p.y, 255, 255, 255, 100);
+	}
+	
 	LOG("showing colliders");
 
 	Uint8 alpha = 80;

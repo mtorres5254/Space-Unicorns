@@ -70,6 +70,9 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	bool Load(pugi::xml_node&);
+	bool Save(pugi::xml_node&) const;
+
 	bool LoadFromObjectLayer(ObjectLayer* layer);
 
 	Collider* AddCollider(SDL_Rect rectC, COLLIDER_TYPE typeC, j1Module* callbackC = nullptr);

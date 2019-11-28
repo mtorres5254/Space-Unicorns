@@ -46903,7 +46903,7 @@
   <object id="418" name="FloorEnemy" x="852" y="630" width="46" height="40"/>
  </objectgroup>
  <objectgroup id="42" name="Colliders">
-  <object id="260" name="Floor" x="0" y="768" width="255" height="120.667"/>
+  <object id="260" name="Floor" x="0" y="768" width="413.667" height="120.667"/>
   <object id="261" name="Floor" x="416" y="735" width="31" height="10"/>
   <object id="262" name="Floor" x="450" y="777" width="30" height="9"/>
   <object id="263" name="Floor" x="481" y="801" width="125" height="18.3333"/>
@@ -47054,6 +47054,5 @@
   <object id="413" name="Dead" x="1503.5" y="301.5" width="29" height="19"/>
   <object id="414" name="Wall" x="2051" y="866.5" width="28" height="122"/>
   <object id="416" name="Dead" x="4610" y="781.5" width="30" height="19"/>
-  <object id="417" name="Floor" x="255.5" y="767" width="158" height="122.667"/>
  </objectgroup>
 </map>
