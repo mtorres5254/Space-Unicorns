@@ -79,6 +79,7 @@ public:
 	void DebugDraw();
 	void DeleteCollider(Collider*);
 	void DeleteAll();
+	void DeleteColliderNow(Collider*);
 
 private:
 	//bool LoadColliders();

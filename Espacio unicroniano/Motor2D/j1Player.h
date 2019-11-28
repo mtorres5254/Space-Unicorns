@@ -36,14 +36,15 @@ public:
 	void Draw();
 	void HandeInput();
 	void Reset();
+	void Load(pugi::xml_node&);
+	void Save(pugi::xml_node&) const;
 	void OnCollision(Collider* c1, Collider* c2);
 	void DrawPointer();
 
-
+	iPoint initial_position;
 	p2List<j1Particle*> bullets;
 private:
 	iPoint pos_before_jump;
-	iPoint initial_position;
 	iPoint vel;
 
 	int maxLives;

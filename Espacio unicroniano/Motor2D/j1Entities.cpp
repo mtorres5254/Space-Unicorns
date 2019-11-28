@@ -24,6 +24,26 @@ bool j1Entities::Awake(pugi::xml_node& config) {
 	return ret;
 }
 
+bool j1Entities::Load(pugi::xml_node& load) {
+	p2List_item<Entity*>* ent;
+	for (ent = entities.start; ent; ent = ent->next) {
+		App->col->DeleteColliderNow(ent->data->col);
+	}
+	DestroyAll();
+
+	App->scene->player = (j1Player*)CreateEntity(Entity::EntityType::player, { 0,0 });
+	App->scene->player->Load(load.child("Player"));
+
+	return true;
+}
+
+bool j1Entities::Save(pugi::xml_node& save) const {
+	save.append_child("Player");
+	App->scene->player->Save(save.child("Player"));
+
+	return true;
+}
+
 bool j1Entities::PreUpdate(float dt) {
 	p2List_item<Entity*>* AuxEntity = entities.start;
 

@@ -106,6 +106,36 @@ void j1Player::PreUpdate(float dt) {
 	falling = true;
 }
 
+void j1Player::Load(pugi::xml_node& load) {
+	App->scene->player->lives = load.attribute("lives").as_int();
+
+	position.x = load.child("position").attribute("x").as_int();
+	position.y = load.child("position").attribute("y").as_int() - 300;
+
+	initial_position.x = load.child("initial_position").attribute("x").as_int();
+	initial_position.y = load.child("initial_position").attribute("y").as_int();
+
+	vel.x = vel.y = 0;
+}
+
+void j1Player::Save(pugi::xml_node& save) const {
+	save.append_attribute("lives");
+	save.attribute("lives").set_value(lives);
+
+	save.append_child("position");
+	save.child("position").append_attribute("x");
+	save.child("position").append_attribute("y");
+	save.child("position").attribute("x").set_value(position.x);
+	save.child("position").attribute("y").set_value(position.y);
+
+	save.append_child("initial_position");
+	save.child("initial_position").append_attribute("x");
+	save.child("initial_position").append_attribute("y");
+	save.child("initial_position").attribute("x").set_value(initial_position.x);
+	save.child("initial_position").attribute("y").set_value(initial_position.y);
+
+}
+
 void j1Player::Reset() {
 	position = initial_position;
 	vel.x = vel.y = 0;
@@ -114,7 +144,9 @@ void j1Player::Reset() {
 }
 
 void j1Player::Update(float dt) { 
-	BROFILER_CATEGORY("Player_Update", Profiler::Color::DarkOrange )
+	BROFILER_CATEGORY("Player_Update", Profiler::Color::DarkOrange)
+
+		LOG("%i x %i", position.x, position.y);
 
 	if (start_timer.ReadSec() > 1.0f && reset == false) {
 		Reset();

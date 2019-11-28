@@ -36,6 +36,8 @@ public:
 	virtual void Draw() {}
 	virtual void HandeInput() {}
 	virtual void Reset() {}
+	virtual void Load(pugi::xml_node&){}
+	virtual void Save(pugi::xml_node&) const {}
 	virtual void OnCollision(Collider* c1, Collider* c2) {}
 };
 
@@ -50,6 +52,9 @@ public:
 	bool Awake(pugi::xml_node& config);
 	void ResetEntities();
 	void OnCollision(Collider* c1, Collider* c2);
+
+	bool Load(pugi::xml_node&);
+	bool Save(pugi::xml_node&) const;
 
 	void LoadFromObjectLayer(ObjectLayer* layer);
 	Entity* CreateEntity(Entity::EntityType type, iPoint pos, int dest_X = NULL, int dest_Y = NULL);

@@ -59,8 +59,13 @@ j1Collisions::j1Collisions()
 j1Collisions::~j1Collisions()
 {}
 
-bool j1Collisions::Load(pugi::xml_node&) {
-	DeleteAll();
+bool j1Collisions::Load(pugi::xml_node& load) {
+	p2List_item<Collider*>* collider;
+	for (collider = App->map->data.colliders.start; collider; collider = collider->next) {
+		DeleteCollider(collider->data);
+	}
+	App->map->data.colliders.clear();
+
 
 	p2List_item<ObjectLayer*>* obj_lay;
 	for (obj_lay = App->map->data.obj_layers.start; obj_lay; obj_lay = obj_lay->next) {
@@ -70,7 +75,7 @@ bool j1Collisions::Load(pugi::xml_node&) {
 	return true;
 }
 
-bool j1Collisions::Save(pugi::xml_node&) const {
+bool j1Collisions::Save(pugi::xml_node& save) const {
 
 	return true;
 }
@@ -268,9 +273,18 @@ void j1Collisions::DeleteAll() {
 	}
 }
 
+void j1Collisions::DeleteColliderNow(Collider* collider) {
+	for (uint i = 0; i < MAX_COLLIDERS; ++i) {
+		if (colliders[i] == collider) {
+			delete colliders[i];
+			colliders[i] = nullptr;
+		}
+	}
+}
+
 bool j1Collisions::LoadFromObjectLayer(ObjectLayer* layer) {
 	if (layer->name == "Colliders") {
-		
+		Collider* ret;
 		p2List_item<ObjectData*>* obj;
 		for (obj = layer->list.start; obj; obj = obj->next) {
 			COLLIDER_TYPE col_type = COLLIDER_NONE;
@@ -297,7 +311,8 @@ bool j1Collisions::LoadFromObjectLayer(ObjectLayer* layer) {
 			rect.w = obj->data->w;
 			rect.h = obj->data->h;
 
-			AddCollider(rect, col_type, callback);
+			ret = AddCollider(rect, col_type, callback);
+			App->map->data.colliders.add(ret);
 		}
 	}
 	return true;
