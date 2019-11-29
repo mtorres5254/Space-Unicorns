@@ -52,6 +52,8 @@ bool j1Scene::Save(pugi::xml_node& save) const {
 // Called before the first frame
 bool j1Scene::Start()
 {
+	debug_tex = App->tex->Load("maps/meta.png");
+
 	App->audio->PlayMusic("audio/music/Brain_Damage.ogg");
 	if(App->map->Load("mapa.tmx") == true)
 	{
@@ -92,7 +94,27 @@ bool j1Scene::PreUpdate(float dt)
 {
 	BROFILER_CATEGORY("Scene_PreUpdate", Profiler::Color::Azure)
 
-		//LOG("%i x %i", App->render->camera.x, App->render->camera.y);
+	static iPoint origin;
+	static bool origin_selected = false;
+
+	int x, y;
+	App->input->GetMousePosition(x, y);
+	iPoint p = App->render->ScreenToWorld(x, y);
+	p = App->map->WorldToMap(p.x, p.y);
+
+	if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN)
+	{
+		if (origin_selected == true)
+		{
+			App->pathfinding->CreatePath(origin, p);
+			origin_selected = false;
+		}
+		else
+		{
+			origin = p;
+			origin_selected = true;
+		}
+	}
 
 	return true;
 }
@@ -161,12 +183,21 @@ bool j1Scene::Update(float dt)
 	App->map->Draw();
 
 	//Show Pathfinding result path
+	int x, y;
+
+	App->input->GetMousePosition(x, y);
+	iPoint p = App->render->ScreenToWorld(x, y);
+	p = App->map->WorldToMap(p.x, p.y);
+	p = App->map->MapToWorld(p.x, p.y);
+
+	//App->render->Blit(debug_tex, p.x, p.y);
+
 	const p2DynArray<iPoint>* path = App->pathfinding->GetLastPath();
 
-	for(uint i = 0; i < path->Count(); ++i)
+	for (uint i = 0; i < path->Count(); ++i)
 	{
 		iPoint pos = App->map->MapToWorld(path->At(i)->x, path->At(i)->y);
-		//App->render->Blit(debug_tex, pos.x, pos.y);
+		App->render->Blit(debug_tex, pos.x, pos.y);
 	}
 
 	return true;

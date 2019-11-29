@@ -49,12 +49,18 @@ public:
 	
 	int map = 1;
 
+	iPoint origin;
+	iPoint dest;
+
+	bool point1selected;
+
 	Collider* col_camera_up;
 	Collider* col_camera_down;
 	Collider* col_camera_left;
 	Collider* col_camera_right;
 
 private:
+	SDL_Texture* debug_tex;
 	float dt_scene;
 };
 

@@ -2,6 +2,7 @@
 #include "p2Log.h"
 #include "j1App.h"
 #include "j1SceneChange.h"
+#include "j1Pathfinding.h"
 #include "j1Render.h"
 #include "j1Scene.h"
 #include "j1Window.h"
@@ -105,6 +106,13 @@ bool j1MapChange::Update(float dt)
 			if (now >= total_time)
 			{
 				//reload things
+				int w, h;
+				uchar* data = NULL;
+				if (App->map->CreateWalkabilityMap(w, h, &data))
+					App->pathfinding->SetMap(w, h, data);
+
+				RELEASE_ARRAY(data);
+
 				reset_timer.Start();
 				p2List_item<ObjectLayer*>* obj;
 				for (obj = App->map->data.obj_layers.start; obj; obj = obj->next) {
