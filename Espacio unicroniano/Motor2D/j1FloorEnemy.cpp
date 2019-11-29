@@ -83,7 +83,7 @@ void j1FloorEnemy::Reset() {
 	vel.y = 0;
 	lives = 5;
 	if (col != nullptr) {
-		App->col->DeleteCollider(col);
+		App->col->DeleteColliderNow(col);
 	}
 	col = App->col->AddCollider({ position.x,position.y,32,32 }, COLLIDER_ENEMY, App->entity);
 	dead = false;

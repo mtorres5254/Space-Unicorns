@@ -5,6 +5,8 @@
 #include "j1Scene.h"
 #include "j1Player.h"
 
+#define SPEED 100
+
 
 j1FlyEnemy::j1FlyEnemy(iPoint pos) : Entity(EntityType::fly_enemy) {
 	//load graphics
@@ -82,7 +84,7 @@ void j1FlyEnemy::Reset() {
 	vel.y = 0;
 	lives = maxLives;
 	if (col != nullptr) {
-		App->col->DeleteCollider(col);
+		App->col->DeleteColliderNow(col);
 	}
 	dead = false;
 	falling = false;
@@ -100,8 +102,20 @@ void j1FlyEnemy::Update(float dt) {
 
 		HandeInput();
 
-		position.x += vel.x * dt;
-		position.y += vel.y * dt;
+		switch (CurrentState)
+		{
+		case j1FlyEnemy::NONE:
+			//nothing
+			break;
+		case j1FlyEnemy::MOVE:
+			position.x += vel.x * dt;
+			position.y += vel.y * dt;
+			break;
+		default:
+			break;
+		}
+
+		
 
 		if (position.x > App->scene->player->position.x) {
 			flip = SDL_FLIP_HORIZONTAL;
@@ -141,9 +155,36 @@ void j1FlyEnemy::Draw() {
 
 void j1FlyEnemy::HandeInput() {
 	vel.x = vel.y = 0;
+	CurrentState = NONE;
 
 	if (ChasePlayer(App->scene->player->position) == true) {
 		App->pathfinding->CreatePath(App->map->WorldToMap(position.x, position.y), App->map->WorldToMap(App->scene->player->position.x, App->scene->player->position.y), true);
+
+		const p2DynArray<Path>* path = App->pathfinding->GetLastPath();
+
+		const Path* path_dir = path->At(1);
+		if (path_dir != nullptr) {
+
+			switch (path_dir->dir)
+			{
+			case DIR_UP:
+				vel.y = SPEED;
+				CurrentState = MOVE;
+				break;
+			case DIR_DOWN:
+				vel.y = -SPEED;
+				CurrentState = MOVE;
+				break;
+			case DIR_LEFT:
+				vel.x = -SPEED;
+				CurrentState = MOVE;
+				break;
+			case DIR_RIGHT:
+				vel.x = SPEED;
+				CurrentState = MOVE;
+				break;
+			}
+		}
 	}
 }
 

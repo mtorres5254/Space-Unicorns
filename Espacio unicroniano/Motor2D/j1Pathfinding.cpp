@@ -67,7 +67,7 @@ uchar j1PathFinding::GetTileAt(const iPoint& pos) const
 }
 
 // To request all tiles involved in the last generated path
-const p2DynArray<iPoint>* j1PathFinding::GetLastPath() const
+const p2DynArray<Path>* j1PathFinding::GetLastPath() const
 {
 	return &last_path;
 }
@@ -114,7 +114,7 @@ p2List_item<PathNode>* PathList::GetNodeLowestScore() const
 PathNode::PathNode() : g(-1), h(-1), pos(-1, -1), parent(NULL)
 {}
 
-PathNode::PathNode(int g, int h, const iPoint& pos, const PathNode* parent) : g(g), h(h), pos(pos), parent(parent)
+PathNode::PathNode(int g, int h, const iPoint& pos, const PathNode* parent, direction nextNodeDir) : g(g), h(h), pos(pos), parent(parent), nextNodeDir(nextNodeDir)
 {}
 
 PathNode::PathNode(const PathNode& node) : g(node.g), h(node.h), pos(node.pos), parent(node.parent)
@@ -131,22 +131,22 @@ uint PathNode::FindWalkableAdjacents(PathList& list_to_fill) const
 	// north
 	cell.create(pos.x, pos.y + 1);
 	if(App->pathfinding->IsWalkable(cell, App->pathfinding->fly_path))
-		list_to_fill.list.add(PathNode(-1, -1, cell, this));
+		list_to_fill.list.add(PathNode(-1, -1, cell, this, DIR_UP));
 
 	// south
 	cell.create(pos.x, pos.y - 1);
 	if(App->pathfinding->IsWalkable(cell, App->pathfinding->fly_path))
-		list_to_fill.list.add(PathNode(-1, -1, cell, this));
+		list_to_fill.list.add(PathNode(-1, -1, cell, this, DIR_DOWN));
 
 	// east
 	cell.create(pos.x + 1, pos.y);
 	if(App->pathfinding->IsWalkable(cell, App->pathfinding->fly_path))
-		list_to_fill.list.add(PathNode(-1, -1, cell, this));
+		list_to_fill.list.add(PathNode(-1, -1, cell, this, DIR_RIGHT));
 
 	// west
 	cell.create(pos.x - 1, pos.y);
 	if(App->pathfinding->IsWalkable(cell, App->pathfinding->fly_path))
-		list_to_fill.list.add(PathNode(-1, -1, cell, this));
+		list_to_fill.list.add(PathNode(-1, -1, cell, this, DIR_LEFT));
 
 	return list_to_fill.list.count();
 }
@@ -193,7 +193,7 @@ int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination, b
 		PathList open;
 		PathList close;
 
-		PathNode originNode(0, origin.DistanceManhattan(destination), origin, NULL);
+		PathNode originNode(0, origin.DistanceManhattan(destination), origin, NULL,DIR_NONE);
 		open.list.add(originNode);
 
 		while (open.list.count() > 0) {
@@ -208,28 +208,40 @@ int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination, b
 			// Use the Pathnode::parent and Flip() the path when you are finish
 			p2List_item<PathNode>* Node = close.list.end;
 			if (Node->data.pos == destination && Fly) {
+				Path FinalPath(Node->data.pos.x, Node->data.pos.y, Node->data.nextNodeDir);
+				last_path.PushBack(FinalPath);
 
-				last_path.PushBack(Node->data.pos);
-				const PathNode* AuxFinal;
-				AuxFinal = &Node->data;
+				const PathNode* PrevNode;
+				const PathNode* AuxNode;
+				PrevNode = &Node->data;
 
-				while (AuxFinal != NULL) {
-					last_path.PushBack(AuxFinal->pos);
+				for (AuxNode = PrevNode->parent; AuxNode; AuxNode = AuxNode->parent) {
+					if (AuxNode->nextNodeDir != PrevNode->nextNodeDir) {
+						Path AuxPath(AuxNode->pos.x, AuxNode->pos.y, AuxNode->nextNodeDir);
+						last_path.PushBack(AuxPath);
+					}
 
-					AuxFinal = AuxFinal->parent;
+					PrevNode = AuxNode;
 				}
 				last_path.Flip();
 				return 1;
+
 			}
 			else if (Node->data.pos.x == destination.x && !Fly) {
-				last_path.PushBack(Node->data.pos);
-				const PathNode* AuxFinal;
-				AuxFinal = &Node->data;
+				Path FinalPath(Node->data.pos.x, Node->data.pos.y, Node->data.nextNodeDir);
+				last_path.PushBack(FinalPath);
 
-				while (AuxFinal != NULL) {
-					last_path.PushBack(AuxFinal->pos);
+				const PathNode* PrevNode;
+				const PathNode* AuxNode;
+				PrevNode = &Node->data;
 
-					AuxFinal = AuxFinal->parent;
+				for (AuxNode = PrevNode->parent; AuxNode; AuxNode = AuxNode->parent) {
+					if (AuxNode->nextNodeDir != PrevNode->nextNodeDir) {
+						Path AuxPath(AuxNode->pos.x, AuxNode->pos.y, AuxNode->nextNodeDir);
+						last_path.PushBack(AuxPath);
+					}
+
+					PrevNode = AuxNode;
 				}
 				last_path.Flip();
 				return 1;
@@ -261,7 +273,7 @@ int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination, b
 					}
 				}
 				else {
-					PathNode NextNode(AdjacentNode->data.g, AdjacentNode->data.h, AdjacentNode->data.pos, AdjacentNode->data.parent);
+					PathNode NextNode(AdjacentNode->data.g, AdjacentNode->data.h, AdjacentNode->data.pos, AdjacentNode->data.parent, AdjacentNode->data.nextNodeDir);
 					open.list.add(NextNode);
 
 					AdjacentNode = AdjacentNode->next;

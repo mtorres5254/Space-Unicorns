@@ -36,6 +36,23 @@ public:
 
 	int maxLives;
 private:
+	enum states{
+		NONE = 0,
+		MOVE
+	};
+	states CurrentState;
+
+	enum inputs {
+		LEFT = 0,
+		RIGHT,
+		DOWN,
+		UP,
+		IN_MAX
+	};
+	inputs Currentinput;
+
+	bool mInputs[IN_MAX];
+
 	float private_dt;
 };
 

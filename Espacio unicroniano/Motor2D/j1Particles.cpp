@@ -30,6 +30,7 @@ j1Particle::j1Particle(iPoint pos, int x, int y) : Entity(EntityType::particle) 
 
 void j1Particle::Reset() {
 	App->entity->DestroyEntity(this);
+	App->col->DeleteColliderNow(col);
 }
 
 void j1Particle::Update(float dt) {
@@ -40,7 +41,7 @@ void j1Particle::Update(float dt) {
 	}
 	if (lives == 0) {
 		App->entity->DestroyEntity(this);
-		App->col->DeleteCollider(col);
+		App->col->DeleteColliderNow(col);
 	}
 
 	if (diferential_x > 0) {

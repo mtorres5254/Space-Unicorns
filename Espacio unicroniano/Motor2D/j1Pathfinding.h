@@ -13,6 +13,26 @@
 // Intro: http://www.raywenderlich.com/4946/introduction-to-a-pathfinding
 // Details: http://theory.stanford.edu/~amitp/GameProgramming/
 // --------------------------------------------------
+enum direction {
+	DIR_UP,
+	DIR_DOWN,
+	DIR_LEFT,
+	DIR_RIGHT,
+	DIR_NONE
+};
+
+struct Path {
+	int PosX;
+	int PosY;
+	direction dir;
+
+	Path() {}
+	Path(int posx, int posy, direction dire) {
+		PosX = posx;
+		PosY = posy;
+		dir = dire;
+	}
+};
 
 class j1PathFinding : public j1Module
 {
@@ -33,7 +53,7 @@ public:
 	int CreatePath(const iPoint& origin, const iPoint& destination, bool Fly);
 
 	// To request all tiles involved in the last generated path
-	const p2DynArray<iPoint>* GetLastPath() const;
+	const p2DynArray<Path>* GetLastPath() const;
 
 	// Utility: return true if pos is inside the map boundaries
 	bool CheckBoundaries(const iPoint& pos) const;
@@ -55,7 +75,7 @@ private:
 	// all map walkability values [0..255]
 	uchar* map;
 	// we store the created path here
-	p2DynArray<iPoint> last_path;
+	p2DynArray<Path> last_path;
 };
 
 // forward declaration
@@ -68,7 +88,7 @@ struct PathNode
 {
 	// Convenient constructors
 	PathNode();
-	PathNode(int g, int h, const iPoint& pos, const PathNode* parent);
+	PathNode(int g, int h, const iPoint& pos, const PathNode* parent, direction nextNodeDir);
 	PathNode(const PathNode& node);
 
 	// Fills a list (PathList) of all valid adjacent pathnodes
@@ -82,6 +102,7 @@ struct PathNode
 	int g;
 	int h;
 	iPoint pos;
+	direction nextNodeDir;
 	const PathNode* parent; // needed to reconstruct the path in the end
 };
 

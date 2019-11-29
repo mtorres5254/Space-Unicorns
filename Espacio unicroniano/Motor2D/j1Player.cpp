@@ -447,8 +447,7 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 		hit_timer.Start();
 		while (hit_timer.ReadSec() < 0.5f) {
 			if (lives != 0) {
-				position.x = c2->rect.x - c1->rect.w - 10;
-				position.y = c2->rect.y - c1->rect.h - 5;
+				position = pos_before_jump;
 			}
 		}
 	}
