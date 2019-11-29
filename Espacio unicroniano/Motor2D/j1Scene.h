@@ -52,8 +52,6 @@ public:
 	iPoint origin;
 	iPoint dest;
 
-	bool point1selected;
-
 	Collider* col_camera_up;
 	Collider* col_camera_down;
 	Collider* col_camera_left;

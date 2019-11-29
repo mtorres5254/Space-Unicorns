@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.5" orientation="orthogonal" renderorder="right-down" width="202" height="36" tilewidth="32" tileheight="32" infinite="0" nextlayerid="47" nextobjectid="420">
+<map version="1.2" tiledversion="1.2.5" orientation="orthogonal" renderorder="right-down" width="202" height="36" tilewidth="32" tileheight="32" infinite="0" nextlayerid="47" nextobjectid="440">
  <properties>
   <property name=" BackgroundMusic" value="audio/music/Brain_Damage.ogg"/>
  </properties>
  <tileset firstgid="1" name="TilesetMap2" tilewidth="32" tileheight="32" tilecount="60" columns="15">
   <image source="tilesetguay.png" trans="ff00ff" width="480" height="128"/>
  </tileset>
- <tileset firstgid="61" name="meta" tilewidth="32" tileheight="32" tilecount="2" columns="2">
-  <image source="meta.png" width="64" height="32"/>
+ <tileset firstgid="61" name="meta" tilewidth="32" tileheight="32" tilecount="3" columns="3">
+  <image source="meta.png" width="96" height="32"/>
  </tileset>
  <imagelayer id="32" name="Background" locked="1" offsetx="0" offsety="-100">
   <image source="aw_back.png" width="6652" height="1158"/>
@@ -25459,6 +25459,10 @@
    <tile/>
    <tile/>
    <tile/>
+   <tile gid="63"/>
+   <tile gid="63"/>
+   <tile gid="63"/>
+   <tile gid="63"/>
    <tile/>
    <tile/>
    <tile/>
@@ -25482,10 +25486,6 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
    <tile gid="62"/>
    <tile gid="62"/>
    <tile/>
@@ -25955,8 +25955,6 @@
    <tile/>
    <tile/>
    <tile gid="62"/>
-   <tile/>
-   <tile/>
    <tile/>
    <tile/>
    <tile/>
@@ -25965,6 +25963,10 @@
    <tile/>
    <tile/>
    <tile/>
+   <tile gid="63"/>
+   <tile gid="63"/>
+   <tile gid="63"/>
+   <tile gid="63"/>
    <tile/>
    <tile/>
    <tile/>
@@ -26044,8 +26046,6 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile/>
    <tile gid="62"/>
    <tile gid="62"/>
    <tile gid="62"/>
@@ -26169,11 +26169,6 @@
    <tile gid="62"/>
    <tile gid="62"/>
    <tile gid="62"/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
    <tile/>
    <tile/>
    <tile/>
@@ -26234,6 +26229,10 @@
    <tile/>
    <tile/>
    <tile/>
+   <tile gid="63"/>
+   <tile gid="63"/>
+   <tile gid="63"/>
+   <tile gid="63"/>
    <tile/>
    <tile/>
    <tile/>
@@ -26259,6 +26258,9 @@
    <tile/>
    <tile/>
    <tile/>
+   <tile gid="63"/>
+   <tile gid="63"/>
+   <tile gid="63"/>
    <tile/>
    <tile/>
    <tile/>
@@ -26270,16 +26272,14 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile/>
    <tile gid="62"/>
    <tile/>
    <tile/>
    <tile/>
    <tile gid="62"/>
-   <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="63"/>
+   <tile gid="63"/>
+   <tile gid="63"/>
    <tile gid="62"/>
    <tile/>
    <tile/>
@@ -26902,8 +26902,6 @@
    <tile/>
    <tile gid="62"/>
    <tile gid="62"/>
-   <tile/>
-   <tile/>
    <tile/>
    <tile/>
    <tile/>
@@ -26938,6 +26936,10 @@
    <tile/>
    <tile/>
    <tile/>
+   <tile gid="63"/>
+   <tile gid="63"/>
+   <tile gid="63"/>
+   <tile gid="63"/>
    <tile/>
    <tile/>
    <tile/>
@@ -26957,8 +26959,6 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile/>
    <tile gid="62"/>
    <tile/>
    <tile/>
@@ -27508,7 +27508,6 @@
    <tile/>
    <tile gid="62"/>
    <tile gid="62"/>
-   <tile/>
    <tile/>
    <tile/>
    <tile/>
@@ -27533,6 +27532,10 @@
    <tile/>
    <tile/>
    <tile/>
+   <tile gid="63"/>
+   <tile gid="63"/>
+   <tile gid="63"/>
+   <tile gid="63"/>
    <tile/>
    <tile/>
    <tile/>
@@ -27601,9 +27604,6 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
    <tile gid="62"/>
    <tile/>
    <tile/>
@@ -27710,7 +27710,6 @@
    <tile/>
    <tile gid="62"/>
    <tile gid="62"/>
-   <tile/>
    <tile/>
    <tile/>
    <tile/>
@@ -27735,6 +27734,7 @@
    <tile/>
    <tile/>
    <tile/>
+   <tile gid="63"/>
    <tile gid="62"/>
    <tile gid="62"/>
    <tile gid="62"/>
@@ -27935,15 +27935,11 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="63"/>
+   <tile gid="63"/>
    <tile gid="62"/>
    <tile gid="62"/>
    <tile gid="62"/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
    <tile/>
    <tile/>
    <tile/>
@@ -27962,6 +27958,10 @@
    <tile/>
    <tile/>
    <tile/>
+   <tile gid="63"/>
+   <tile gid="63"/>
+   <tile gid="63"/>
+   <tile gid="63"/>
    <tile/>
    <tile/>
    <tile/>
@@ -28114,18 +28114,18 @@
    <tile/>
    <tile gid="62"/>
    <tile gid="62"/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="63"/>
+   <tile gid="63"/>
+   <tile gid="63"/>
+   <tile gid="63"/>
+   <tile gid="63"/>
+   <tile gid="63"/>
+   <tile gid="63"/>
+   <tile gid="63"/>
+   <tile gid="63"/>
+   <tile gid="63"/>
+   <tile gid="63"/>
+   <tile gid="63"/>
    <tile gid="62"/>
    <tile/>
    <tile/>
@@ -28137,7 +28137,7 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
+   <tile gid="63"/>
    <tile gid="62"/>
    <tile gid="62"/>
    <tile gid="62"/>
@@ -28227,13 +28227,13 @@
    <tile/>
    <tile/>
    <tile gid="62"/>
-   <tile/>
    <tile/>
+   <tile gid="63"/>
+   <tile gid="63"/>
+   <tile gid="63"/>
+   <tile gid="63"/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
    <tile gid="62"/>
    <tile/>
    <tile/>
@@ -28712,12 +28712,12 @@
    <tile/>
    <tile/>
    <tile gid="62"/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
    <tile/>
    <tile/>
+   <tile gid="63"/>
+   <tile gid="63"/>
+   <tile gid="63"/>
+   <tile gid="63"/>
    <tile gid="62"/>
    <tile gid="62"/>
    <tile gid="62"/>
@@ -46901,9 +46901,29 @@
    <tile/>
   </data>
  </layer>
- <objectgroup id="45" name="Entities" visible="0">
+ <objectgroup id="45" name="Entities">
   <object id="410" name="Player" x="32.3333" y="637.667" width="35" height="80"/>
   <object id="418" name="FloorEnemy" x="852" y="630" width="46" height="40"/>
+  <object id="420" name="FloorEnemy" x="1167" y="531" width="46" height="40"/>
+  <object id="421" name="FloorEnemy" x="1570" y="680" width="46" height="40"/>
+  <object id="422" name="FloorEnemy" x="2376" y="364" width="46" height="40"/>
+  <object id="423" name="FloorEnemy" x="3762" y="711" width="46" height="40"/>
+  <object id="424" name="FloorEnemy" x="4430" y="402" width="46" height="40"/>
+  <object id="425" name="FloorEnemy" x="5330" y="401" width="46" height="40"/>
+  <object id="426" name="FloorEnemy" x="5640" y="264" width="46" height="40"/>
+  <object id="427" name="FloorEnemy" x="5911" y="389" width="46" height="40"/>
+  <object id="428" name="FlyEnemy" x="428" y="470" width="31" height="28"/>
+  <object id="429" name="FlyEnemy" x="981.5" y="435" width="31" height="28"/>
+  <object id="430" name="FlyEnemy" x="1336.5" y="853" width="31" height="28"/>
+  <object id="431" name="FlyEnemy" x="2189.5" y="278" width="31" height="28"/>
+  <object id="432" name="FlyEnemy" x="2951.5" y="553" width="31" height="28"/>
+  <object id="433" name="FlyEnemy" x="3386.5" y="478" width="31" height="28"/>
+  <object id="434" name="FlyEnemy" x="3849.5" y="535" width="31" height="28"/>
+  <object id="435" name="FlyEnemy" x="4526.5" y="724" width="31" height="28"/>
+  <object id="436" name="FlyEnemy" x="4749.5" y="327" width="31" height="28"/>
+  <object id="437" name="FlyEnemy" x="5455.5" y="322" width="31" height="28"/>
+  <object id="438" name="FlyEnemy" x="6073.5" y="260" width="31" height="28"/>
+  <object id="439" name="FlyEnemy" x="6296.5" y="495" width="31" height="28"/>
  </objectgroup>
  <objectgroup id="42" name="Colliders" visible="0">
   <object id="260" name="Floor" x="0" y="768" width="413.667" height="120.667"/>

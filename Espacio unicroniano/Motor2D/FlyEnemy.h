@@ -14,6 +14,7 @@ public:
 	void Update(float dt);
 	void Draw();
 	void HandeInput();
+	bool ChasePlayer(iPoint);
 	void Reset();
 	void Load(pugi::xml_node&);
 	void Save(pugi::xml_node&) const;

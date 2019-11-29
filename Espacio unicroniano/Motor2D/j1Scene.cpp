@@ -95,7 +95,9 @@ bool j1Scene::PreUpdate(float dt)
 	BROFILER_CATEGORY("Scene_PreUpdate", Profiler::Color::Azure)
 
 	static iPoint origin;
+	static iPoint origin2;
 	static bool origin_selected = false;
+	static bool origin_selected2 = false;
 
 	int x, y;
 	App->input->GetMousePosition(x, y);
@@ -106,7 +108,7 @@ bool j1Scene::PreUpdate(float dt)
 	{
 		if (origin_selected == true)
 		{
-			App->pathfinding->CreatePath(origin, p);
+			App->pathfinding->CreatePath(origin, p, false);
 			origin_selected = false;
 		}
 		else

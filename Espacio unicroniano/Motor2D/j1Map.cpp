@@ -666,7 +666,17 @@ bool j1Map::CreateWalkabilityMap(int& width, int& height, uchar** buffer) const
 				
 				if(tileset != NULL)
 				{
-					map[i] = (tile_id - tileset->firstgid) > 0 ? 0 : 1;
+					if (tile_id - tileset->firstgid > 0) {
+						if (tile_id - tileset->firstgid == 2) {
+							//pathfinding for walk
+							map[i] = 2;
+						}
+						else if(tile_id - tileset->firstgid == 1)
+						{
+							//wall
+							map[i] = 0;
+						}
+					}
 					/*TileType* ts = tileset->GetTileType(tile_id);
 					if(ts != NULL)
 					{

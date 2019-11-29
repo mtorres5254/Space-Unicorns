@@ -44,10 +44,17 @@ bool j1PathFinding::CheckBoundaries(const iPoint& pos) const
 }
 
 // Utility: returns true is the tile is walkable
-bool j1PathFinding::IsWalkable(const iPoint& pos) const
+bool j1PathFinding::IsWalkable(const iPoint& pos, bool Fly) const
 {
 	uchar t = GetTileAt(pos);
-	return t != INVALID_WALK_CODE && t > 0;
+	if (Fly == true) {
+		return t != INVALID_WALK_CODE && t > 0;
+	}
+	else
+	{
+		return t != INVALID_WALK_CODE && t == 2;
+	}
+	
 }
 
 // Utility: return the walkability value of a tile
@@ -123,22 +130,22 @@ uint PathNode::FindWalkableAdjacents(PathList& list_to_fill) const
 
 	// north
 	cell.create(pos.x, pos.y + 1);
-	if(App->pathfinding->IsWalkable(cell))
+	if(App->pathfinding->IsWalkable(cell, App->pathfinding->fly_path))
 		list_to_fill.list.add(PathNode(-1, -1, cell, this));
 
 	// south
 	cell.create(pos.x, pos.y - 1);
-	if(App->pathfinding->IsWalkable(cell))
+	if(App->pathfinding->IsWalkable(cell, App->pathfinding->fly_path))
 		list_to_fill.list.add(PathNode(-1, -1, cell, this));
 
 	// east
 	cell.create(pos.x + 1, pos.y);
-	if(App->pathfinding->IsWalkable(cell))
+	if(App->pathfinding->IsWalkable(cell, App->pathfinding->fly_path))
 		list_to_fill.list.add(PathNode(-1, -1, cell, this));
 
 	// west
 	cell.create(pos.x - 1, pos.y);
-	if(App->pathfinding->IsWalkable(cell))
+	if(App->pathfinding->IsWalkable(cell, App->pathfinding->fly_path))
 		list_to_fill.list.add(PathNode(-1, -1, cell, this));
 
 	return list_to_fill.list.count();
@@ -166,7 +173,7 @@ int PathNode::CalculateF(const iPoint& destination)
 // ----------------------------------------------------------------------------------
 // Actual A* algorithm: return number of steps in the creation of the path or -1 ----
 // ----------------------------------------------------------------------------------
-int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
+int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination, bool Fly)
 {
 	BROFILER_CATEGORY("Pathfinding_Algorithm", Profiler::Color::Gold )
 
@@ -174,9 +181,11 @@ int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 		last_path.Clear();
 
 		// 1: if origin or destination are not walkable, return -1
-		if (IsWalkable(origin) == false || IsWalkable(destination) == false) {
+		if (IsWalkable(origin, Fly) == false || IsWalkable(destination, Fly) == false) {
 			return -1;
 		}
+
+		fly_path = Fly;
 
 		// 2: Create two lists: open, close
 		// Add the origin tile to open
@@ -198,8 +207,21 @@ int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 			// Backtrack to create the final path
 			// Use the Pathnode::parent and Flip() the path when you are finish
 			p2List_item<PathNode>* Node = close.list.end;
-			if (Node->data.pos == destination) {
+			if (Node->data.pos == destination && Fly) {
 
+				last_path.PushBack(Node->data.pos);
+				const PathNode* AuxFinal;
+				AuxFinal = &Node->data;
+
+				while (AuxFinal != NULL) {
+					last_path.PushBack(AuxFinal->pos);
+
+					AuxFinal = AuxFinal->parent;
+				}
+				last_path.Flip();
+				return 1;
+			}
+			else if (Node->data.pos.x == destination.x && !Fly) {
 				last_path.PushBack(Node->data.pos);
 				const PathNode* AuxFinal;
 				AuxFinal = &Node->data;

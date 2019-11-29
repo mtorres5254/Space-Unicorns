@@ -1,6 +1,7 @@
 #include "FlyEnemy.h"
 #include "j1Collisions.h"
 #include "j1Textures.h"
+#include "j1Pathfinding.h"
 #include "j1Scene.h"
 #include "j1Player.h"
 
@@ -140,6 +141,20 @@ void j1FlyEnemy::Draw() {
 
 void j1FlyEnemy::HandeInput() {
 	vel.x = vel.y = 0;
+
+	if (ChasePlayer(App->scene->player->position) == true) {
+		App->pathfinding->CreatePath(App->map->WorldToMap(position.x, position.y), App->map->WorldToMap(App->scene->player->position.x, App->scene->player->position.y), true);
+	}
+}
+
+bool j1FlyEnemy::ChasePlayer(iPoint player) {
+	if (player.x + 16 > position.x - 500 && player.x + 16 < position.x + 500) {
+		if (player.y > position.y - 200 && player.y < position.y + 300) {
+			return true;
+		}
+	}
+
+	return false;
 }
 
 void j1FlyEnemy::OnCollision(Collider* c1, Collider * c2) {
