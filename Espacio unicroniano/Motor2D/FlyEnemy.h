@@ -51,7 +51,6 @@ private:
 	};
 	inputs Currentinput;
 
-	bool mInputs[IN_MAX];
 
 	float private_dt;
 };

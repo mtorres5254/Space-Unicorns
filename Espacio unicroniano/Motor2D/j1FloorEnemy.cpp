@@ -4,7 +4,11 @@
 #include "j1Player.h"
 #include "j1Scene.h"
 #include "j1Collisions.h"
+#include "j1Pathfinding.h"
 #include "j1App.h"
+
+#define SPEED 100
+
 
 j1FloorEnemy::j1FloorEnemy(iPoint pos) : Entity(EntityType::floor_enemy) {
 	//Load Sprite
@@ -100,15 +104,26 @@ void j1FloorEnemy::Update(float dt) {
 
 		HandeInput();
 
+		switch (CurrentState)
+		{
+		case j1FloorEnemy::NONE:
+			//nothing
+			break;
+		case j1FloorEnemy::MOVE:
+			position.x += vel.x * dt;
+			break;
+		default:
+			break;
+		}
+
+		position.y += vel.y * dt;
+
 		if (position.x > App->scene->player->position.x) {
 			flip = SDL_FLIP_HORIZONTAL;
 		}
 		else if (position.x < App->scene->player->position.x) {
 			flip = SDL_FLIP_NONE;
 		}
-
-		position.x += vel.x * dt;
-		position.y += vel.y * dt;
 
 		Draw();
 		col->SetPos(position.x, position.y);
@@ -120,8 +135,50 @@ void j1FloorEnemy::Update(float dt) {
 	}
 }
 
+bool j1FloorEnemy::ChasePlayer(iPoint player) {
+	if (player.x + 16 > position.x - 500 && player.x + 16 < position.x + 500) {
+		if (player.y > position.y - 200 && player.y < position.y + 300) {
+			return true;
+		}
+	}
+
+	return false;
+}
+
 void j1FloorEnemy::HandeInput() {
 	vel.x = 0;
+
+	CurrentState = NONE;
+
+	if (ChasePlayer(App->scene->player->position) == true) {
+		App->pathfinding->CreatePath(App->map->WorldToMap(position.x, position.y), App->map->WorldToMap(App->scene->player->position.x, App->scene->player->position.y + App->map->data.tile_height + App->map->data.tile_height / 2), false);
+
+		const p2DynArray<Path>* path = App->pathfinding->GetLastPath();
+
+		const Path* path_dir = path->At(1);
+		if (path_dir != nullptr) {
+
+			switch (path_dir->dir)
+			{
+			case DIR_UP:
+				//vel.y = SPEED;
+				//CurrentState = MOVE;
+				break;
+			case DIR_DOWN:
+				//vel.y = -SPEED;
+				//CurrentState = MOVE;
+				break;
+			case DIR_LEFT:
+				vel.x = -SPEED;
+				CurrentState = MOVE;
+				break;
+			case DIR_RIGHT:
+				vel.x = SPEED;
+				CurrentState = MOVE;
+				break;
+			}
+		}
+	}
 
 	if (falling == true) {
 		vel.y += 10;

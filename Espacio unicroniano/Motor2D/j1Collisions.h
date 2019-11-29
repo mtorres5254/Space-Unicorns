@@ -7,7 +7,7 @@
 #include "j1Map.h"
 #include "j1Module.h"
 
-#define MAX_COLLIDERS 200
+#define MAX_COLLIDERS 400
 
 //------------------------------------------------------------------------
 enum COLLIDER_TYPE

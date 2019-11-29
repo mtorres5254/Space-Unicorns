@@ -193,7 +193,7 @@ int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination, b
 		PathList open;
 		PathList close;
 
-		PathNode originNode(0, origin.DistanceManhattan(destination), origin, NULL,DIR_NONE);
+		PathNode originNode(0, origin.DistanceManhattan(destination), origin, NULL, DIR_NONE);
 		open.list.add(originNode);
 
 		while (open.list.count() > 0) {
@@ -216,10 +216,11 @@ int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination, b
 				PrevNode = &Node->data;
 
 				for (AuxNode = PrevNode->parent; AuxNode; AuxNode = AuxNode->parent) {
+					Path AuxPath(AuxNode->pos.x, AuxNode->pos.y, AuxNode->nextNodeDir);
 					if (AuxNode->nextNodeDir != PrevNode->nextNodeDir) {
-						Path AuxPath(AuxNode->pos.x, AuxNode->pos.y, AuxNode->nextNodeDir);
 						last_path.PushBack(AuxPath);
 					}
+
 
 					PrevNode = AuxNode;
 				}
