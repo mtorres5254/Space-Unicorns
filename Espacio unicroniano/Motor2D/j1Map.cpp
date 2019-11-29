@@ -395,7 +395,7 @@ bool j1Map::Load(const char* file_name)
 			item_layer = item_layer->next;
 		}
 	}
-	//App->audio->PlayMusic(data.BackgroundMusic);
+	App->audio->PlayMusic(data.BackgroundMusic.GetString());
 	map_loaded = ret;
 
 	return ret;
@@ -601,6 +601,7 @@ bool j1Map::LoadProperties(pugi::xml_node& node, Properties& properties)
 
 			p->name = prop.attribute("name").as_string();
 			p->type = prop.attribute("type").as_string();
+			
 			if (p->type == "int") {
 				p->value = prop.attribute("value").as_int();
 			}
