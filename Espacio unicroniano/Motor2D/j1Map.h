@@ -128,7 +128,7 @@ struct MapData
 	p2List<ImageLayer*>  img_layers;
 	p2List<ObjectLayer*> obj_layers;
 	p2List<Collider*>    colliders;
-	p2SString BackgroundMusic;
+	//p2SString BackgroundMusic;
 };
 
 // ----------------------------------------------------
@@ -183,6 +183,7 @@ private:
 	p2SString			folder;
 	p2SString			map_loadded_string;
 	bool				map_loaded;
+	
 };
 
 #endif // __j1MAP_H__

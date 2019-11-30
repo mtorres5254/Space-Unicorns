@@ -291,7 +291,15 @@ bool j1Map::Load(const char* file_name)
 		LOG("Could not load map xml file %s. pugi error: %s", file_name, result.description());
 		ret = false;
 	}
-
+	if (file_name == "mapa.tmx") {
+		App->audio->PlayMusic("audio/music/Brain_Damage.ogg");
+		
+		
+	}
+	else if(file_name == "mapa2.tmx"){
+		App->audio->PlayMusic("audio/music/Background2.ogg");
+		
+	}
 	// Load general info ----------------------------------------------
 	if(ret == true)
 	{
@@ -395,7 +403,7 @@ bool j1Map::Load(const char* file_name)
 			item_layer = item_layer->next;
 		}
 	}
-	App->audio->PlayMusic(data.BackgroundMusic.GetString());
+	//App->audio->PlayMusic(data.BackgroundMusic.GetString());
 	map_loaded = ret;
 
 	return ret;

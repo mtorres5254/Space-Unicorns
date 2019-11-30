@@ -55,7 +55,7 @@ bool j1Scene::Start()
 	debug_tex = App->tex->Load("maps/debug.png");
 
 	//App->audio->PlayMusic("audio/music/Brain_Damage.ogg");
-	if(App->map->Load("mapa.tmx") == true)
+	if(App->map->Load("mapa2.tmx") == true)
 	{
 		int w, h;
 		uchar* data = NULL;
