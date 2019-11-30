@@ -4,69 +4,79 @@
 
 Repository:https://github.com/mtorres5254/Space-Unicorns
 
-##Authors:
+## Authors:
 
-###Marc Ramos Gomez
+### Marc Ramos Gomez
+
 https://github.com/Ramsubito
 
-·Level Design
-·Music and Fx
-·Enemies animation
+·Level Design.
+·Music and Fx.
+·Enemies animation.
 
 
-###Martí Torres Garzo
+### Martí Torres Garzo
+
 https://github.com/mtorres5254
 
-·Collider Implentation
-·Character movement
-·Pathfinding/Enemies
-·Particle implementation
+·Collider Implentation.
+·Character movement.
+·Pathfinding/Enemies.
+·Particle implementation.
 
-##Controls
+## Controls
 
-###Character Movement:
-A-Move Backgwards
-S-Crouch
-D-Move Forward
-W-Jump
+### Character Movement:
+
+A-Move Backgwards.
+S-Crouch.
+D-Move Forward.
+W-Jump.
 
 Character is able to double jump if W is pressed after jumping once.
 
-###Attack
-Mouse right click- Shoot
+### Attack
+
+Mouse right click- Shoot.
 
 
-##Debug
-F1-Change level(to level 1)
-F2-Change level(to level 2)
-F3-Reset current level
-F5- Save Game
-F6-Load Game
-F10- GodMode
-F11-Change frame cap
+## Debug
 
-##Credits
+F1-Change level(to level 1).
+F2-Change level(to level 2).
+F3-Reset current level.
+F5- Save Game.
+F6-Load Game.
+F10- GodMode.
+F11-Change frame cap.
 
-###Music
+## Credits
+
+### Music
+
 Music has been taken from a free game art source: https://opengameart.org/
 
-###Fx
+### Fx
+
 Fx sounds have been taken from a free game art source: https://opengameart.org/
 
-###Maps
+### Maps
+
 Map tiles and backgrounds are taken from free art sources such as:
 https://opengameart.org/
 https://itch.io/game-assets/free/tag-tileset
 
-##Spritesheets
+## Spritesheets
+
 Main character and enemies: https://itch.io/game-assets/free/tag-tileset , https://opengameart.org/
 
-##Extras
-·Colliders are made as objects instead of tiles
-·Player can doublejump
-·Player can shoot particles using the mouse
+## Extras
 
-###License
+·Colliders are made as objects instead of tiles.
+·Player can doublejump.
+·Player can shoot particles using the mouse.
+
+### License
 
 MIT License
 
