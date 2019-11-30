@@ -1,15 +1,70 @@
 # Space Unicorns
- 
-We are a little team of developers that we are amaking a simple 2D platformer game.
+ Space Unicorns is a 2D platform game, this is our development project.
+ We are both students of video game design and development at CITM.
 
-The inovations of our games are more technical that playables, because we implemented the code to read tilesets from extern sources and colliders from object layer from Tiled.
+Repository:https://github.com/mtorres5254/Space-Unicorns
 
-Here you have a link to our github repository to see more.
+#Authors:
 
-https://github.com/mtorres5254/Space-Unicorns
+##Marc Ramos Gomez
+https://github.com/Ramsubito
+
+·Level Design
+·Music and Fx
+·Enemies animation
 
 
+##Martí Torres Garzo
+https://github.com/mtorres5254
+
+·Collider Implentation
+·Character movement
+·Pathfinding/Enemies
+·Particle implementation
+
+#Controls
+
+##Character Movement:
+A-Move Backgwards
+S-Crouch
+D-Move Forward
+W-Jump
+
+Character is able to double jump if W is pressed after jumping once.
+
+##Attack
+Mouse right click- Shoot
 #License
+
+#Debug
+F1-Change level(to level 1)
+F2-Change level(to level 2)
+F3-Reset current level
+F5- Save Game
+F6-Load Game
+F10- GodMode
+F11-Change frame cap
+
+#Credits
+
+##Music
+Music has been taken from a free game art source: https://opengameart.org/
+
+##Fx
+Fx sounds have been taken from a free game art source: https://opengameart.org/
+
+##Maps
+Map tiles and backgrounds are taken from free art sources such as:
+https://opengameart.org/
+https://itch.io/game-assets/free/tag-tileset
+
+#Spritesheets
+Main character and enemies: https://itch.io/game-assets/free/tag-tileset , https://opengameart.org/
+
+#Extras
+·Colliders are made as objects instead of tiles
+·Player can doublejump
+·Player can shoot particles using the mouse
 
 MIT License
 
