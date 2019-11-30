@@ -9,7 +9,7 @@
 
 j1Audio::j1Audio() : j1Module()
 {
-	back_music = NULL;
+	music = NULL;
 	name.create("audio");
 }
 
@@ -23,6 +23,8 @@ bool j1Audio::Awake(pugi::xml_node& config)
 	LOG("Loading Audio Mixer");
 	bool ret = true;
 	SDL_Init(0);
+
+	folder = config.child("music").child("folder").child_value();
 
 	if(SDL_InitSubSystem(SDL_INIT_AUDIO) < 0)
 	{
@@ -61,7 +63,7 @@ bool j1Audio::CleanUp()
 
 	LOG("Freeing sound FX, closing Mixer and Audio subsystem");
 
-	if(back_music != NULL)
+	if(music != NULL)
 	{
 		Mix_FreeMusic(back_music);
 	}
@@ -82,12 +84,15 @@ bool j1Audio::CleanUp()
 // Play a music file
 bool j1Audio::PlayMusic(const char* path, float fade_time)
 {
+	
+	p2SString tmp("%s%s", folder.GetString(), path);
+	LOG("BackgroundMusic: %s", tmp.GetString());
 	bool ret = true;
 
 	if(!active)
 		return false;
 
-	if(back_music != NULL)
+	if(music != NULL)
 	{
 		if(fade_time > 0.0f)
 		{
@@ -99,12 +104,12 @@ bool j1Audio::PlayMusic(const char* path, float fade_time)
 		}
 
 		// this call blocks until fade out is done
-		Mix_FreeMusic(back_music);
+		Mix_FreeMusic(music);
 	}
 
-	back_music = Mix_LoadMUS(path);
+	music = Mix_LoadMUS(tmp.GetString());
 
-	if(back_music == NULL)
+	if(music == NULL)
 	{
 		LOG("Cannot load music %s. Mix_GetError(): %s\n", path, Mix_GetError());
 		ret = false;
@@ -113,7 +118,7 @@ bool j1Audio::PlayMusic(const char* path, float fade_time)
 	{
 		if(fade_time > 0.0f)
 		{
-			if(Mix_FadeInMusic(back_music, -1, (int) (fade_time * 1000.0f)) < 0)
+			if(Mix_FadeInMusic(music, -1, (int) (fade_time * 1000.0f)) < 0)
 			{
 				LOG("Cannot fade in music %s. Mix_GetError(): %s", path, Mix_GetError());
 				ret = false;
@@ -121,7 +126,7 @@ bool j1Audio::PlayMusic(const char* path, float fade_time)
 		}
 		else
 		{
-			if(Mix_PlayMusic(back_music, -1) < 0)
+			if(Mix_PlayMusic(music, -1) < 0)
 			{
 				LOG("Cannot play in music %s. Mix_GetError(): %s", path, Mix_GetError());
 				ret = false;

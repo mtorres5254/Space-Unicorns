@@ -35,7 +35,8 @@ public:
 	void StopFx();
 private:
 
-	Mix_Music* back_music;
+	Mix_Music* music;
+	p2SString folder;
 	p2List<Mix_Chunk*>	fx;
 };
 

@@ -183,6 +183,9 @@ private:
 	p2SString			folder;
 	p2SString			map_loadded_string;
 	bool				map_loaded;
+	p2SString BackgroundMusic1;
+	p2SString BackgroundMusic2;
+
 	
 };
 

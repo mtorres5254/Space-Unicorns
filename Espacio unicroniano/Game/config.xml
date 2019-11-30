@@ -22,8 +22,21 @@
     <path>data.zip</path>
   </file_system>
 
+  <audio>
+    <music>
+      <folder>audio/music/</folder>
+    </music>
+  </audio>
+  
+  
   <map>
     <folder>maps/</folder>
+    <mapa1>
+      <BackgroundMusic file ="Brain_Damage.ogg"/>
+    </mapa1>
+    <mapa2>
+      <BackgroundMusic file ="Background2.ogg"/>
+    </mapa2>
   </map>
 
   <scenes>

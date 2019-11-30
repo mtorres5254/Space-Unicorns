@@ -27,7 +27,11 @@ bool j1Map::Awake(pugi::xml_node& config)
 	bool ret = true;
 
 	folder.create(config.child("folder").child_value());
-
+	
+	//Background Music
+	
+	BackgroundMusic1 = config.child("mapa1").child("BackgroundMusic").attribute("file").as_string();
+	BackgroundMusic2 = config.child("mapa2").child("BackgroundMusic").attribute("file").as_string();
 	return ret;
 }
 
@@ -292,12 +296,12 @@ bool j1Map::Load(const char* file_name)
 		ret = false;
 	}
 	if (file_name == "mapa.tmx") {
-		App->audio->PlayMusic("audio/music/Brain_Damage.ogg");
+		App->audio->PlayMusic(BackgroundMusic1.GetString());
 		
 		
 	}
-	else if(file_name == "mapa2.tmx"){
-		App->audio->PlayMusic("audio/music/Background2.ogg");
+	if(file_name == "mapa2.tmx"){
+		App->audio->PlayMusic(BackgroundMusic2.GetString());
 		
 	}
 	// Load general info ----------------------------------------------
