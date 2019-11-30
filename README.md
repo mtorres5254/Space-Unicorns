@@ -4,9 +4,9 @@
 
 Repository:https://github.com/mtorres5254/Space-Unicorns
 
-#Authors:
+##Authors:
 
-##Marc Ramos Gomez
+###Marc Ramos Gomez
 https://github.com/Ramsubito
 
 ·Level Design
@@ -14,7 +14,7 @@ https://github.com/Ramsubito
 ·Enemies animation
 
 
-##Martí Torres Garzo
+###Martí Torres Garzo
 https://github.com/mtorres5254
 
 ·Collider Implentation
@@ -22,9 +22,9 @@ https://github.com/mtorres5254
 ·Pathfinding/Enemies
 ·Particle implementation
 
-#Controls
+##Controls
 
-##Character Movement:
+###Character Movement:
 A-Move Backgwards
 S-Crouch
 D-Move Forward
@@ -32,11 +32,11 @@ W-Jump
 
 Character is able to double jump if W is pressed after jumping once.
 
-##Attack
+###Attack
 Mouse right click- Shoot
-#License
 
-#Debug
+
+##Debug
 F1-Change level(to level 1)
 F2-Change level(to level 2)
 F3-Reset current level
@@ -45,26 +45,28 @@ F6-Load Game
 F10- GodMode
 F11-Change frame cap
 
-#Credits
+##Credits
 
-##Music
+###Music
 Music has been taken from a free game art source: https://opengameart.org/
 
-##Fx
+###Fx
 Fx sounds have been taken from a free game art source: https://opengameart.org/
 
-##Maps
+###Maps
 Map tiles and backgrounds are taken from free art sources such as:
 https://opengameart.org/
 https://itch.io/game-assets/free/tag-tileset
 
-#Spritesheets
+##Spritesheets
 Main character and enemies: https://itch.io/game-assets/free/tag-tileset , https://opengameart.org/
 
-#Extras
+##Extras
 ·Colliders are made as objects instead of tiles
 ·Player can doublejump
 ·Player can shoot particles using the mouse
+
+###License
 
 MIT License
 
