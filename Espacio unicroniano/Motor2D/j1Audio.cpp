@@ -65,7 +65,7 @@ bool j1Audio::CleanUp()
 
 	if(music != NULL)
 	{
-		Mix_FreeMusic(back_music);
+		Mix_FreeMusic(music);
 	}
 
 	p2List_item<Mix_Chunk*>* item;
