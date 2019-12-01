@@ -80,7 +80,7 @@ j1Player::j1Player(iPoint pos) : Entity(EntityType::player) {
 	diedsound = App->audio->LoadFx("audio/fx/dead.wav");
 	changescene_sound = App->audio->LoadFx("audio/fx/change_scene.wav");
 	shotsound = App->audio->LoadFx("audio/fx/fire.wav");
-	hitsound = App->audio->LoadFx("audio/fx/hit.wav");
+	hitsound = App->audio->LoadFx("audio/fx/hithit.wav");
 	
 
 	//set player info 
@@ -443,11 +443,16 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 
 	if (c2->type == COLLIDER_ENEMY) {
 		
+		if (lives >= 1) {
+			App->audio->PlayFx(hitsound, 0);
+			}
+		
 		lives -= 1;
 		hit_timer.Start();
 		while (hit_timer.ReadSec() < 0.5f) {
 			if (lives != 0) {
 				position = initial_position;
+
 			}
 		}
 	}
