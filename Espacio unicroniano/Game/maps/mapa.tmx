@@ -120143,7 +120143,6 @@
  </objectgroup>
  <objectgroup id="7" name="Entities">
   <object id="119" name="Player" x="62" y="1542" width="48" height="84"/>
-  <object id="125" name="FloorEnemy" x="638" y="1520" width="104" height="78"/>
   <object id="126" name="FloorEnemy" x="950" y="1515" width="104" height="78"/>
   <object id="127" name="FloorEnemy" x="1608" y="1617" width="104" height="78"/>
   <object id="128" name="FloorEnemy" x="2958" y="1491" width="104" height="78"/>
@@ -120158,7 +120157,6 @@
   <object id="138" name="FloorEnemy" x="6400" y="689" width="104" height="78"/>
   <object id="139" name="FloorEnemy" x="7708" y="911" width="104" height="78"/>
   <object id="140" name="FlyEnemy" x="1318" y="1372" width="44" height="44"/>
-  <object id="143" name="FlyEnemy" x="352" y="1348" width="44" height="44"/>
   <object id="144" name="FlyEnemy" x="2150" y="1282" width="44" height="44"/>
   <object id="145" name="FlyEnemy" x="2760" y="1210" width="44" height="44"/>
   <object id="146" name="FlyEnemy" x="3286" y="1564" width="44" height="44"/>
