@@ -129,6 +129,9 @@
     <ClInclude Include="PugiXml\src\pugixml.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\Game\maps\mapa.tmx">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="..\Game\maps\mapa2.tmx" />
   </ItemGroup>
   <ItemGroup>

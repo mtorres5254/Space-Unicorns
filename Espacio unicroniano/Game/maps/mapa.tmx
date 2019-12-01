@@ -80035,7 +80035,7 @@
    <tile/>
   </data>
  </layer>
- <layer id="10" name="Pathfinding" width="400" height="100">
+ <layer id="10" name="Pathfinding" width="400" height="100" visible="0">
   <properties>
    <property name="Navigation" type="int" value="1"/>
    <property name="Nodraw" type="int" value="1"/>
@@ -120043,7 +120043,7 @@
    <tile/>
   </data>
  </layer>
- <objectgroup id="5" name="Colliders" visible="0">
+ <objectgroup id="5" name="Colliders">
   <object id="5" name="Floor" x="9.75757" y="1668.05" width="477" height="36"/>
   <object id="6" name="Floor" x="483.424" y="1603.88" width="1019" height="26"/>
   <object id="7" name="Floor" x="1504.76" y="1700.88" width="349" height="31"/>

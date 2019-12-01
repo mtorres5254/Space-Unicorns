@@ -55,41 +55,55 @@ bool j1MapChange::Start()
 
 bool j1MapChange::Update(float dt)
 {
-	BROFILER_CATEGORY("SceneChange_Update", Profiler::Color::DarkSlateBlue )
+	BROFILER_CATEGORY("SceneChange_Update", Profiler::Color::DarkSlateBlue)
 
-	if (current_step == fade_step::none)
-	{
-		return true;
-	}
+		if (current_step == fade_step::none)
+		{
+			return true;
+		}
 
 	uint now = SDL_GetTicks() - start_time;
 	float normalized = 1.0f < ((float)now / (float)total_time) ? 1.0f : ((float)now / (float)total_time);
 
-		
+
 	switch (current_step)
 	{
-			case fade_step::fade_to_black:
+	case fade_step::fade_to_black:
+	{
+		if (now >= total_time)
 		{
-			if (now >= total_time)
-			{
-				//map change logic
-				App->map->CleanUp();
-				App->col->DeleteAll();
-				App->entity->DestroyAll();
-				App->scene->player = nullptr;
-				App->scene->FloorEnemies.clear();
-				App->scene->FlyEnemies.clear();
+			//map change logic
+			App->map->CleanUp();
+			App->col->DeleteAll();
+			App->entity->DestroyAll();
+			App->scene->player = nullptr;
+			App->scene->FloorEnemies.clear();
+			App->scene->FlyEnemies.clear();
 
-				if (map_to_change == 1) {
-					App->map->Load(map1.GetString());
-					App->render->camera.x = 0;
-					App->render->camera.y = -130;
+			if (map_to_change == 1) {
+				if (App->map->Load(map1.GetString()) == true) {
+					int w, h;
+					uchar* data = NULL;
+					if (App->map->CreateWalkabilityMap(w, h, &data))
+						App->pathfinding->SetMap(w, h, data);
+
+					RELEASE_ARRAY(data);
 				}
-				else if (map_to_change == 2) {
-					App->map->Load(map2.GetString());
+				App->render->camera.x = 0;
+				App->render->camera.y = -130;
+			}
+			else if (map_to_change == 2) {
+				if (App->map->Load(map2.GetString()) == true) {
+					int w, h;
+					uchar* data = NULL;
+					if (App->map->CreateWalkabilityMap(w, h, &data))
+						App->pathfinding->SetMap(w, h, data);
+
+					RELEASE_ARRAY(data);
+				}
 					App->render->camera.x = 0;
 					App->render->camera.y = -900;
-				}
+			}
 
 				//pom pom
 				total_time += total_time;
@@ -106,12 +120,7 @@ bool j1MapChange::Update(float dt)
 			if (now >= total_time)
 			{
 				//reload things
-				int w, h;
-				uchar* data = NULL;
-				if (App->map->CreateWalkabilityMap(w, h, &data))
-					App->pathfinding->SetMap(w, h, data);
-
-				RELEASE_ARRAY(data);
+				
 
 				reset_timer.Start();
 				p2List_item<ObjectLayer*>* obj;
