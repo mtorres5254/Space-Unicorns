@@ -452,8 +452,8 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 		while (hit_timer.ReadSec() < 0.5f) {
 			if (lives != 0) {
 				position = initial_position;
-				App->render->camera.x = App->scene->initial_camera.x;
-				App->render->camera.y = App->scene->initial_camera.y;
+				App->render->camera.x = 0;
+				App->render->camera.y = -900;
 
 			}
 		}
