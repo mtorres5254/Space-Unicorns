@@ -64,6 +64,9 @@
     <ClCompile Include="FlyEnemy.cpp">
       <Filter>Desenvolupament  ========\Modules\Entities Manager</Filter>
     </ClCompile>
+    <ClCompile Include="j1Fonts.cpp">
+      <Filter>Desenvolupament  ========\Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -149,6 +152,9 @@
     </ClInclude>
     <ClInclude Include="FlyEnemy.h">
       <Filter>Desenvolupament  ========\Modules\Entities Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Fonts.h">
+      <Filter>Desenvolupament  ========\Modules</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
