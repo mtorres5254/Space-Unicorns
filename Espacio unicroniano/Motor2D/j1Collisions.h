@@ -24,7 +24,8 @@ enum COLLIDER_TYPE
 	COLLIDER_CAM_DOWN,
 	COLLIDER_CAM_LEFT,
 	COLLIDER_CAM_RIGHT,
-	COLLIDER_MAX
+	COLLIDER_MAX,
+	COLLIDER_COIN
 };
 //------------------------------------------------------------------------
 struct Collider 

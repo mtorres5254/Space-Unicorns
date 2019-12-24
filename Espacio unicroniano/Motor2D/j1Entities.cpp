@@ -3,6 +3,7 @@
 #include "j1Player.h"
 #include "j1FloorEnemy.h"
 #include "FlyEnemy.h"
+#include "Coin.h"
 #include "j1Particles.h"
 #include "j1Scene.h"
 #include "j1Map.h"
@@ -161,6 +162,9 @@ void j1Entities::OnCollision(Collider* c1, Collider* c2) {
 	if (c1->type == COLLIDER_PLAYER) {
 		App->scene->player->OnCollision( c1, c2);
 	}
+	if (c1->type == COLLIDER_COIN){
+		App->scene->player->OnCollision(c1, c2);
+		}
 
 	if (c1->type == COLLIDER_SHOT) {
 		p2List_item<j1Particle*>* particle;
@@ -215,6 +219,14 @@ void j1Entities::LoadFromObjectLayer(ObjectLayer* layer) {
 
 			j1FlyEnemy* ret = (j1FlyEnemy*)CreateEntity(Entity::EntityType::fly_enemy, pos);
 			App->scene->FlyEnemies.add(ret);
+		}
+		if (obj->data->name == "Coin") {
+			iPoint pos;
+			pos.x = obj->data->x;
+			pos.y = obj->data->y;
+
+			Coin* ret = (Coin*)CreateEntity(Entity::EntityType::coin, pos);
+				App->scene->coin.add(ret);
 		}
 	}
 }

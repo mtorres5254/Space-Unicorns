@@ -16,6 +16,7 @@ public:
 		player = 0,
 		floor_enemy,
 		fly_enemy,
+		coin,
 		particle,
 		unknown
 	};
