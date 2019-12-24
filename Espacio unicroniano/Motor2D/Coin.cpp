@@ -75,6 +75,7 @@ void Coin::Update(float dt) {
 		else if (taken == true) {
 		
 			App->render->Blit(sprite, position.x, position.y, &Current_animation->GetCurrentFrame(), 1.0f, NULL, NULL, NULL, flip);
+			coinCnt += 1;
 		}
 }
 
@@ -92,6 +93,7 @@ void Coin::OnCollision(Collider* c1, Collider *c2) {
 	if (c2->type == COLLIDER_PLAYER) {
 		if (lives != 0) {
 			lives -= 1;
+			
 		}
 
 

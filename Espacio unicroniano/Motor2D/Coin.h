@@ -28,6 +28,7 @@ private:
 	float private_dt;
 	SDL_RendererFlip flip = SDL_FLIP_NONE;
 	Collider* col;
+	int coinCnt = 0;
 
 
 };
