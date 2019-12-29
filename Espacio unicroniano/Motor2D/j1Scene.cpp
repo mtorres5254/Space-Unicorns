@@ -151,13 +151,13 @@ void j1Scene::SettingsMenu() {
 	music.x = menu.x + 312 / 3;
 	music.y = menu.y + 35;
 
-	App->gui->CreateUI_ScrollBar(music, { 637,736,16,203 }, { 591,786,33,33 }, 20, Events::ScrollEvents::MUSIC, window);
+	App->gui->CreateUI_ScrollBar(music, { 637,736,16,203 }, { 591,786,33,33 }, App->audio->GetMusicVolume(), Events::ScrollEvents::MUSIC, window);
 
 	iPoint fx;
 	fx.x = menu.x + (312 / 3) * 2;
 	fx.y = menu.y + 35;
 
-	App->gui->CreateUI_ScrollBar(fx, { 637,736,16,203 }, { 591,786,33,33 }, 20, Events::ScrollEvents::FX, window);
+	App->gui->CreateUI_ScrollBar(fx, { 637,736,16,203 }, { 591,786,33,33 }, App->audio->GetFxVolume(), Events::ScrollEvents::FX, window);
 
 	//Text
 	iPoint musicTxt;

@@ -138,7 +138,7 @@ Entity* j1Entities::CreateEntity(Entity::EntityType type, iPoint pos, int dest_X
 	case Entity::EntityType::player:				ret = new j1Player(pos);			break;
 	case Entity::EntityType::floor_enemy:			ret = new j1FloorEnemy(pos);		break;
 	case Entity::EntityType::fly_enemy:				ret = new j1FlyEnemy(pos);			break;
-	case Entity::EntityType::coin:					ret = new Coin(pos); break;
+	case Entity::EntityType::coin:					ret = new Coin(pos);				break;
 	case Entity::EntityType::particle:				ret = new j1Particle(pos, dest_X, dest_Y); break;
 	
 	}

@@ -865,6 +865,7 @@ bool UI_ScrollBar::DoMouseEvent() {
 	if (mouse == MouseEvent::HOVER && past_mouse == MouseEvent::CLICK) {
 		//back to hover
 		App->gui->InteractFocus = nullptr;
+		App->gui->events.PushBack(Feedback);
 		return true;
 	}
 

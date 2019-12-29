@@ -140,6 +140,7 @@ bool j1Audio::PlayMusic(const char* path, float fade_time)
 
 void j1Audio::SetMusicVolume(int volume) {
 	Mix_VolumeMusic(volume);
+	musicvolume = volume;
 }
 
 void j1Audio::SetFxVolume(int volume) {
@@ -148,6 +149,16 @@ void j1Audio::SetFxVolume(int volume) {
 	for (Aux = fx.start; Aux != nullptr; Aux = Aux->next) {
 		Mix_VolumeChunk(Aux->data, volume);
 	}
+
+	fxvolume = volume;
+}
+
+int j1Audio::GetMusicVolume() {
+	return 100 - musicvolume;
+}
+
+int j1Audio::GetFxVolume() {
+	return 100 - fxvolume;
 }
 
 // Load WAV

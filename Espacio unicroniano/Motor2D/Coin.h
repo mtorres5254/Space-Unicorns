@@ -1,7 +1,8 @@
-#ifndef __J1FLOORENEMY_H__
-#define __J1FLOORENEMY_H__
+#ifndef __COIN_H__
+#define __COIN_H__
 
 #include "j1Entities.h"
+#include "j1App.h"
 #include "j1Animations.h"
 
 class Coin : public Entity {

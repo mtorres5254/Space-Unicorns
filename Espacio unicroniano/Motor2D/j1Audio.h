@@ -36,7 +36,13 @@ public:
 
 	void SetMusicVolume(int volume);
 	void SetFxVolume(int volume);
+
+	int GetMusicVolume();
+	int GetFxVolume();
 private:
+	int musicvolume = 80;
+	int fxvolume = 80;
+
 
 	Mix_Music* music;
 	p2SString folder;
