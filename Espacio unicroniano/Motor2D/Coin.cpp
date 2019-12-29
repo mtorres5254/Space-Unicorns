@@ -18,7 +18,8 @@ Coin::Coin(iPoint pos) : Entity(EntityType::coin) {
 	
 
 	idle.PushBack({ 19 , 0 , 31 , 31 });
-	idle.PushBack({ 19 , 0 , 31 , 31 });
+	takenanim.PushBack({ 61 , 0 , 31 , 31 });
+	
 	idle.speed = 1.0f;
 	
 	takenanim.PushBack({ 61 , 0 , 31 , 31 });
@@ -41,7 +42,11 @@ Coin::Coin(iPoint pos) : Entity(EntityType::coin) {
 	lives = 1;
 }
 
-Coin::~Coin() {}
+Coin::~Coin() {
+	this->col->to_delete = true;
+	App->tex->UnLoad(this->sprite);
+	taken = true;
+}
 
 void Coin::PreUpdate(float dt) {
 	private_dt = dt;
@@ -78,10 +83,10 @@ void Coin::Update(float dt) {
 		else if (taken = true) {
 			Current_animation = &takenanim;
 			App->render->Blit(sprite, position.x, position.y, &Current_animation->GetCurrentFrame(), 1.0f, NULL, NULL, NULL, flip);
+
+
+
 		}
-		
-	
-	
 }
 
 
@@ -95,17 +100,20 @@ void Coin::Draw() {
 }
 
 void Coin::OnCollision(Collider* c1, Collider *c2) {
-	if (c1->type == COLLIDER_COIN) {
-		if (c2->type == COLLIDER_PLAYER) {
+	
+		if (c1->type == COLLIDER_PLAYER) {
+			if (lives = 1) {
+				lives = 0;
+			}
 
 			coinCnt += 1;
 			
-				lives = 0;
+			Coin::~Coin();
 			
 
 		}
 
 
 
-	}
+	
 }
