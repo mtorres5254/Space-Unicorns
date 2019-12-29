@@ -33,11 +33,12 @@ S-Crouch.
 D-Move Forward.
 W-Jump.
 
+
 Character is able to double jump if W is pressed after jumping once.
 
 ### Attack
 
-Mouse right click- Shoot.
+Space(while pointing with the mouse)- Shoot.
 
 
 ## Debug
@@ -49,6 +50,8 @@ F5- Save Game.
 F6-Load Game.
 F10- GodMode.
 F11-Change frame cap.
+ESC-Menú
+
 
 ## Credits
 
