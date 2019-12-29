@@ -23,13 +23,15 @@ public:
 private:
 	iPoint CoinPosition;
 	Animation idle;
+	Animation takenanim;
 	Animation* Current_animation;
 	bool taken = false;
-	bool falling = true;
+	//bool falling = true;
 	float private_dt;
 	SDL_RendererFlip flip = SDL_FLIP_NONE;
 	Collider* col;
 	int coinCnt = 0;
+	
 
 
 };
