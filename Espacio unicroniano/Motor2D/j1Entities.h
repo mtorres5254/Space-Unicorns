@@ -62,6 +62,8 @@ public:
 	void DestroyEntity(Entity* entity);
 	void DestroyAll();
 
+	bool pause = false;
+
 private:
 
 	void UpdateEntities(float dt, bool do_logic);

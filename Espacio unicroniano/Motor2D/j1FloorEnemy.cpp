@@ -42,7 +42,7 @@ j1FloorEnemy::j1FloorEnemy(iPoint pos) : Entity(EntityType::floor_enemy) {
 	//Load position and save it
 	initialPosition = position = pos;
 
-	lives = 5;
+	lives = 3;
 }
 
 j1FloorEnemy::~j1FloorEnemy(){}

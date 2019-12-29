@@ -15,6 +15,8 @@
 #include "j1Entities.h"
 #include "j1Collisions.h"
 #include "j1SceneChange.h"
+#include "j1Gui.h"
+#include "j1Fonts.h"
 #include "j1App.h"
 
 // Constructor
@@ -33,6 +35,8 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	entity = new j1Entities();
 	col = new j1Collisions();
 	scene_change = new j1MapChange();
+	font = new j1Fonts();
+	gui = new j1Gui();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -46,6 +50,8 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(entity);
 	AddModule(col);
 	AddModule(scene_change);
+	AddModule(font);
+	AddModule(gui);
 
 	// render last to swap buffer
 	AddModule(render);
@@ -388,6 +394,21 @@ void j1App::SaveGame(const char* file) const
 void j1App::GetSaveGames(p2List<p2SString>& list_to_fill) const
 {
 	// need to add functionality to file_system module for this to work
+}
+
+bool j1App::IsSaveDataExist(const char* file) {
+	bool ret = false;
+	load_game.create(file);
+
+	pugi::xml_document data;
+	pugi::xml_parse_result result = data.load_file(load_game.GetString());
+
+	if (result != NULL) {
+		LOG("There are save data");
+		ret = true;
+	}
+
+	return ret;
 }
 
 bool j1App::LoadGameNow()

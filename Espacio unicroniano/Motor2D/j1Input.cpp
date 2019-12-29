@@ -51,6 +51,8 @@ bool j1Input::PreUpdate(float dt)
 	BROFILER_CATEGORY("Input_PreUpdate", Profiler::Color::HotPink )
 
 	static SDL_Event event;
+
+	int scale = App->win->GetScale();
 	
 	const Uint8* keys = SDL_GetKeyboardState(NULL);
 
@@ -120,13 +122,30 @@ bool j1Input::PreUpdate(float dt)
 			break;
 
 			case SDL_MOUSEMOTION:
-				int scale = App->win->GetScale();
 				mouse_motion_x = event.motion.xrel / scale;
 				mouse_motion_y = event.motion.yrel / scale;
 				mouse_x = event.motion.x / scale;
 				mouse_y = event.motion.y / scale;
 				//LOG("Mouse motion x %d y %d", mouse_motion_x, mouse_motion_y);
 				//LOG("Mouse motion x %d y %d", mouse_x, mouse_y);
+			break;
+
+			case SDL_TEXTINPUT:
+				/* Add new text onto the end of our text */
+				if (text.Length() <= 27) {
+					text.operator+=(event.text.text);
+				}
+				LOG("%s", event.text.text);
+			break;
+
+			case SDL_TEXTEDITING:
+				LOG("%s", event.edit.text);
+			break;
+
+			case SDL_KEYDOWN:
+				if (event.key.keysym.scancode == SDL_SCANCODE_BACKSPACE) {
+					text.operator--();
+				}
 			break;
 		}
 	}
@@ -140,6 +159,18 @@ bool j1Input::CleanUp()
 	LOG("Quitting SDL event subsystem");
 	SDL_QuitSubSystem(SDL_INIT_EVENTS);
 	return true;
+}
+
+void j1Input::EnableTextInput() {
+	SDL_StartTextInput();
+}
+
+void j1Input::DisableTextInput() {
+	SDL_StopTextInput();
+}
+
+const char* j1Input::GetText() {
+	return text.GetString();
 }
 
 // ---------

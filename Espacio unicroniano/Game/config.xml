@@ -28,7 +28,10 @@
     </music>
   </audio>
   
-  
+ <gui>
+    <atlas file="gui/atlas.png"/>
+  </gui>  
+
   <map>
     <folder>maps/</folder>
     <mapa1>

@@ -50,6 +50,11 @@ public:
 	// Gather relevant win events
 	bool GetWindowEvent(j1EventWindow ev);
 
+	//cosa de copiar despres
+	void EnableTextInput();
+	void DisableTextInput();
+	const char* GetText();
+
 	// Check key states (includes mouse and joy buttons)
 	j1KeyState GetKey(int id) const
 	{
@@ -69,6 +74,7 @@ public:
 	void GetMouseMotion(int& x, int& y);
 
 private:
+	p2SString text;
 	bool		windowEvents[WE_COUNT];
 	j1KeyState*	keyboard;
 	j1KeyState	mouse_buttons[NUM_MOUSE_BUTTONS];

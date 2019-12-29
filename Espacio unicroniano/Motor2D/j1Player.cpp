@@ -307,7 +307,7 @@ void j1Player::DrawPointer() {
 
 	App->render->Blit(weapon_pointer, p.x - 16, p.y - 16);
 
-	if (App->input->GetMouseButtonDown(1) == KEY_DOWN) {
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
 		j1Particle* shoot;
 		shoot = (j1Particle*) App->entity->CreateEntity(Entity::EntityType::particle, position, p.x, p.y);
 		bullets.add(shoot);

@@ -84,6 +84,10 @@ bool j1Entities::Save(pugi::xml_node& save) const {
 }
 
 bool j1Entities::PreUpdate(float dt) {
+	if (pause == true) {
+		return true;
+	}
+
 	p2List_item<Entity*>* AuxEntity = entities.start;
 
 	for (; AuxEntity != NULL; AuxEntity = AuxEntity->next) {
@@ -100,6 +104,15 @@ bool j1Entities::Update(float dt) {
 	if (accumulated_time >= update_ms_cycle) {
 		do_logic = true;
 	}*/
+
+	if (pause == true) {
+		p2List_item<Entity*>* AuxEntity = entities.start;
+
+		for (; AuxEntity != NULL; AuxEntity = AuxEntity->next) {
+			AuxEntity->data->Draw();
+		}
+		return true;
+	}
 
 	UpdateEntities(dt, do_logic);
 /*

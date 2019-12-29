@@ -6,11 +6,13 @@
 #include "j1Audio.h"
 #include "j1Render.h"
 #include "j1Window.h"
+#include "j1Fonts.h"
 #include "j1Map.h"
 #include "j1PathFinding.h"
 #include "j1Player.h"
 #include "j1SceneChange.h"
 #include "j1Scene.h"
+#include "j1Gui.h"
 #include "j1Collisions.h"
 
 #define CAMERA_SPEED 250
@@ -35,6 +37,19 @@ bool j1Scene::Awake()
 
 bool j1Scene::Load(pugi::xml_node& load) {
 
+	initial_camera.x = load.child("initial_camera").attribute("x").as_int();
+	initial_camera.y = load.child("initial_camera").attribute("y").as_int();
+
+
+	uint winx, winy;
+	App->win->GetWindowSize(winx, winy);
+	if (col_camera_up == nullptr && col_camera_down == nullptr && col_camera_left == nullptr && col_camera_right == nullptr) {
+		App->scene->col_camera_up = App->col->AddCollider({ 0,0, (int)winx, (int)winy / 4 }, COLLIDER_CAM_UP, App->scene);
+		App->scene->col_camera_down = App->col->AddCollider({ 0, ((int)winy / 3) * 2, (int)winx, (int)winy / 3 }, COLLIDER_CAM_DOWN, App->scene);
+		App->scene->col_camera_left = App->col->AddCollider({ 0,0, (int)winx / 4, (int)winy }, COLLIDER_CAM_LEFT, App->scene);
+		App->scene->col_camera_right = App->col->AddCollider({ ((int)winx / 3) * 2, 0, (int)winx / 3, (int)winy }, COLLIDER_CAM_RIGHT, App->scene);
+	}
+
 	return true;
 }
 
@@ -55,38 +70,107 @@ bool j1Scene::Start()
 	debug_tex = App->tex->Load("maps/debug.png");
 
 	//App->audio->PlayMusic("audio/music/Brain_Damage.ogg");
-	if(App->map->Load("mapa2.tmx") == true)
-	{
-		int w, h;
-		uchar* data = NULL;
-		if(App->map->CreateWalkabilityMap(w, h, &data))
-			App->pathfinding->SetMap(w, h, data);
+	iPoint pos;
+	pos.x = pos.y = 50;
 
-		RELEASE_ARRAY(data);
+	//App->gui->CreateUI_Button("HOLA", pos, { 353, 346, 169, 39 }, { 353,346,169,39 }, { 353, 390, 169, 39 }, Events::ButtonEvents::PATATA, nullptr, false);
 
-		p2List_item<ObjectLayer*>* ob_lay;
-		for (ob_lay = App->map->data.obj_layers.start; ob_lay; ob_lay = ob_lay->next) {
-			if (ob_lay->data->name == "Entities") {
-				App->entity->LoadFromObjectLayer(ob_lay->data);
-			}
-		}
-		App->render->camera.x = 0;
-		App->render->camera.y = -900;
-	
-	}
-
-	uint winx, winy;
-	App->win->GetWindowSize(winx, winy);
-
-	col_camera_up = App->col->AddCollider({ 0,0, (int)winx, (int)winy / 4 }, COLLIDER_CAM_UP, this);
-	col_camera_down = App->col->AddCollider({ 0, ((int)winy / 3) * 2, (int)winx, (int)winy / 3 }, COLLIDER_CAM_DOWN, this);
-	col_camera_left = App->col->AddCollider({ 0,0, (int)winx / 4, (int)winy }, COLLIDER_CAM_LEFT, this);
-	col_camera_right = App->col->AddCollider({ ((int)winx / 3) * 2, 0, (int)winx / 3, (int)winy }, COLLIDER_CAM_RIGHT, this);
+	StartMenu();
 
 	initial_camera.x = App->render->camera.x;
 	initial_camera.y = App->render->camera.y;
 
 	return true;
+}
+
+bool j1Scene::StartMenu() {
+	App->gui->DeleteAllUI();
+
+	//background;
+
+	//play button
+	iPoint play;
+	play.x = 100;
+	play.y = 300;
+	App->gui->CreateUI_Button("Play", play, { 353, 346, 169, 39 }, { 353,390,169,39 }, { 353,346,169,39 }, Events::ButtonEvents::NEWGAME);
+
+	//continue button
+	iPoint cont;
+	cont.x = 100;
+	cont.y = 350;
+	if (App->IsSaveDataExist("save_game.xml") == false) {
+		App->gui->CreateUI_Button("Continue", cont, { 353, 302, 169, 39 }, { 353,302,169,39 }, { 353,302,169,39 }, Events::ButtonEvents::NONE);
+	}
+	else {
+		App->gui->CreateUI_Button("Continue", cont, { 353, 346, 169, 39 }, { 353,390,169,39 }, { 353,346,169,39 }, Events::ButtonEvents::CONTINUE);
+	}
+
+	//settings button
+	iPoint setting;
+	setting.x = 100;
+	setting.y = 400;
+	App->gui->CreateUI_Button("Settings", setting, { 353, 346, 169, 39 }, { 353,390,169,39 }, { 353,346,169,39 }, Events::ButtonEvents::SETTINGS);
+
+	//Exit button
+	iPoint exit;
+	exit.x = 100;
+	exit.y = 450;
+	App->gui->CreateUI_Button("Exit", exit, { 353, 346, 169, 39 }, { 353,390,169,39 }, { 353,346,169,39 }, Events::ButtonEvents::EXIT);
+
+
+	return true;
+}
+
+void j1Scene::SettingsMenu() {
+	//window parent
+	uint width, height;
+	App->win->GetWindowSize(width, height);
+
+	iPoint menu;
+	menu.x = width / 2 - (312 / 2);
+	menu.y = height / 2 - (287 / 2);
+
+	UI * window = App->gui->CreateUI_Window("Settings", menu, { 31,75,312,287 });
+
+	//closing button
+	iPoint close;
+	close.x = menu.x + 258;
+	close.y = menu.y;
+
+	App->gui->CreateUI_Button("X", close, { 228,686,54,54 }, { 292,686,54,54 }, { 161,685,54,54 }, Events::ButtonEvents::CLOSEWINDOW, window);
+
+	//back to menu button
+	iPoint back;
+	back.x = menu.x + (312 / 2) - (169 / 2);
+	back.y = menu.y + 250;
+
+	App->gui->CreateUI_Button("Back to menu", back, { 353, 346, 169, 39 }, { 353,390,169,39 }, { 353,346,169,39 }, Events::ButtonEvents::BACKTOMENU, window);
+
+	//sliders
+	iPoint music;
+	music.x = menu.x + 312 / 3;
+	music.y = menu.y + 35;
+
+	App->gui->CreateUI_ScrollBar(music, { 637,736,16,203 }, { 591,786,33,33 }, 20, Events::ScrollEvents::MUSIC, window);
+
+	iPoint fx;
+	fx.x = menu.x + (312 / 3) * 2;
+	fx.y = menu.y + 35;
+
+	App->gui->CreateUI_ScrollBar(fx, { 637,736,16,203 }, { 591,786,33,33 }, 20, Events::ScrollEvents::FX, window);
+
+	//Text
+	iPoint musicTxt;
+	musicTxt.x = music.x - 50;
+	musicTxt.y = music.y + 50;
+
+	App->gui->CreateUI_Text("Music:", musicTxt, "Music:", "Music:", window);
+
+	iPoint fxTxt;
+	fxTxt.x = fx.x - 50;
+	fxTxt.y = fx.y + 50;
+
+	App->gui->CreateUI_Text("Effects:", fxTxt, "Effects:", "Effects:", window);
 }
 
 // Called each loop iteration
@@ -144,6 +228,16 @@ bool j1Scene::Update(float dt)
 		App->render->camera.x -= (CAMERA_SPEED * dt);
 
 
+
+	if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) {
+		App->entity->pause = !App->entity->pause;
+	}
+	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) {
+		App->entity->pause = true;
+		SettingsMenu();
+	}
+
+
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) { //Change first level
 		App->scene_change->ChangeMap(2.0f, 2);
 	}
@@ -176,11 +270,13 @@ bool j1Scene::Update(float dt)
 	uint winx, winy;
 	App->win->GetWindowSize(winx, winy);
 
-	col_camera_up->SetPos(-1 * App->render->camera.x, -1 * App->render->camera.y);
-	col_camera_down->SetPos(-1 * App->render->camera.x, -1 * App->render->camera.y + ((int)winy / 3) * 2);
-	col_camera_left->SetPos(-1 * App->render->camera.x, -1 * App->render->camera.y);
-	col_camera_right->SetPos(-1 * App->render->camera.x + ((int)winx / 3) * 2, -1 * App->render->camera.y);
-
+	if (col_camera_up != nullptr && col_camera_down != nullptr && col_camera_left != nullptr && col_camera_right != nullptr) {
+		col_camera_up->SetPos(-1 * App->render->camera.x, -1 * App->render->camera.y);
+		col_camera_down->SetPos(-1 * App->render->camera.x, -1 * App->render->camera.y + ((int)winy / 3) * 2);
+		col_camera_left->SetPos(-1 * App->render->camera.x, -1 * App->render->camera.y);
+		col_camera_right->SetPos(-1 * App->render->camera.x + ((int)winx / 3) * 2, -1 * App->render->camera.y);
+	}
+	
 
 	App->map->Draw();
 
@@ -209,10 +305,6 @@ bool j1Scene::Update(float dt)
 bool j1Scene::PostUpdate(float dt)
 {
 	bool ret = true;
-
-
-	if(App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
-		ret = false;
 
 	return ret;
 }

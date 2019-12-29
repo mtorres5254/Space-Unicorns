@@ -130,6 +130,14 @@ public:
 			return strcmp(string, str) != 0;
 		return true;
 	}
+
+	bool operator-- ()
+	{
+		str[size - 2] = '\0';
+		size = size - 1;
+
+		return true;
+	}
 	
 	const p2SString& operator= (const p2SString& string)
 	{

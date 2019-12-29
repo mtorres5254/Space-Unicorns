@@ -41,7 +41,7 @@ j1FlyEnemy::j1FlyEnemy(iPoint pos) : Entity(EntityType::fly_enemy) {
 	initial_position = position = pos;
 
 	//save lives
-	lives = maxLives = 8;
+	lives = maxLives = 3;
 
 	//add collider
 	col = App->col->AddCollider({ position.x, position.y, 28,28 }, COLLIDER_ENEMY, App->entity);

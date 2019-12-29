@@ -138,6 +138,18 @@ bool j1Audio::PlayMusic(const char* path, float fade_time)
 	return ret;
 }
 
+void j1Audio::SetMusicVolume(int volume) {
+	Mix_VolumeMusic(volume);
+}
+
+void j1Audio::SetFxVolume(int volume) {
+	p2List_item<Mix_Chunk*>* Aux;
+
+	for (Aux = fx.start; Aux != nullptr; Aux = Aux->next) {
+		Mix_VolumeChunk(Aux->data, volume);
+	}
+}
+
 // Load WAV
 unsigned int j1Audio::LoadFx(const char* path)
 {

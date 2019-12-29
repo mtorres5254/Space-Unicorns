@@ -70,6 +70,9 @@
     <ClCompile Include="Coin.cpp">
       <Filter>Desenvolupament  ========\Modules\Entities Manager</Filter>
     </ClCompile>
+    <ClCompile Include="j1Gui.cpp">
+      <Filter>Desenvolupament  ========\Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -161,6 +164,9 @@
     </ClInclude>
     <ClInclude Include="Coin.h">
       <Filter>Desenvolupament  ========\Modules\Entities Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Gui.h">
+      <Filter>Desenvolupament  ========\Modules</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -4,128 +4,114 @@
 	<window />
 	<textures />
 	<audio />
-	<map path="mapa.tmx" />
+	<map path="mapa2.tmx" />
 	<scene>
-		<initial_camera x="0" y="-900" />
+		<initial_camera x="0" y="0" />
 	</scene>
 	<pathfinding />
 	<entities>
-		<Player lives="3">
-			<position x="167" y="1598" />
-			<initial_position x="62" y="1542" />
+		<Player lives="0">
+			<position x="32" y="717" />
+			<initial_position x="32" y="637" />
 		</Player>
 		<Floor_Enemies>
-			<Floor_Enemy lives="5">
-				<position x="638" y="1574" />
-				<initial_position x="638" y="1520" />
+			<Floor_Enemy lives="3">
+				<position x="852" y="640" />
+				<initial_position x="852" y="630" />
 			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="950" y="1574" />
-				<initial_position x="950" y="1515" />
+			<Floor_Enemy lives="3">
+				<position x="1167" y="544" />
+				<initial_position x="1167" y="531" />
 			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="1608" y="1671" />
-				<initial_position x="1608" y="1617" />
+			<Floor_Enemy lives="3">
+				<position x="1570" y="704" />
+				<initial_position x="1570" y="680" />
 			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="2958" y="1541" />
-				<initial_position x="2958" y="1491" />
+			<Floor_Enemy lives="3">
+				<position x="2376" y="384" />
+				<initial_position x="2376" y="364" />
 			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="3890" y="1738" />
-				<initial_position x="3890" y="1679" />
+			<Floor_Enemy lives="3">
+				<position x="3762" y="739" />
+				<initial_position x="3762" y="711" />
 			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="4540" y="1821" />
-				<initial_position x="4540" y="1771" />
+			<Floor_Enemy lives="3">
+				<position x="4430" y="418" />
+				<initial_position x="4430" y="402" />
 			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="4006" y="1478" />
-				<initial_position x="4006" y="1419" />
+			<Floor_Enemy lives="3">
+				<position x="5330" y="417" />
+				<initial_position x="5330" y="401" />
 			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="5150" y="1704" />
-				<initial_position x="5150" y="1645" />
+			<Floor_Enemy lives="3">
+				<position x="5640" y="292" />
+				<initial_position x="5640" y="264" />
 			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="5388" y="1823" />
-				<initial_position x="5388" y="1769" />
+			<Floor_Enemy lives="3">
+				<position x="5911" y="417" />
+				<initial_position x="5911" y="389" />
 			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="4662" y="477" />
-				<initial_position x="4662" y="427" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="6166" y="1321" />
-				<initial_position x="6166" y="1267" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="6374" y="1701" />
-				<initial_position x="6374" y="1647" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="7268" y="1964" />
-				<initial_position x="7268" y="1905" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="6400" y="748" />
-				<initial_position x="6400" y="689" />
-			</Floor_Enemy>
-			<Floor_Enemy lives="5">
-				<position x="7708" y="965" />
-				<initial_position x="7708" y="911" />
+			<Floor_Enemy lives="3">
+				<position x="20" y="738" />
+				<initial_position x="355" y="718" />
 			</Floor_Enemy>
 		</Floor_Enemies>
 		<Fly_Enemies>
-			<Fly_Enemy lives="8">
-				<position x="1318" y="1372" />
-				<initial_position x="1318" y="1372" />
+			<Fly_Enemy lives="3">
+				<position x="88" y="631" />
+				<initial_position x="428" y="470" />
 			</Fly_Enemy>
-			<Fly_Enemy lives="0">
-				<position x="376" y="1451" />
-				<initial_position x="352" y="1348" />
+			<Fly_Enemy lives="3">
+				<position x="981" y="435" />
+				<initial_position x="981" y="435" />
 			</Fly_Enemy>
-			<Fly_Enemy lives="8">
-				<position x="2150" y="1282" />
-				<initial_position x="2150" y="1282" />
+			<Fly_Enemy lives="3">
+				<position x="1336" y="853" />
+				<initial_position x="1336" y="853" />
 			</Fly_Enemy>
-			<Fly_Enemy lives="8">
-				<position x="2760" y="1210" />
-				<initial_position x="2760" y="1210" />
+			<Fly_Enemy lives="3">
+				<position x="2189" y="278" />
+				<initial_position x="2189" y="278" />
 			</Fly_Enemy>
-			<Fly_Enemy lives="8">
-				<position x="3286" y="1564" />
-				<initial_position x="3286" y="1564" />
+			<Fly_Enemy lives="3">
+				<position x="2951" y="553" />
+				<initial_position x="2951" y="553" />
 			</Fly_Enemy>
-			<Fly_Enemy lives="8">
-				<position x="4582" y="1242" />
-				<initial_position x="4582" y="1242" />
+			<Fly_Enemy lives="3">
+				<position x="3386" y="478" />
+				<initial_position x="3386" y="478" />
 			</Fly_Enemy>
-			<Fly_Enemy lives="8">
-				<position x="5772" y="1322" />
-				<initial_position x="5772" y="1322" />
+			<Fly_Enemy lives="3">
+				<position x="3849" y="535" />
+				<initial_position x="3849" y="535" />
 			</Fly_Enemy>
-			<Fly_Enemy lives="8">
-				<position x="5388" y="616" />
-				<initial_position x="5388" y="616" />
+			<Fly_Enemy lives="3">
+				<position x="4526" y="724" />
+				<initial_position x="4526" y="724" />
 			</Fly_Enemy>
-			<Fly_Enemy lives="8">
-				<position x="6790" y="1446" />
-				<initial_position x="6790" y="1446" />
+			<Fly_Enemy lives="3">
+				<position x="4749" y="327" />
+				<initial_position x="4749" y="327" />
 			</Fly_Enemy>
-			<Fly_Enemy lives="8">
-				<position x="7304" y="550" />
-				<initial_position x="7304" y="550" />
+			<Fly_Enemy lives="3">
+				<position x="5455" y="322" />
+				<initial_position x="5455" y="322" />
 			</Fly_Enemy>
-			<Fly_Enemy lives="8">
-				<position x="7922" y="702" />
-				<initial_position x="7922" y="702" />
+			<Fly_Enemy lives="3">
+				<position x="6073" y="260" />
+				<initial_position x="6073" y="260" />
+			</Fly_Enemy>
+			<Fly_Enemy lives="3">
+				<position x="6296" y="495" />
+				<initial_position x="6296" y="495" />
 			</Fly_Enemy>
 		</Fly_Enemies>
 	</entities>
 	<map />
 	<scenes />
+	<fonts />
+	<gui />
 	<renderer>
-		<camera x="-2" y="-1172" />
+		<camera x="-2" y="-384" />
 	</renderer>
 </game_state>

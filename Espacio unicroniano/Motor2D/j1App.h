@@ -19,6 +19,8 @@ class j1PathFinding;
 class j1Entities;
 class j1Collisions;
 class j1MapChange;
+class j1Gui;
+class j1Fonts;
 
 class j1App
 {
@@ -56,6 +58,7 @@ public:
 	void LoadGame(const char* file);
 	void SaveGame(const char* file) const;
 	void GetSaveGames(p2List<p2SString>& list_to_fill) const;
+	bool IsSaveDataExist(const char* file);
 
 private:
 
@@ -95,6 +98,8 @@ public:
 	j1Entities*			entity = NULL;
 	j1Collisions*		col = NULL;
 	j1MapChange*        scene_change = NULL;
+	j1Fonts*			font = NULL;
+	j1Gui*				gui = NULL;
 
 	float				dt;
 	int					max_framerate = 0;
