@@ -22,6 +22,7 @@ j1Collisions::j1Collisions()
 	matrix[COLLIDER_PLAYER][COLLIDER_CAM_DOWN] = true;
 	matrix[COLLIDER_PLAYER][COLLIDER_CAM_LEFT] = true;
 	matrix[COLLIDER_PLAYER][COLLIDER_CAM_RIGHT] = true;
+	matrix[COLLIDER_PLAYER][COLLIDER_COIN] = true;
 
 	matrix[COLLIDER_ENEMY][COLLIDER_PLAYER] = true;
 	matrix[COLLIDER_ENEMY][COLLIDER_FLOOR] = true;
@@ -29,6 +30,8 @@ j1Collisions::j1Collisions()
 	matrix[COLLIDER_ENEMY][COLLIDER_WALL] = true;
 	matrix[COLLIDER_ENEMY][COLLIDER_DEAD] = true;
 	matrix[COLLIDER_ENEMY][COLLIDER_SHOT] = true;
+	
+	matrix[COLLIDER_COIN][COLLIDER_PLAYER] = true;
 
 	matrix[COLLIDER_FLOOR][COLLIDER_PLAYER] = true;
 	matrix[COLLIDER_FLOOR][COLLIDER_ENEMY] = true;

@@ -1,5 +1,5 @@
-#ifndef __J1FLOORENEMY_H__
-#define __J1FLOORENEMY_H__
+#ifndef __COIN_H__
+#define __COIN_H__
 
 #include "j1Entities.h"
 #include "j1Animations.h"
@@ -22,13 +22,15 @@ public:
 private:
 	iPoint CoinPosition;
 	Animation idle;
+	Animation takenanim;
 	Animation* Current_animation;
 	bool taken = false;
-	bool falling = true;
+	//bool falling = true;
 	float private_dt;
 	SDL_RendererFlip flip = SDL_FLIP_NONE;
 	Collider* col;
 	int coinCnt = 0;
+	
 
 
 };

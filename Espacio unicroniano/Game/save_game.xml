@@ -10,55 +10,55 @@
 	</scene>
 	<pathfinding />
 	<entities>
-		<Player lives="0">
-			<position x="32" y="717" />
+		<Player lives="3">
+			<position x="32" y="690" />
 			<initial_position x="32" y="637" />
 		</Player>
 		<Floor_Enemies>
-			<Floor_Enemy lives="3">
-				<position x="852" y="640" />
+			<Floor_Enemy lives="5">
+				<position x="852" y="639" />
 				<initial_position x="852" y="630" />
 			</Floor_Enemy>
-			<Floor_Enemy lives="3">
-				<position x="1167" y="544" />
+			<Floor_Enemy lives="5">
+				<position x="1167" y="547" />
 				<initial_position x="1167" y="531" />
 			</Floor_Enemy>
-			<Floor_Enemy lives="3">
+			<Floor_Enemy lives="5">
 				<position x="1570" y="704" />
 				<initial_position x="1570" y="680" />
 			</Floor_Enemy>
-			<Floor_Enemy lives="3">
+			<Floor_Enemy lives="5">
 				<position x="2376" y="384" />
 				<initial_position x="2376" y="364" />
 			</Floor_Enemy>
-			<Floor_Enemy lives="3">
-				<position x="3762" y="739" />
+			<Floor_Enemy lives="5">
+				<position x="3762" y="740" />
 				<initial_position x="3762" y="711" />
 			</Floor_Enemy>
-			<Floor_Enemy lives="3">
+			<Floor_Enemy lives="5">
 				<position x="4430" y="418" />
 				<initial_position x="4430" y="402" />
 			</Floor_Enemy>
-			<Floor_Enemy lives="3">
+			<Floor_Enemy lives="5">
 				<position x="5330" y="417" />
 				<initial_position x="5330" y="401" />
 			</Floor_Enemy>
-			<Floor_Enemy lives="3">
-				<position x="5640" y="292" />
+			<Floor_Enemy lives="5">
+				<position x="5640" y="293" />
 				<initial_position x="5640" y="264" />
 			</Floor_Enemy>
-			<Floor_Enemy lives="3">
-				<position x="5911" y="417" />
+			<Floor_Enemy lives="5">
+				<position x="5911" y="418" />
 				<initial_position x="5911" y="389" />
 			</Floor_Enemy>
-			<Floor_Enemy lives="3">
-				<position x="20" y="738" />
+			<Floor_Enemy lives="5">
+				<position x="179" y="738" />
 				<initial_position x="355" y="718" />
 			</Floor_Enemy>
 		</Floor_Enemies>
 		<Fly_Enemies>
 			<Fly_Enemy lives="3">
-				<position x="88" y="631" />
+				<position x="280" y="545" />
 				<initial_position x="428" y="470" />
 			</Fly_Enemy>
 			<Fly_Enemy lives="3">
@@ -112,6 +112,6 @@
 	<fonts />
 	<gui />
 	<renderer>
-		<camera x="-2" y="-384" />
+		<camera x="-2" y="-264" />
 	</renderer>
 </game_state>

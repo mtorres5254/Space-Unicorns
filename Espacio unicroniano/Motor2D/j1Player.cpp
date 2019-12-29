@@ -442,8 +442,12 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 		
 	}
 	if (c2->type == COLLIDER_COIN) {
-		App->audio->PlayFx(coinsound, 0);
+		
+			App->audio->PlayFx(coinsound, 0);
+		
+		
 	}
+
 
 	if (c2->type == COLLIDER_ENEMY) {
 		
