@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.5" orientation="orthogonal" renderorder="right-down" width="261" height="70" tilewidth="32" tileheight="32" infinite="0" nextlayerid="11" nextobjectid="154">
+<map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="261" height="70" tilewidth="32" tileheight="32" infinite="0" nextlayerid="11" nextobjectid="196">
  <properties>
   <property name=" BackgroundMusic" value="audio/music/Background2.ogg"/>
  </properties>
@@ -120166,5 +120166,43 @@
   <object id="150" name="FlyEnemy" x="6790" y="1446" width="44" height="44"/>
   <object id="151" name="FlyEnemy" x="7304" y="550" width="44" height="44"/>
   <object id="152" name="FlyEnemy" x="7922" y="702" width="44" height="44"/>
+  <object id="154" name="Coin" x="589" y="1564" width="31" height="30.5"/>
+  <object id="156" name="Coin" x="695" y="1561.75" width="31" height="30.5"/>
+  <object id="157" name="Coin" x="779" y="1559.25" width="31" height="30.5"/>
+  <object id="158" name="Coin" x="859" y="1558.25" width="31" height="30.5"/>
+  <object id="159" name="Coin" x="1367.5" y="1557.75" width="31" height="30.5"/>
+  <object id="160" name="Coin" x="1438" y="1559.25" width="31" height="30.5"/>
+  <object id="161" name="Coin" x="2820.5" y="1531.75" width="31" height="30.5"/>
+  <object id="162" name="Coin" x="2880.5" y="1532.25" width="31" height="30.5"/>
+  <object id="163" name="Coin" x="3433.5" y="1799.75" width="31" height="30.5"/>
+  <object id="164" name="Coin" x="4044" y="1719.25" width="31" height="30.5"/>
+  <object id="165" name="Coin" x="4106.5" y="1718.75" width="31" height="30.5"/>
+  <object id="166" name="Coin" x="4169" y="1719.25" width="31" height="30.5"/>
+  <object id="167" name="Coin" x="4240.5" y="1812.25" width="31" height="30.5"/>
+  <object id="169" name="Coin" x="4280.5" y="1811.75" width="31" height="30.5"/>
+  <object id="170" name="Coin" x="4321.5" y="1809.75" width="31" height="30.5"/>
+  <object id="171" name="Coin" x="4368.5" y="1810.75" width="31" height="30.5"/>
+  <object id="172" name="Coin" x="4495" y="1497.75" width="31" height="30.5"/>
+  <object id="173" name="Coin" x="4558" y="1496.75" width="31" height="30.5"/>
+  <object id="175" name="Coin" x="3875.5" y="1466.75" width="31" height="30.5"/>
+  <object id="176" x="3927.5" y="1464.75" width="31" height="30.5"/>
+  <object id="177" name="Coin" x="5400.5" y="1686.75" width="31" height="30.5"/>
+  <object id="179" name="Coin" x="5456.5" y="1687.75" width="31" height="30.5"/>
+  <object id="180" x="5416.5" y="1373.75" width="31" height="30.5"/>
+  <object id="181" name="Coin" x="5354.5" y="1180.75" width="31" height="30.5"/>
+  <object id="182" name="Coin" x="5034.5" y="1113.75" width="31" height="30.5"/>
+  <object id="183" name="Coin" x="4878.5" y="472.75" width="31" height="30.5"/>
+  <object id="184" name="Coin" x="4924.5" y="469.75" width="31" height="30.5"/>
+  <object id="185" name="Coin" x="6307.5" y="1697.75" width="31" height="30.5"/>
+  <object id="186" name="Coin" x="6739.5" y="1949.75" width="31" height="30.5"/>
+  <object id="187" name="Coin" x="6782.5" y="1954.75" width="31" height="30.5"/>
+  <object id="188" name="Coin" x="6841.5" y="1952.75" width="31" height="30.5"/>
+  <object id="189" name="Coin" x="6902.5" y="1951.75" width="31" height="30.5"/>
+  <object id="190" name="Coin" x="6228.5" y="698.75" width="31" height="30.5"/>
+  <object id="191" name="Coin" x="6288.5" y="700.75" width="31" height="30.5"/>
+  <object id="192" name="Coin" x="6987.5" y="734.75" width="31" height="30.5"/>
+  <object id="193" name="Coin" x="7889.5" y="1914.75" width="31" height="30.5"/>
+  <object id="194" name="Coin" x="7955.5" y="1916.75" width="31" height="30.5"/>
+  <object id="195" name="Coin" x="8016.5" y="1915.75" width="31" height="30.5"/>
  </objectgroup>
 </map>

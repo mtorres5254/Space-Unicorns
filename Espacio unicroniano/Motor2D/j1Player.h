@@ -80,6 +80,7 @@ private:
 	unsigned int changescene_sound;
 	unsigned int hitsound;
 	unsigned int shotsound;
+	unsigned int coinsound;
 
 	float player_dt;
 

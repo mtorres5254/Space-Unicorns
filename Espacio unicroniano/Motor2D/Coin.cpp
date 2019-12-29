@@ -15,7 +15,9 @@ Coin::Coin(iPoint pos) : Entity(EntityType::coin) {
 	sprite = App->tex->Load("textures/coins.png");
 
 	idle.PushBack({ 18 , 0 , 465 , 464 });
-	idle.speed = 0.1f;
+	idle.PushBack({ 18 , 0 , 465 , 464 });
+	idle.speed = 1.0f;
+	
 
 	//Load Animations
 	//idle.PushBack({ });
@@ -42,17 +44,18 @@ void Coin::PreUpdate(float dt) {
 void Coin::Reset() {
 	position.x = CoinPosition.x;
 	position.y = CoinPosition.y - 5;
+	lives = 1;
 	
 	
 	if (col != nullptr) {
 		App->col->DeleteColliderNow(col);
 	}
-	col = App->col->AddCollider({ position.x,position.y,32,32 }, COLLIDER_COIN, App->entity);
+	col = App->col->AddCollider({ position.x,position.y,22,22 }, COLLIDER_COIN, App->entity);
 	taken = false;
 }
 
 void Coin::Update(float dt) {
-	BROFILER_CATEGORY("FloorEnemy_Update", Profiler::Color::FloralWhite)
+	
 
 		if (taken == false) {
 			if (lives == 0) {

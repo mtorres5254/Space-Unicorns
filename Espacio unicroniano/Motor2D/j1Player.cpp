@@ -81,6 +81,7 @@ j1Player::j1Player(iPoint pos) : Entity(EntityType::player) {
 	changescene_sound = App->audio->LoadFx("audio/fx/change_scene.wav");
 	shotsound = App->audio->LoadFx("audio/fx/fire.wav");
 	hitsound = App->audio->LoadFx("audio/fx/hithit.wav");
+	coinsound = App->audio->LoadFx("audio/fx/Pickup_Coin.wav");
 	
 
 	//set player info 
@@ -439,6 +440,9 @@ void j1Player::OnCollision(Collider* c1, Collider* c2) {
 			App->scene->map = 1;
 		}
 		
+	}
+	if (c2->type == COLLIDER_COIN) {
+		App->audio->PlayFx(coinsound, 0);
 	}
 
 	if (c2->type == COLLIDER_ENEMY) {
